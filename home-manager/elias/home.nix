@@ -26,14 +26,13 @@
     ../fonts.nix
 
     # Programs
-    # ../programs/1password.nix
     ../programs/alacritty.nix
     ../programs/fish.nix
     ../programs/git.nix
     ../programs/lsd.nix
     ../programs/mpv.nix
     ../programs/ssh.nix
-    # ../programs/vim.nix
+    ../programs/vim.nix
   ];
 
   home.username = userConfig.username;

@@ -8,7 +8,7 @@
 
 {
 
-  imports = [ inputs.nixvim.nixosModules.nixvim ];
+  imports = [ inputs.nixvim.homeManagerModules.nixvim ];
 
   programs.nixvim = {
     enable = true;
