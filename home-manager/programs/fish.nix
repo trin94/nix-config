@@ -1,9 +1,13 @@
-{ config, pkgs, ... }:
+{
+  config,
+  pkgs,
+  userConfig,
+  ...
+}:
 
 {
 
   home.packages = with pkgs; [
-    #bash # GNU Bourne-Again Shell, the de facto standard shell on Linux
     fish # Smart and user-friendly command line shell
     starship # A minimal, blazing fast, and extremely customizable prompt for any shell
   ];
@@ -43,12 +47,12 @@
 
       nup-user = {
         description = "Update user packages";
-        body = "home-manager switch --flake ~/.dotfiles#elias@nixos";
+        body = "home-manager switch --flake ${userConfig.configLocation}#${userConfig.username}@${userConfig.hostname}";
       };
 
       nup-system = {
         description = "Update system packages";
-        body = "sudo nixos-rebuild switch --flake ~/.dotfiles#nixos";
+        body = "sudo nixos-rebuild switch --flake ${userConfig.configLocation}#${userConfig.hostname}";
       };
 
       envpp = {

@@ -2,7 +2,12 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, ... }:
+{
+  config,
+  pkgs,
+  userConfig,
+  ...
+}:
 
 {
   imports = [
@@ -10,11 +15,13 @@
     ./hardware-configuration.nix
   ];
 
+  boot.kernelPackages = pkgs.linuxPackages_latest;
+
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  networking.hostName = "nixos"; # Define your hostname.
+  networking.hostName = userConfig.hostname; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Configure network proxy if necessary
@@ -25,21 +32,21 @@
   networking.networkmanager.enable = true;
 
   # Set your time zone.
-  time.timeZone = "Europe/Berlin";
+  time.timeZone = userConfig.timezone;
 
   # Select internationalisation properties.
-  i18n.defaultLocale = "en_US.UTF-8";
+  i18n.defaultLocale = userConfig.defaultLocale;
 
   i18n.extraLocaleSettings = {
-    LC_ADDRESS = "de_DE.UTF-8";
-    LC_IDENTIFICATION = "de_DE.UTF-8";
-    LC_MEASUREMENT = "de_DE.UTF-8";
-    LC_MONETARY = "de_DE.UTF-8";
-    LC_NAME = "de_DE.UTF-8";
-    LC_NUMERIC = "de_DE.UTF-8";
-    LC_PAPER = "de_DE.UTF-8";
-    LC_TELEPHONE = "de_DE.UTF-8";
-    LC_TIME = "de_DE.UTF-8";
+    LC_ADDRESS = userConfig.extraLocale;
+    LC_IDENTIFICATION = userConfig.extraLocale;
+    LC_MEASUREMENT = userConfig.extraLocale;
+    LC_MONETARY = userConfig.extraLocale;
+    LC_NAME = userConfig.extraLocale;
+    LC_NUMERIC = userConfig.extraLocale;
+    LC_PAPER = userConfig.extraLocale;
+    LC_TELEPHONE = userConfig.extraLocale;
+    LC_TIME = userConfig.extraLocale;
   };
 
   # Enable the X11 windowing system.
@@ -51,7 +58,7 @@
 
   # Configure keymap in X11
   services.xserver.xkb = {
-    layout = "de+us";
+    layout = userConfig.keyboardLayout;
     variant = "";
   };
 
@@ -80,7 +87,7 @@
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.elias = {
     isNormalUser = true;
-    description = "elias";
+    description = userConfig.username;
     extraGroups = [
       "networkmanager"
       "wheel"
@@ -123,6 +130,18 @@
     pkgs.gnome-tour
     pkgs.gnome-connections
   ];
+
+  environment.sessionVariables = {
+    NIXOS_OZONE_WL = "1";
+  };
+
+  programs._1password.enable = true;
+  programs._1password-gui = {
+    enable = true;
+    # Certain features, including CLI integration and system authentication support,
+    # require enabling PolKit integration on some desktop environments (e.g. Plasma).
+    polkitPolicyOwners = [ userConfig.username ];
+  };
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.

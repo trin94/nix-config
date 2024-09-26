@@ -18,14 +18,20 @@
     userEmail = "elias.mr1@gmail.com";
 
     extraConfig = {
-      credential = {
-        helper = "${pkgs.git.override { withLibsecret = true; }}/bin/git-credential-libsecret";
+      gpg = {
+        format = "ssh";
       };
-      init = {
-        defaultBranch = "main";
+
+      "gpg \"ssh\"" = {
+        program = "${lib.getExe' pkgs._1password-gui "op-ssh-sign"}";
       };
-      core = {
-        autocrlf = "input";
+
+      commit = {
+        gpgsign = true;
+      };
+
+      user = {
+        signingKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHd9tRbMZVCnF7obsvrgq1LSSL4xBm8fpQnwu0SKNUdg";
       };
     };
   };

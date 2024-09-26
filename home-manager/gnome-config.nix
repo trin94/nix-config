@@ -1,10 +1,28 @@
-{ config, pkgs, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  userConfig,
+  ...
+}:
 
 let
   disabled = [ "" ];
 in
 {
-  dconf.settings = {
+  # https://github.com/NixOS/nixpkgs/blob/master/lib/gvariant.nix
+  # https://github.com/wimpysworld/nix-config/blob/main/nixos/_mixins/desktop/gnome/default.nix
+
+  dconf.settings = with lib.gvariant; {
+
+    "org/gnome/desktop/datetime" = {
+      automatic-timezone = true;
+    };
+
+    "org/gnome/desktop/background" = {
+      "picture-uri" = lib.mkIf (builtins.hasAttr "wallpaperPathLight" userConfig) "file://${userConfig.wallpaperPathLight}";
+      "picture-uri-dark" = lib.mkIf (builtins.hasAttr "wallpaperPathDark" userConfig) "file://${userConfig.wallpaperPathDark}";
+    };
 
     "org/gnome/desktop/interface" = {
       clock-format = "12h";
@@ -18,9 +36,13 @@ in
       monospace-font-name = "CaskaydiaCove NF Bold 16";
     };
 
+    "org/gnome/desktop/session" = {
+      idle-delay = mkUint32 900;
+    };
+
     "org/gnome/desktop/wm/keybindings" = {
       close = [ "<Shift><Super>q" ];
-      activate-window-menu = [ "" ];
+      activate-window-menu = disabled;
       always-on-top = disabled;
       begin-move = disabled;
       begin-resize = disabled;
@@ -105,6 +127,15 @@ in
       unmaximize = [ "<Super>Down" ];
     };
 
+    "org/gnome/mutter" = {
+      dynamic-workspaces = true;
+      workspaces-only-on-primary = true;
+    };
+
+    "org/gnome/nautilus/preferences" = {
+      default-folder-viewer = "list-view";
+    };
+
     "org/gnome/shell" = {
       favorite-apps = [
         "org.gnome.Nautilus.desktop"
@@ -118,6 +149,24 @@ in
         "com.microsoft.Teams.desktop"
         "com.teamspeak.TeamSpeak.desktop"
       ];
+    };
+
+    "org/gnome/TextEditor" = {
+      highlight-current-line = true;
+      indent-style = "space";
+      show-grid = false;
+      show-line-numbers = true;
+      show-map = true;
+      show-right-margin = true;
+      style-scheme = "builder-dark";
+      tab-width = mkUint32 4;
+      use-system-font = true;
+    };
+
+    "org/gnome/settings-daemon/plugins/power" = {
+      power-button-action = "interactive";
+      sleep-inactive-ac-timeout = mkUint32 0;
+      sleep-inactive-ac-type = "nothing";
     };
 
     "org/gtk/Settings/FileChooser".clock-format = "12h";

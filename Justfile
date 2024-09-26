@@ -3,13 +3,25 @@
 _list:
     @just --list
 
-# Build current configuration into directory 'result'
-verify:
+# Build home to 'result' directory
+[group('user')]
+verify-user:
     home-manager build --flake .
 
-# Apply current configuration
-apply:
+# Apply home configuration
+[group('user')]
+apply-user:
     home-manager switch --flake .
+
+# Build system to 'result' directory
+[group('system')]
+verify-system:
+    nixos-rebuild build --flake .#nixos
+
+# Apply system configuration
+[group('system')]
+apply-system:
+    sudo nixos-rebuild switch --flake .#nixos
 
 # Format source
 format:
