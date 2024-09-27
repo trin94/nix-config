@@ -53,14 +53,16 @@
     poetry # Python dependency management and packaging made easy
     procs # A modern replacement for ps written in Rust
     python312 # A high-level dynamically-typed programming language
-    # python312Packages.mpv # Python interface to the mpv media player
-    # python312Packages.pyside6 # Python bindings for Qt
-    # python312Packages.shiboken6 # Generator for the pyside6 Qt bindings
     ripgrep # A utility that combines the usability of The Silver Searcher with the raw speed of grep
     # teamspeak_client # TeamSpeak voice communication tool
     tokei # A program that allows you to count your code, quickly
     yq-go # Portable command-line YAML processor
     yt-dlp # Command-line tool to download videos from YouTube.com and other sites (youtube-dl fork)
+
+    kdePackages.qtsvg # Cross-platform application framework for C++
+    python312Packages.mpv # Python interface to the mpv media player
+    python312Packages.pyside6 # Python bindings for Qt
+    python312Packages.shiboken6 # Generator for the pyside6 Qt bindings
 
     # Graphical programs without special configuration
     # _1password # 1Password command-line tool
