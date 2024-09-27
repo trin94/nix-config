@@ -6,6 +6,7 @@
   config,
   pkgs,
   userConfig,
+  pkgs-stable,
   ...
 }:
 
@@ -174,6 +175,9 @@
       userland-proxy = false;
     };
   };
+
+  services.flatpak.enable = true;
+  xdg.portal.config.common.default = "gtk";
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
