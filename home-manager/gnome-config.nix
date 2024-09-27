@@ -36,6 +36,10 @@ in
       monospace-font-name = "CaskaydiaCove NF Bold 16";
     };
 
+    "org/gnome/desktop/peripherals/mouse" = {
+      accel-profile = "flat";
+    };
+
     "org/gnome/desktop/session" = {
       idle-delay = mkUint32 900;
     };
