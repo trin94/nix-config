@@ -2,6 +2,8 @@
   config,
   pkgs,
   userConfig,
+  inputs,
+  pkgs-stable,
   ...
 }:
 

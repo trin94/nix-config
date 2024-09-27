@@ -3,12 +3,12 @@
 
   inputs = {
 
-    stable = {
-      url = "github:nixos/nixpkgs/nixos-24.05";
-    };
-
     nixpkgs = {
       url = "github:nixos/nixpkgs/nixos-unstable";
+    };
+
+    nixpkgs-stable = {
+      url = "github:nixos/nixpkgs/nixos-24.05";
     };
 
     nixvim = {
@@ -24,12 +24,13 @@
   };
 
   outputs =
-    {
+    inputs@{
       self,
       nixpkgs,
+      nixpkgs-stable,
       home-manager,
       ...
-    }@inputs: # <- this `@inputs` will expose the block of code below, to the inputs that you set above.
+    }:
 
     let
       commonConfig = {
@@ -57,6 +58,10 @@
               # `inherit` is used to pass the variables set in the above "let" statement into our configuration.nix file below
               inherit inputs;
               userConfig = nixpkgs.lib.recursiveUpdate commonConfig systemConfig;
+              pkgs-stable = import nixpkgs-stable {
+                system = "x86_64-linux";
+                config.allowUnfree = true;
+              };
             };
             # Our main nixos configuration file
             # This is the file where we compartmentalize the changes we want to make on a system level
@@ -82,6 +87,10 @@
               # `inherit` is used to pass the variables set in the above "let" statement into our home.nix file below
               inherit inputs;
               userConfig = nixpkgs.lib.recursiveUpdate commonConfig systemConfig;
+              pkgs-stable = import nixpkgs-stable {
+                system = "x86_64-linux";
+                config.allowUnfree = true;
+              };
             };
             # > Our main home-manager configuration file <
             modules = [ ./home-manager/${commonConfig.username}/home.nix ];
