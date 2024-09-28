@@ -38,6 +38,7 @@ in
 
     "org/gnome/desktop/peripherals/mouse" = {
       accel-profile = "flat";
+      speed = mkDouble 0.6;
     };
 
     "org/gnome/desktop/session" = {
