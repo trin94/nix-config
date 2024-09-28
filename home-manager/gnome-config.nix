@@ -137,6 +137,10 @@ in
       workspaces-only-on-primary = true;
     };
 
+    "org/gnome/nautilus/list-view" = {
+      default-zoom-level = "small";
+    };
+
     "org/gnome/nautilus/preferences" = {
       default-folder-viewer = "list-view";
     };
