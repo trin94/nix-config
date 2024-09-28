@@ -2,6 +2,19 @@
 
 * Copied and adjusted from https://codeberg.org/justgivemeaname/.dotfiles
 
+```shell
+nix-shell -p git just home-manager
+
+git clone https://github.com/trin94/nix-config.git ~/.dotfiles
+cd ~/.dotfiles
+
+cp /etc/nixos/hardware-configuration.nix system/nixos
+
+export NIX_CONFIG="experimental-features = nix-command flakes"
+
+just apply-system apply-user
+```
+
 ## ***GUIDE***
 
 The files in this repo are what manage my NixOs system. 
