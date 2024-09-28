@@ -29,6 +29,7 @@
 
     # Programs
     ../programs/alacritty.nix
+    ../programs/fastfetch.nix
     ../programs/fish.nix
     ../programs/git.nix
     ../programs/lsd.nix
@@ -45,7 +46,6 @@
     # Terminal programs without special configuration
     bat # A cat(1) clone with syntax highlighting and Git integration
     dtrx # Do The Right Extraction: A tool for taking the hassle out of extracting archives
-    fastfetch # Like neofetch, but much faster because written in C
     fd # A simple, fast and user-friendly alternative to find
     ffmpeg_7-full # Complete, cross-platform solution to record, convert and stream audio and video
     hugo # A fast and modern static website engine

@@ -71,8 +71,8 @@
         };
 
         dimensions = {
-          columns = 100;
-          lines = 25;
+          columns = 120;
+          lines = 30;
         };
       };
     };
