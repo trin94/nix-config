@@ -1,5 +1,5 @@
 {
-  description = "My flake"; # You can change this to whatever
+  description = "frupp.nix's nix configuration :)";
 
   inputs = {
 
@@ -7,8 +7,12 @@
       url = "github:nixos/nixpkgs/nixos-unstable";
     };
 
-    nixpkgs-stable = {
+    nixpkgsStable = {
       url = "github:nixos/nixpkgs/nixos-24.05";
+    };
+
+    nixpkgsUnstable = {
+      url = "github:nixos/nixpkgs/nixos-unstable";
     };
 
     nixvim = {
@@ -17,8 +21,8 @@
     };
 
     home-manager = {
-      url = "github:nix-community/home-manager/master";
-      inputs.nixpkgs.follows = "nixpkgs";
+      url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgsUnstable";
     };
 
   };
@@ -27,74 +31,65 @@
     inputs@{
       self,
       nixpkgs,
-      nixpkgs-stable,
+      nixpkgsStable,
       home-manager,
       ...
     }:
 
     let
-      commonConfig = {
-        configLocation = "/home/elias/.dotfiles";
-        username = "elias";
-        timezone = "Europe/Berlin";
-        defaultLocale = "en_US.UTF-8";
-        extraLocale = "de_DE.UTF-8";
-        keyboardLayout = "de+us";
+      inherit (nixpkgs) lib;
+      inherit (self) outputs;
+
+      configVars = import ./vars { inherit inputs lib; };
+
+      pkgsStable = import nixpkgsStable {
+        system = "x86_64-linux";
+        config.allowUnfree = true;
+      };
+
+      specialArgs = {
+        inherit
+          inputs
+          outputs
+          configVars
+          nixpkgs
+          pkgsStable
+          ;
+      };
+
+      extraSpecialArgs = {
+        inherit
+          inputs
+          configVars
+          pkgsStable
+          ;
       };
     in
 
     {
 
-      # This is the section of the `flake.nix` that is responsible for importing and configuring the `configuration.nix`
       nixosConfigurations = {
-        nixos =
-          let
-            systemConfig = {
-              hostname = "nixos";
-            };
-          in
-          nixpkgs.lib.nixosSystem {
-            specialArgs = {
-              # `inherit` is used to pass the variables set in the above "let" statement into our configuration.nix file below
-              inherit inputs;
-              userConfig = nixpkgs.lib.recursiveUpdate commonConfig systemConfig;
-              pkgs-stable = import nixpkgs-stable {
-                system = "x86_64-linux";
-                config.allowUnfree = true;
-              };
-            };
-            # Our main nixos configuration file
-            # This is the file where we compartmentalize the changes we want to make on a system level
-            modules = [ ./system/nixos/configuration.nix ];
-          };
+
+        nixos = nixpkgs.lib.nixosSystem {
+          inherit specialArgs;
+          modules = [
+            ./hosts/nixos
+          ];
+        };
+
       };
 
-      # home-manager configuration entrypoint
-      # Available through 'home-manager --flake .
       homeConfigurations = {
 
-        "elias@nixos" =
-          let
-            systemConfig = {
-              hostname = "nixos"; # required
-              wallpaperPathLight = "${commonConfig.configLocation}/data/wallpaper/space.jpg"; # optional
-              wallpaperPathDark = "${commonConfig.configLocation}/data/wallpaper/space.jpg"; # optional
-            };
-          in
-          home-manager.lib.homeManagerConfiguration {
-            pkgs = nixpkgs.legacyPackages."x86_64-linux"; # Home-manager requires 'pkgs' instance
-            extraSpecialArgs = {
-              # `inherit` is used to pass the variables set in the above "let" statement into our home.nix file below
-              inherit inputs;
-              userConfig = nixpkgs.lib.recursiveUpdate commonConfig systemConfig;
-              pkgs-stable = import nixpkgs-stable {
-                system = "x86_64-linux";
-                config.allowUnfree = true;
-              };
-            };
-            # > Our main home-manager configuration file <
-            modules = [ ./home-manager/${commonConfig.username}/home.nix ];
-          };
+        "elias@nixos" = home-manager.lib.homeManagerConfiguration {
+          inherit extraSpecialArgs;
+
+          pkgs = nixpkgs.legacyPackages."x86_64-linux"; # Home-manager requires 'pkgs' instance
+
+          modules = [
+            ./home-manager/${configVars.username}/home.nix
+          ];
+        };
 
       };
 

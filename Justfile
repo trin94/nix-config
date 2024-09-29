@@ -1,6 +1,6 @@
 #!/usr/bin/env just --justfile
 
-_list:
+_default:
     @just --list
 
 # Build home to 'result' directory

@@ -2,7 +2,7 @@
   config,
   pkgs,
   lib,
-  userConfig,
+  configVars,
   ...
 }:
 
@@ -20,8 +20,8 @@ in
     };
 
     "org/gnome/desktop/background" = {
-      "picture-uri" = lib.mkIf (builtins.hasAttr "wallpaperPathLight" userConfig) "file://${userConfig.wallpaperPathLight}";
-      "picture-uri-dark" = lib.mkIf (builtins.hasAttr "wallpaperPathDark" userConfig) "file://${userConfig.wallpaperPathDark}";
+      "picture-uri" = "${configVars.configLocation}/data/wallpaper/space.jpg";
+      "picture-uri-dark" = "${configVars.configLocation}/data/wallpaper/space.jpg";
     };
 
     "org/gnome/desktop/interface" = {

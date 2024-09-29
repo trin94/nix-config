@@ -118,3 +118,4 @@ Nix will update the `flake.lock` to look at the newest updated channel and you c
 # Links
 
 * https://www.zknotes.com/page/alternate-nixpkgs-in-flakes-nixos
+* https://github.com/EmergentMind/nix-config

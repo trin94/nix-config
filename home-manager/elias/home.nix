@@ -1,9 +1,9 @@
 {
   config,
   pkgs,
-  userConfig,
+  configVars,
   inputs,
-  pkgs-stable,
+  pkgsStable,
   ...
 }:
 
@@ -38,8 +38,8 @@
     ../programs/vim.nix
   ];
 
-  home.username = userConfig.username;
-  home.homeDirectory = "/home/${userConfig.username}";
+  home.username = configVars.username;
+  home.homeDirectory = "/home/${configVars.username}";
 
   home.packages = with pkgs; [
 

@@ -2,8 +2,8 @@
   config,
   pkgs,
   lib,
-  userConfig,
-  pkgs-stable,
+  configVars,
+  pkgsStable,
   ...
 }:
 
@@ -15,7 +15,7 @@
       enable = true;
       # Certain features, including CLI integration and system authentication support,
       # require enabling PolKit integration on some desktop environments (e.g. Plasma).
-      polkitPolicyOwners = [ userConfig.username ];
+      polkitPolicyOwners = [ configVars.username ];
     };
 
     firefox.enable = true;
@@ -53,7 +53,7 @@
       enable = true;
       displayManager.gdm.enable = true;
       desktopManager.gnome.enable = true;
-      xkb.layout = userConfig.keyboardLayout;
+      xkb.layout = configVars.keyboardLayout;
 
       # libinput.enable = true; # Enable touchpad support (enabled default in most desktopManager).
     };
@@ -142,7 +142,7 @@
   };
 
   networking = {
-    hostName = userConfig.hostname;
+    hostName = "nixos";
     networkmanager.enable = true; # Enable networking
 
     # wireless.enable = true;  # Enables wireless support via wpa_supplicant.
@@ -160,29 +160,29 @@
   };
 
   i18n = {
-    defaultLocale = userConfig.defaultLocale;
+    defaultLocale = configVars.defaultLocale;
 
     extraLocaleSettings = {
-      LC_ADDRESS = userConfig.extraLocale;
-      LC_IDENTIFICATION = userConfig.extraLocale;
-      LC_MEASUREMENT = userConfig.extraLocale;
-      LC_MONETARY = userConfig.extraLocale;
-      LC_NAME = userConfig.extraLocale;
-      LC_NUMERIC = userConfig.extraLocale;
-      LC_PAPER = userConfig.extraLocale;
-      LC_TELEPHONE = userConfig.extraLocale;
-      LC_TIME = userConfig.extraLocale;
+      LC_ADDRESS = configVars.extraLocale;
+      LC_IDENTIFICATION = configVars.extraLocale;
+      LC_MEASUREMENT = configVars.extraLocale;
+      LC_MONETARY = configVars.extraLocale;
+      LC_NAME = configVars.extraLocale;
+      LC_NUMERIC = configVars.extraLocale;
+      LC_PAPER = configVars.extraLocale;
+      LC_TELEPHONE = configVars.extraLocale;
+      LC_TIME = configVars.extraLocale;
     };
   };
 
-  time.timeZone = userConfig.timezone; # Set your time zone.
+  time.timeZone = configVars.timezone; # Set your time zone.
   hardware.pulseaudio.enable = false; # Enable sound with pipewire.
   security.rtkit.enable = true; # hands out realtime scheduling priority to user processes on demand
   xdg.portal.config.common.default = "gtk"; # XDG backend for flatpak
 
   users.users.elias = {
     isNormalUser = true;
-    description = userConfig.username;
+    description = configVars.username;
     extraGroups = [
       "networkmanager"
       "wheel"
