@@ -95,6 +95,7 @@
       gnome-maps
       gnome-music
       gnome-screenshot
+      gnome-shell-extensions
       gnome-tour
     ];
 
