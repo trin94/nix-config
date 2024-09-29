@@ -49,8 +49,10 @@
     fd # A simple, fast and user-friendly alternative to find
     ffmpeg_7-full # Complete, cross-platform solution to record, convert and stream audio and video
     hugo # A fast and modern static website engine
+    jdk # Open-source Java Development Kit / Latest LTS
     jq # A lightweight and flexible command-line JSON processor
     just # A handy way to save and run project-specific commands
+    maven # Build automation tool (used primarily for Java projects)
     nixfmt-rfc-style # Official formatter for Nix code
     poetry # Python dependency management and packaging made easy
     procs # A modern replacement for ps written in Rust
@@ -60,7 +62,6 @@
     tokei # A program that allows you to count your code, quickly
     yq-go # Portable command-line YAML processor
     yt-dlp # Command-line tool to download videos from YouTube.com and other sites (youtube-dl fork)
-	maven # Build automation tool (used primarily for Java projects)
 
     kdePackages.qtsvg # Cross-platform application framework for C++
     python312Packages.mpv # Python interface to the mpv media player
@@ -76,6 +77,7 @@
     hexchat # A popular and easy to use graphical IRC (chat) client
     jetbrains-toolbox # Jetbrains Toolbox
     telegram-desktop # Telegram Desktop messaging app
+    dconf-editor # GSettings editor for GNOME
 
     # python312Packages.pyside6
 

@@ -1,6 +1,7 @@
 {
   config,
   pkgs,
+  lib,
   userConfig,
   pkgs-stable,
   ...
@@ -72,8 +73,22 @@
   };
 
   environment = {
+
     sessionVariables = {
       NIXOS_OZONE_WL = "1";
+
+      GST_PLUGIN_SYSTEM_PATH_1_0 = lib.makeSearchPathOutput "lib" "lib/gstreamer-1.0" (
+        with pkgs.gst_all_1;
+        [
+          gstreamer
+          gst-plugins-base
+          gst-plugins-good
+          gst-plugins-bad
+          gst-plugins-ugly
+          gst-libav
+          gst-vaapi
+        ]
+      );
     };
 
     systemPackages = with pkgs; [ ];
@@ -96,6 +111,7 @@
       gnome-music
       gnome-screenshot
       gnome-shell-extensions
+      gnome-software
       gnome-tour
     ];
 

@@ -2,6 +2,8 @@
 
 * Copied and adjusted from https://codeberg.org/justgivemeaname/.dotfiles
 
+## Install on new machine
+
 ```shell
 nix-shell -p git just home-manager
 
@@ -13,6 +15,12 @@ cp /etc/nixos/hardware-configuration.nix system/nixos
 export NIX_CONFIG="experimental-features = nix-command flakes"
 
 just apply-system apply-user
+```
+
+## Flatpak
+
+```shell
+flatpak remote-add --if-not-exists --user flathub https://dl.flathub.org/repo/flathub.flatpakrepo
 ```
 
 ## ***GUIDE***
