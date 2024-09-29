@@ -60,6 +60,7 @@
     tokei # A program that allows you to count your code, quickly
     yq-go # Portable command-line YAML processor
     yt-dlp # Command-line tool to download videos from YouTube.com and other sites (youtube-dl fork)
+	maven # Build automation tool (used primarily for Java projects)
 
     kdePackages.qtsvg # Cross-platform application framework for C++
     python312Packages.mpv # Python interface to the mpv media player
