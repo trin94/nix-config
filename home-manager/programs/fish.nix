@@ -47,12 +47,12 @@
 
       nup-user = {
         description = "Update user packages";
-        body = "home-manager switch --flake ${configVars.configLocation}#${configVars.username}@nixos";
+        body = "nh home switch --update --configuration ${configVars.username}@nixos ${configVars.configLocation}";
       };
 
       nup-system = {
         description = "Update system packages";
-        body = "sudo nixos-rebuild switch --flake ${configVars.configLocation}#nixos";
+        body = "nh os switch --update --hostname nixos ${configVars.configLocation}";
       };
 
       envpp = {

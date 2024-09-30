@@ -5,7 +5,7 @@
 ## Install on new machine
 
 ```shell
-nix-shell -p git just home-manager
+nix-shell -p git just home-manager nh
 
 git clone https://github.com/trin94/nix-config.git ~/.dotfiles
 cd ~/.dotfiles
