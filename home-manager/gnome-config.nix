@@ -20,8 +20,8 @@ in
     };
 
     "org/gnome/desktop/background" = {
-      "picture-uri" = "${configVars.configLocation}/data/wallpaper/space.jpg";
-      "picture-uri-dark" = "${configVars.configLocation}/data/wallpaper/space.jpg";
+      "picture-uri" = "${configVars.configLocation}/resources/wallpaper/space.jpg";
+      "picture-uri-dark" = "${configVars.configLocation}/resources/wallpaper/space.jpg";
     };
 
     "org/gnome/desktop/interface" = {
