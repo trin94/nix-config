@@ -53,16 +53,17 @@
     jq # A lightweight and flexible command-line JSON processor
     just # A handy way to save and run project-specific commands
     maven # Build automation tool (used primarily for Java projects)
+    nh # Yet another nix cli helper
     nixfmt-rfc-style # Official formatter for Nix code
     poetry # Python dependency management and packaging made easy
     procs # A modern replacement for ps written in Rust
     python312 # A high-level dynamically-typed programming language
     ripgrep # A utility that combines the usability of The Silver Searcher with the raw speed of grep
+    ruff # Extremely fast Python linter
     # teamspeak_client # TeamSpeak voice communication tool
     tokei # A program that allows you to count your code, quickly
     yq-go # Portable command-line YAML processor
     yt-dlp # Command-line tool to download videos from YouTube.com and other sites (youtube-dl fork)
-    nh # Yet another nix cli helper
 
     kdePackages.qtsvg # Cross-platform application framework for C++
     python312Packages.mpv # Python interface to the mpv media player
