@@ -41,6 +41,10 @@ in
       speed = mkDouble 0.6;
     };
 
+    "org/gnome/desktop/privacy" = {
+      remember-recent-files = false;
+    };
+
     "org/gnome/desktop/session" = {
       idle-delay = mkUint32 900;
     };
