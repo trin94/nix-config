@@ -40,7 +40,7 @@
       inherit (nixpkgs) lib;
       inherit (self) outputs;
 
-      configVars = import ./vars { inherit inputs lib; };
+      configVars = import ./common/vars.nix { inherit inputs lib; };
 
       pkgsStable = import nixpkgsStable {
         system = "x86_64-linux";
