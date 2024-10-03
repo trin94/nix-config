@@ -156,11 +156,10 @@ in
         "firefox.desktop"
         "jetbrains-toolbox.desktop"
         "io.bassi.Amberol.desktop"
-        "steam.desktop"
-        "com.discordapp.Discord.desktop"
+        "discord.desktop"
         "org.telegram.desktop.desktop"
-        "com.microsoft.Teams.desktop"
-        "com.teamspeak.TeamSpeak.desktop"
+        "com.teamspeak.TeamSpeak3.desktop"
+        "1password.desktop"
       ];
     };
 
