@@ -38,6 +38,12 @@
     ../programs/vim.nix
   ];
 
+  customizeFish = {
+    username = configVars.username;
+    hostname = "nixos";
+    configLocation = configVars.configLocation;
+  };
+
   home.username = configVars.username;
   home.homeDirectory = "/home/${configVars.username}";
 
