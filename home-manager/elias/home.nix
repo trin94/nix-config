@@ -32,6 +32,7 @@
 
   myOS = {
 
+    bat.enable = true;
     eza.enable = true;
 
     fish = {
@@ -49,7 +50,6 @@
   home.packages = with pkgs; [
 
     # Terminal programs without special configuration
-    bat # A cat(1) clone with syntax highlighting and Git integration
     dtrx # Do The Right Extraction: A tool for taking the hassle out of extracting archives
     fd # A simple, fast and user-friendly alternative to find
     ffmpeg_7-full # Complete, cross-platform solution to record, convert and stream audio and video
