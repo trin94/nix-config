@@ -29,16 +29,18 @@
 
     # Programs
     ../programs/alacritty.nix
+    ../programs/eza.nix
     ../programs/fastfetch.nix
     ../programs/fish.nix
     ../programs/git.nix
-    ../programs/lsd.nix
     ../programs/mpv.nix
     ../programs/ssh.nix
     ../programs/vim.nix
   ];
 
   myOS = {
+
+    eza.enable = true;
 
     fish = {
       enable = true;

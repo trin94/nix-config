@@ -8,6 +8,8 @@ let
   cfg = config.myOS.fish;
 
   hasHomeManagerPackage = pname: lib.any (p: p ? pname && p.pname == pname) config.home.packages;
+  isYtDlpInstalled = hasHomeManagerPackage "yt-dlp";
+  isEzaInstalled = hasHomeManagerPackage "eza";
 in
 {
 
@@ -58,16 +60,21 @@ in
         set fish_greeting
       '';
 
-      shellAliases = {
-        "k" = "kubectl";
-        "kctx" = "kubectx";
-        "kns" = "kubens";
-        "qmltestrunner" = "qmltestrunner-qt6";
+      shellAliases =
+        let
+          ezaArgs = "--group-directories-first --color=always --icons=never --no-filesize";
+        in
+        {
+          "ls" = lib.mkIf isEzaInstalled "eza ${ezaArgs} --long";
+          "ll" = lib.mkIf isEzaInstalled "eza ${ezaArgs} --long --all";
+          "lt" = lib.mkIf isEzaInstalled "eza ${ezaArgs} --long --tree";
+          "la" = "ll";
 
-        "ll" = "lsd -alA";
-        "ls" = "lsd -l";
-        "lt" = "lsd --tree";
-      };
+          "k" = "kubectl";
+          "kctx" = "kubectx";
+          "kns" = "kubens";
+          "qmltestrunner" = "qmltestrunner-qt6";
+        };
 
       functions = {
 
@@ -110,7 +117,7 @@ in
                 --table-wrap C2'';
         };
 
-        ytd = lib.mkIf (hasHomeManagerPackage "yt-dlp") {
+        ytd = lib.mkIf isYtDlpInstalled {
           description = "Download YT videos";
           body = ''
             yt-dlp \
