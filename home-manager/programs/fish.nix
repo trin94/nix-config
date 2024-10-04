@@ -2,42 +2,44 @@
   config,
   pkgs,
   lib,
-  configVars,
   ...
 }:
 let
-  cfg = config.customizeFish;
+  cfg = config.myOS.fish;
+
+  hasHomeManagerPackage = pname: lib.any (p: p ? pname && p.pname == pname) config.home.packages;
 in
-with pkgs.lib;
 {
 
-  options.customizeFish = {
+  options.myOS.fish = with lib; {
 
-    addUpdateHostFunction = mkOption {
-      default = true;
-      type = with types; bool;
-    };
-
-    addUpdateHomeFunction = mkOption {
-      default = true;
-      type = with types; bool;
-    };
-
-    configLocation = mkOption {
-      type = with types; string;
-    };
+    enable = mkEnableOption "fish";
 
     username = mkOption {
-      type = with types; string;
+      type = types.string;
     };
 
     hostname = mkOption {
-      type = with types; string;
+      type = types.string;
+    };
+
+    configLocation = mkOption {
+      type = types.string;
+    };
+
+    addUpdateHostFunction = mkOption {
+      type = types.bool;
+      default = true;
+    };
+
+    addUpdateHomeFunction = mkOption {
+      type = types.bool;
+      default = true;
     };
 
   };
 
-  config = {
+  config = lib.mkIf cfg.enable {
 
     home.packages = with pkgs; [
       fish # Smart and user-friendly command line shell
@@ -57,10 +59,6 @@ with pkgs.lib;
       '';
 
       shellAliases = {
-        "shutdown" = "sudo shutdown now";
-        "restart" = "sudo restart now";
-
-        "dnf" = "dnf -C";
         "k" = "kubectl";
         "kctx" = "kubectx";
         "kns" = "kubens";
@@ -73,7 +71,7 @@ with pkgs.lib;
 
       functions = {
 
-        nup = mkIf (cfg.addUpdateHostFunction || cfg.addUpdateHomeFunction) {
+        nup = lib.mkIf (cfg.addUpdateHostFunction || cfg.addUpdateHomeFunction) {
           description =
             if (cfg.addUpdateHostFunction && cfg.addUpdateHomeFunction) then
               "Update system packages and home packages"
@@ -90,12 +88,12 @@ with pkgs.lib;
               "nup-user";
         };
 
-        nup-user = mkIf cfg.addUpdateHomeFunction {
+        nup-user = lib.mkIf cfg.addUpdateHomeFunction {
           description = "Update user packages";
           body = "nh home switch --update --configuration ${cfg.username}@${cfg.hostname} ${cfg.configLocation}";
         };
 
-        nup-system = mkIf cfg.addUpdateHostFunction {
+        nup-system = lib.mkIf cfg.addUpdateHostFunction {
           description = "Update system packages";
           body = "nh os switch --update --hostname ${cfg.hostname} ${cfg.configLocation}";
         };
@@ -112,7 +110,7 @@ with pkgs.lib;
                 --table-wrap C2'';
         };
 
-        ytd = {
+        ytd = lib.mkIf (hasHomeManagerPackage "yt-dlp") {
           description = "Download YT videos";
           body = ''
             yt-dlp \
