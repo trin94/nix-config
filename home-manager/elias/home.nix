@@ -35,6 +35,7 @@
     alacritty.enable = true;
     bat.enable = true;
     eza.enable = true;
+    fastfetch.enable = true;
 
     fish = {
       enable = true;
