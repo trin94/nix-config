@@ -50,6 +50,8 @@
       email = "elias.mr1@gmail.com";
     };
 
+    mpv.enable = true;
+
   };
 
   home.username = configVars.username;
