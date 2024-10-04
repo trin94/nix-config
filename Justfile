@@ -6,22 +6,22 @@ _default:
 # Build home to 'result' directory
 [group('user')]
 verify-user:
-    nh home build --out-link result --update .
+    nh home build --out-link result .
 
 # Apply home configuration
 [group('user')]
 apply-user:
-	nh home switch --update .
+	nh home switch .
 
 # Build system to 'result' directory
 [group('system')]
 verify-system:
-    nh os build --out-link result --update --hostname nixos .
+    nh os build --out-link result --hostname nixos .
 
 # Apply system configuration
 [group('system')]
 apply-system:
-    nh os switch --update --hostname nixos .
+    nh os switch --hostname nixos .
 
 # Format source
 format:
