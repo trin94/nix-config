@@ -1,9 +1,10 @@
 {
   config,
   pkgs,
+  pkgsStable,
   configVars,
   inputs,
-  pkgsStable,
+  dirImport,
   ...
 }:
 
@@ -21,22 +22,13 @@
     ];
   };
 
-  imports = [
-    # Import gnome configuration
-    ../gnome-config.nix
-
-    ../fonts.nix
-
-    # Programs
-    ../programs/alacritty.nix
-    ../programs/eza.nix
-    ../programs/fastfetch.nix
-    ../programs/fish.nix
-    ../programs/git.nix
-    ../programs/mpv.nix
-    ../programs/ssh.nix
-    ../programs/vim.nix
-  ];
+  imports = dirImport {
+    paths = [
+      ../programs
+      ../gnome-config.nix
+      ../fonts.nix
+    ];
+  };
 
   myOS = {
 

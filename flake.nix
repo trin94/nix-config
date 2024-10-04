@@ -41,6 +41,7 @@
       inherit (self) outputs;
 
       configVars = import ./common/vars.nix { inherit inputs lib; };
+      dirImport = (import ./common/lib/dirImport.nix { inherit (nixpkgs) lib; }).dirImport;
 
       pkgsStable = import nixpkgsStable {
         system = "x86_64-linux";
@@ -60,6 +61,7 @@
       extraSpecialArgs = {
         inherit
           inputs
+          dirImport
           configVars
           pkgsStable
           ;
