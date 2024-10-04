@@ -44,6 +44,12 @@
       configLocation = configVars.configLocation;
     };
 
+    git = {
+      enable = true;
+      name = "Elias Mueller";
+      email = "elias.mr1@gmail.com";
+    };
+
   };
 
   home.username = configVars.username;
