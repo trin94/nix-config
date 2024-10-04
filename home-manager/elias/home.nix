@@ -52,6 +52,7 @@
 
     mpv.enable = true;
     ssh.enable = true;
+    vim.enable = true;
 
   };
 
