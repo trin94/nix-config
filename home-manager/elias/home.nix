@@ -51,6 +51,7 @@
     };
 
     mpv.enable = true;
+    ssh.enable = true;
 
   };
 
