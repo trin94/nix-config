@@ -32,6 +32,7 @@
 
   myOS = {
 
+    alacritty.enable = true;
     bat.enable = true;
     eza.enable = true;
 
