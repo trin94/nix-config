@@ -49,6 +49,7 @@
         enable = true;
         name = "Elias Mueller";
         email = "elias.mr1@gmail.com";
+        signCommits = true;
       };
 
       hugo.enable = true;

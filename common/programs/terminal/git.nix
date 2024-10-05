@@ -21,6 +21,10 @@ in
       type = types.string;
     };
 
+    signCommits = mkOption {
+      type = types.bool;
+    };
+
   };
 
   config = lib.mkIf cfg.enable {
@@ -35,7 +39,7 @@ in
       userName = cfg.name;
       userEmail = cfg.email;
 
-      extraConfig = {
+      extraConfig = lib.mkIf cfg.signCommits {
         gpg = {
           format = "ssh";
         };
