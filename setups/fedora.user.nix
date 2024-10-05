@@ -88,7 +88,7 @@
     homeDirectory = "/home/${configVars.username}";
 
     packages = with pkgs; [
-      mediawriter # Tool to write images files to portable media
+
     ];
 
     # This value determines the Home Manager release that your

@@ -93,7 +93,7 @@
     homeDirectory = "/home/${configVars.username}";
 
     packages = with pkgs; [
-      mediawriter # Tool to write images files to portable media
+      efibootmgr # A Linux user-space application to modify the Intel Extensible Firmware Interface (EFI) Boot Manager
     ];
 
     # This value determines the Home Manager release that your
