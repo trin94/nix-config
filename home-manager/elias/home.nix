@@ -24,13 +24,22 @@
 
   imports = dirImport {
     paths = [
+      ../desktops
       ../programs
-      ../gnome-config.nix
       ../fonts.nix
     ];
   };
 
   myOS = {
+
+    desktop = {
+
+      gnome = {
+        configure = true;
+        wallpaper = "${configVars.configLocation}/resources/wallpaper/space.jpg";
+      };
+
+    };
 
     terminal = {
 
