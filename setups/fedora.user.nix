@@ -58,6 +58,7 @@
       just.enable = true;
       nh.enable = true;
       nixfmt.enable = true;
+      poetry.enable = true;
       procs.enable = true;
       ripgrep.enable = true;
       ssh.enable = true;
