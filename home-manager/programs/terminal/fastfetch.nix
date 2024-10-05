@@ -5,11 +5,11 @@
   ...
 }:
 let
-  cfg = config.myOS.fastfetch;
+  cfg = config.myOS.terminal.fastfetch;
 in
 {
 
-  options.myOS.fastfetch = with lib; {
+  options.myOS.terminal.fastfetch = with lib; {
 
     enable = mkEnableOption "fastfetch";
 

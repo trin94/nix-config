@@ -5,12 +5,12 @@
   ...
 }:
 let
-  cfg = config.myOS.ssh;
+  cfg = config.myOS.terminal.ssh;
   onePassPath = "~/.1password/agent.sock";
 in
 {
 
-  options.myOS.ssh = with lib; {
+  options.myOS.terminal.ssh = with lib; {
 
     enable = mkEnableOption "ssh";
 

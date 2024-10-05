@@ -5,11 +5,11 @@
   ...
 }:
 let
-  cfg = config.myOS.alacritty;
+  cfg = config.myOS.graphical.alacritty;
 in
 {
 
-  options.myOS.alacritty = with lib; {
+  options.myOS.graphical.alacritty = with lib; {
 
     enable = mkEnableOption "alacritty";
 

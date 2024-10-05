@@ -5,11 +5,11 @@
   ...
 }:
 let
-  cfg = config.myOS.eza;
+  cfg = config.myOS.terminal.eza;
 in
 {
 
-  options.myOS.eza = with lib; {
+  options.myOS.terminal.eza = with lib; {
 
     enable = mkEnableOption "eza";
 

@@ -5,11 +5,11 @@
   ...
 }:
 let
-  cfg = config.myOS.bat;
+  cfg = config.myOS.terminal.bat;
 in
 {
 
-  options.myOS.bat = with lib; {
+  options.myOS.terminal.bat = with lib; {
 
     enable = mkEnableOption "bat";
 

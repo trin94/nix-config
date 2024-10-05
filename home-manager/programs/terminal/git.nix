@@ -5,11 +5,11 @@
   ...
 }:
 let
-  cfg = config.myOS.git;
+  cfg = config.myOS.terminal.git;
 in
 {
 
-  options.myOS.git = with lib; {
+  options.myOS.terminal.git = with lib; {
 
     enable = mkEnableOption "git";
 

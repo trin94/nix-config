@@ -5,11 +5,11 @@
   ...
 }:
 let
-  cfg = config.myOS.mpv;
+  cfg = config.myOS.graphical.mpv;
 in
 {
 
-  options.myOS.mpv = with lib; {
+  options.myOS.graphical.mpv = with lib; {
 
     enable = mkEnableOption "mpv";
 

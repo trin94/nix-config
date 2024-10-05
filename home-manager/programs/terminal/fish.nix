@@ -5,7 +5,7 @@
   ...
 }:
 let
-  cfg = config.myOS.fish;
+  cfg = config.myOS.terminal.fish;
 
   hasHomeManagerPackage = pname: lib.any (p: p ? pname && p.pname == pname) config.home.packages;
   isYtDlpInstalled = hasHomeManagerPackage "yt-dlp";
@@ -13,7 +13,7 @@ let
 in
 {
 
-  options.myOS.fish = with lib; {
+  options.myOS.terminal.fish = with lib; {
 
     enable = mkEnableOption "fish";
 

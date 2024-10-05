@@ -6,7 +6,7 @@
   ...
 }:
 let
-  cfg = config.myOS.vim;
+  cfg = config.myOS.terminal.vim;
 in
 {
 
@@ -14,7 +14,7 @@ in
     inputs.nixvim.homeManagerModules.nixvim
   ];
 
-  options.myOS.vim = with lib; {
+  options.myOS.terminal.vim = with lib; {
 
     enable = mkEnableOption "vim";
 
