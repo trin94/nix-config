@@ -15,6 +15,10 @@ in
 
     configure = mkEnableOption "gnome";
 
+    terminalApp = mkOption {
+      type = types.string;
+    };
+
     wallpaper = mkOption {
       type = types.nullOr types.string;
       default = null;
@@ -215,7 +219,7 @@ in
       "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0" = {
         name = "Terminal";
         binding = "<Super>Return";
-        command = "alacritty";
+        command = cfg.terminalApp;
       };
 
     };

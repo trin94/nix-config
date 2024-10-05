@@ -24,6 +24,7 @@
 
       gnome = {
         configure = true;
+        terminalApp = "alacritty";
         wallpaper = "${configVars.configLocation}/resources/wallpaper/space.jpg";
       };
 

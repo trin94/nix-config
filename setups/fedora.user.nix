@@ -24,6 +24,7 @@
 
       gnome = {
         configure = true;
+        terminalApp = "ptyxis --new-window";
         wallpaper = "${configVars.configLocation}/resources/wallpaper/space.jpg";
       };
 
@@ -70,7 +71,7 @@
 
       # alacritty.enable = true;
       # amberol.enable = true;
-      # dconf-editor.enable = true;
+      dconf-editor.enable = true;
       # discord.enable = true;
       # eartag.enable = true;
       # hexchat.enable = true;
