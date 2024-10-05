@@ -102,12 +102,7 @@
   home.homeDirectory = "/home/${configVars.username}";
 
   home.packages = with pkgs; [
-
-    kdePackages.qtsvg # Cross-platform application framework for C++
-    python312Packages.mpv # Python interface to the mpv media player
-    python312Packages.pyside6 # Python bindings for Qt
-    python312Packages.shiboken6 # Generator for the pyside6 Qt bindings
-
+    mediawriter # Tool to write images files to portable media
   ];
 
   # This value determines the Home Manager release that your
