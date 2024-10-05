@@ -26,3 +26,39 @@ apply-system:
 # Format source
 format:
     @nixfmt .
+
+# Add a new program which needs to be enabled manually, though
+[group('scripts')]
+add-program NAME:
+    #!/usr/bin/env bash
+    TYPE="graphical"
+
+    cat > common/programs/{{ NAME }}.nix << EOF
+    {
+      config,
+      pkgs,
+      lib,
+      ...
+    }:
+    let
+      cfg = config.myOS.$TYPE.{{ NAME }};
+    in
+    {
+
+      options.myOS.$TYPE.{{ NAME }} = with lib; {
+
+        enable = mkEnableOption "{{ NAME }}";
+
+      };
+
+      config = lib.mkIf cfg.enable {
+
+        home.packages = with pkgs; [
+          {{ NAME }}
+        ];
+
+      };
+
+    }
+    EOF
+    just format
