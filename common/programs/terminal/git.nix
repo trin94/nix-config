@@ -14,11 +14,11 @@ in
     enable = mkEnableOption "git";
 
     name = mkOption {
-      type = types.string;
+      type = types.str;
     };
 
     email = mkOption {
-      type = types.string;
+      type = types.str;
     };
 
     signCommits = mkOption {

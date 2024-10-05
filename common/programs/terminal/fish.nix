@@ -18,15 +18,15 @@ in
     enable = mkEnableOption "fish";
 
     username = mkOption {
-      type = types.string;
+      type = types.str;
     };
 
     hostname = mkOption {
-      type = types.string;
+      type = types.str;
     };
 
     configLocation = mkOption {
-      type = types.string;
+      type = types.str;
     };
 
     addUpdateHostFunction = mkOption {

@@ -16,16 +16,16 @@ in
     configure = mkEnableOption "gnome";
 
     terminalApp = mkOption {
-      type = types.string;
+      type = types.str;
     };
 
     wallpaper = mkOption {
-      type = types.nullOr types.string;
+      type = types.nullOr types.str;
       default = null;
     };
 
     wallpaperDark = mkOption {
-      type = types.nullOr types.string;
+      type = types.nullOr types.str;
       default = cfg.wallpaper;
     };
 
