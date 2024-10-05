@@ -1,17 +1,20 @@
 #!/usr/bin/env just --justfile
 
+USER := env_var("USERNAME")
+HOSTNAME := `cat /etc/hostname`
+
 _default:
     @just --list
 
 # Build home to 'result' directory
 [group('user')]
 verify-user:
-    nh home build --out-link result .
+    nh home build --out-link result --configuration "{{ USER }}@{{ HOSTNAME }}" .
 
 # Apply home configuration
 [group('user')]
 apply-user:
-	nh home switch .
+    nh home switch --configuration "{{ USER }}@{{ HOSTNAME }}" .
 
 # Build system to 'result' directory
 [group('system')]
