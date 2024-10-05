@@ -83,6 +83,16 @@
 
       homeConfigurations = {
 
+        "elias@fedora" = home-manager.lib.homeManagerConfiguration {
+          inherit extraSpecialArgs;
+
+          pkgs = nixpkgs.legacyPackages."x86_64-linux"; # Home-manager requires 'pkgs' instance
+
+          modules = [
+            ./setups/fedora.user.nix
+          ];
+        };
+
         "elias@nixos" = home-manager.lib.homeManagerConfiguration {
           inherit extraSpecialArgs;
 
