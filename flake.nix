@@ -75,7 +75,7 @@
         nixos = nixpkgs.lib.nixosSystem {
           inherit specialArgs;
           modules = [
-            ./hosts/nixos
+            ./setups/nixos.system.nix
           ];
         };
 
@@ -89,7 +89,7 @@
           pkgs = nixpkgs.legacyPackages."x86_64-linux"; # Home-manager requires 'pkgs' instance
 
           modules = [
-            ./home-manager/${configVars.username}/home.nix
+            ./setups/nixos.user.nix
           ];
         };
 

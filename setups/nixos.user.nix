@@ -9,24 +9,12 @@
 }:
 
 {
-  nixpkgs.config.allowUnfree = true;
-
-  targets.genericLinux.enable = true;
-  xdg.mime.enable = true;
-
-  nix = {
-    package = pkgs.nix;
-    settings.experimental-features = [
-      "nix-command"
-      "flakes"
-    ];
-  };
 
   imports = dirImport {
     paths = [
-      ../desktops
-      ../programs
-      ../fonts.nix
+      ../common/desktops
+      ../common/programs
+      ../common/fonts.nix
     ];
   };
 
@@ -98,25 +86,40 @@
 
   };
 
-  home.username = configVars.username;
-  home.homeDirectory = "/home/${configVars.username}";
+  home = {
+    username = configVars.username;
+    homeDirectory = "/home/${configVars.username}";
 
-  home.packages = with pkgs; [
-    mediawriter # Tool to write images files to portable media
-  ];
+    packages = with pkgs; [
+      mediawriter # Tool to write images files to portable media
+    ];
 
-  # This value determines the Home Manager release that your
-  # configuration is compatible with. This helps avoid breakage
-  # when a new Home Manager release introduces backwards
-  # incompatible changes.
-  #
-  # You can update Home Manager without changing this value. See
-  # the Home Manager release notes for a list of state version
-  # changes in each release.
-  home.stateVersion = "24.05";
+    # This value determines the Home Manager release that your
+    # configuration is compatible with. This helps avoid breakage
+    # when a new Home Manager release introduces backwards
+    # incompatible changes.
+    #
+    # You can update Home Manager without changing this value. See
+    # the Home Manager release notes for a list of state version
+    # changes in each release.
+    stateVersion = "24.05";
+  };
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
+
+  nixpkgs.config.allowUnfree = true;
+
+  targets.genericLinux.enable = true;
+  xdg.mime.enable = true;
+
+  nix = {
+    package = pkgs.nix;
+    settings.experimental-features = [
+      "nix-command"
+      "flakes"
+    ];
+  };
 
   fonts.fontconfig.enable = true;
 }

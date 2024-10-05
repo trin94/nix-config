@@ -10,7 +10,10 @@ nix-shell -p git just home-manager nh
 git clone https://github.com/trin94/nix-config.git ~/.dotfiles
 cd ~/.dotfiles
 
-cp /etc/nixos/hardware-configuration.nix system/nixos
+# Configure new setup
+cp /etc/nixos/hardware-configuration.nix setups/<hostname>.hardware.nix
+cp /etc/nixos/configuration.nix setups/<hostname>.system.nix
+touch <hostname>.user.nix
 
 export NIX_CONFIG="experimental-features = nix-command flakes"
 
