@@ -76,7 +76,7 @@
       # discord.enable = true;
       # eartag.enable = true;
       # hexchat.enable = true;
-      jetbrains-toolbox.enable = true;
+      # jetbrains-toolbox.enable = true;
       # mpv.enable = true;
       # telegram-desktop.enable = true;
 
