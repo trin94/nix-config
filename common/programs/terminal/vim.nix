@@ -29,7 +29,7 @@ in
       viAlias = true;
       vimAlias = true;
 
-      colorschemes.one.enable = true;
+      colorschemes.nord.enable = true;
 
       extraPlugins = with pkgs.vimPlugins; [
         vim-just
@@ -110,7 +110,7 @@ in
 
       extraConfigLua = ''
         vim.g.lightline = {
-          colorscheme = "one"
+          colorscheme = "nord"
         }
 
         -- Add new line to the end of files
