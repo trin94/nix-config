@@ -17,12 +17,16 @@
 
     nixvim = {
       url = "github:nix-community/nixvim";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixpkgsUnstable";
     };
 
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgsUnstable";
+    };
+
+    nixgl = {
+      url = "github:nix-community/nixGL";
     };
 
   };
@@ -33,6 +37,7 @@
       nixpkgs,
       nixpkgsStable,
       home-manager,
+      nixgl,
       ...
     }:
 
@@ -84,7 +89,12 @@
       homeConfigurations = {
 
         "elias@fedora" = home-manager.lib.homeManagerConfiguration {
-          inherit extraSpecialArgs;
+          extraSpecialArgs = extraSpecialArgs // {
+            pkgs = import nixpkgs {
+              system = "x86_64-linux";
+              overlays = [ nixgl.overlay ];
+            };
+          };
 
           pkgs = nixpkgs.legacyPackages."x86_64-linux"; # Home-manager requires 'pkgs' instance
 

@@ -1,6 +1,7 @@
 {
   config,
   pkgs,
+  lib,
   pkgsStable,
   configVars,
   inputs,
@@ -24,7 +25,7 @@
 
       gnome = {
         configure = true;
-        terminalApp = "ptyxis --new-window";
+        terminalApp = "${lib.getExe pkgs.nixgl.nixGLIntel} alacritty";
         wallpaper = "${configVars.configLocation}/resources/wallpaper/space.jpg";
       };
 
@@ -70,7 +71,7 @@
 
     graphical = {
 
-      # alacritty.enable = true;
+      alacritty.enable = true;
       # amberol.enable = true;
       dconf-editor.enable = true;
       # discord.enable = true;
@@ -89,7 +90,7 @@
     homeDirectory = "/home/${configVars.username}";
 
     packages = with pkgs; [
-
+      nixgl.nixGLIntel
     ];
 
     # This value determines the Home Manager release that your
