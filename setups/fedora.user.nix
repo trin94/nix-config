@@ -65,6 +65,7 @@
       ripgrep.enable = true;
       ssh.enable = true;
       tokei.enable = true;
+      uv.enable = true;
       vim.enable = true;
       yq.enable = true;
 
