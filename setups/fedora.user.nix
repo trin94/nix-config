@@ -57,6 +57,7 @@
 
       jq.enable = true;
       just.enable = true;
+      libwebp.enable = true;
       nh.enable = true;
       nixfmt.enable = true;
       poetry.enable = true;
