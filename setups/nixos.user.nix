@@ -110,8 +110,6 @@
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 
-  nixpkgs.config.allowUnfree = true;
-
   targets.genericLinux.enable = true;
   xdg.mime.enable = true;
 

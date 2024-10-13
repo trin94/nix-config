@@ -7,12 +7,12 @@
       url = "github:nixos/nixpkgs/nixos-unstable";
     };
 
-    nixpkgsStable = {
-      url = "github:nixos/nixpkgs/nixos-24.05";
-    };
-
     nixpkgsUnstable = {
       url = "github:nixos/nixpkgs/nixos-unstable";
+    };
+
+    nixpkgsStable = {
+      url = "github:nixos/nixpkgs/nixos-24.05";
     };
 
     nixvim = {
@@ -49,6 +49,11 @@
       configVars = import ./common/vars.nix { inherit inputs lib; };
       dirImport = (import ./common/lib/dirImport.nix { inherit (nixpkgs) lib; }).dirImport;
 
+	  pkgs = import nixpkgs {
+	    system = "x86_64-linux";
+        config.allowUnfree = true;
+	  };
+
       pkgsStable = import nixpkgsStable {
         system = "x86_64-linux";
         config.allowUnfree = true;
@@ -60,6 +65,7 @@
           outputs
           configVars
           nixpkgs
+          pkgs
           pkgsStable
           ;
       };
@@ -69,6 +75,7 @@
           inputs
           dirImport
           configVars
+          pkgs
           pkgsStable
           ;
       };
