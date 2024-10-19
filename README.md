@@ -5,7 +5,7 @@ This repo contains my work-in-progress nixOS and home-manager configuration.
 ## Install on new machine
 
 ```shell
-nix-shell -p git just home-manager nh
+nix-shell -p git just home-manager nh nixfmt
 
 git clone https://github.com/trin94/nix-config.git ~/.dotfiles
 cd ~/.dotfiles
@@ -16,6 +16,8 @@ cp /etc/nixos/configuration.nix setups/<hostname>.system.nix
 touch <hostname>.user.nix
 
 export NIX_CONFIG="experimental-features = nix-command flakes"
+
+# nix flake update --commit-lock-file
 
 just apply-system apply-user
 ```

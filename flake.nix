@@ -49,10 +49,10 @@
       configVars = import ./common/vars.nix { inherit inputs lib; };
       dirImport = (import ./common/lib/dirImport.nix { inherit (nixpkgs) lib; }).dirImport;
 
-	  pkgs = import nixpkgs {
-	    system = "x86_64-linux";
+      pkgs = import nixpkgs {
+        system = "x86_64-linux";
         config.allowUnfree = true;
-	  };
+      };
 
       pkgsStable = import nixpkgsStable {
         system = "x86_64-linux";
@@ -104,17 +104,32 @@
             };
           };
 
-          pkgs = nixpkgs.legacyPackages."x86_64-linux"; # Home-manager requires 'pkgs' instance
+          pkgs = nixpkgs.legacyPackages."x86_64-linux";
 
           modules = [
             ./setups/fedora.user.nix
           ];
         };
 
+        "elias@t470p" = home-manager.lib.homeManagerConfiguration {
+          extraSpecialArgs = extraSpecialArgs // {
+            pkgs = import nixpkgs {
+              system = "x86_64-linux";
+              overlays = [ nixgl.overlay ];
+            };
+          };
+
+          pkgs = nixpkgs.legacyPackages."x86_64-linux";
+
+          modules = [
+            ./setups/t470p.user.nix
+          ];
+        };
+
         "elias@nixos" = home-manager.lib.homeManagerConfiguration {
           inherit extraSpecialArgs;
 
-          pkgs = nixpkgs.legacyPackages."x86_64-linux"; # Home-manager requires 'pkgs' instance
+          pkgs = nixpkgs.legacyPackages."x86_64-linux";
 
           modules = [
             ./setups/nixos.user.nix
