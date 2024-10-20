@@ -62,6 +62,7 @@
       poetry.enable = true;
       procs.enable = true;
       ripgrep.enable = true;
+      ruff.enable = true;
       ssh.enable = true;
       tokei.enable = true;
       vim.enable = true;
