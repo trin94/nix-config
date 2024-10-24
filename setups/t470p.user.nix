@@ -59,6 +59,7 @@
       libwebp.enable = true;
       nh.enable = true;
       nixfmt.enable = true;
+      nushell.enable = true;
       poetry.enable = true;
       procs.enable = true;
       ripgrep.enable = true;
