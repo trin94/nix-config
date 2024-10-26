@@ -70,6 +70,7 @@
       uv.enable = true;
       vim.enable = true;
       yq.enable = true;
+      ytdlp.enable = true;
 
     };
 
