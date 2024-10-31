@@ -55,6 +55,7 @@
         signCommits = false;
       };
 
+      hugo.enable = true;
       jq.enable = true;
       just.enable = true;
       libwebp.enable = true;
