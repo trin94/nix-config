@@ -19,6 +19,7 @@
     };
 
     firefox.enable = true;
+    hyprland.enable = false;
 
     # gnupg.agent = {
     #   enable = true;

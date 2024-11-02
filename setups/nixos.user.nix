@@ -28,6 +28,10 @@
         wallpaper = "${configVars.configLocation}/resources/wallpaper/space.jpg";
       };
 
+      hyprland = {
+        configure = false;
+      };
+
     };
 
     terminal = {
