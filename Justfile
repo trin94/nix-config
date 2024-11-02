@@ -1,6 +1,6 @@
 #!/usr/bin/env just --justfile
 
-USER := env_var("USERNAME")
+USER := env_var("USER")
 HOSTNAME := `cat /etc/hostname`
 
 _default:
