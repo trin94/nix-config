@@ -81,7 +81,7 @@
       # hexchat.enable = true;
       # jetbrains-toolbox.enable = true;
       # mpv.enable = true;
-      # telegram-desktop.enable = true;
+      telegram-desktop.enable = true;
 
     };
 
