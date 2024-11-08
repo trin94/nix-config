@@ -41,8 +41,6 @@
 
       fish = {
         enable = true;
-        username = configVars.username;
-        hostname = "p16gen2";
         configLocation = configVars.configLocation;
         addUpdateHostFunction = false;
       };

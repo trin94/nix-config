@@ -17,14 +17,6 @@ in
 
     enable = mkEnableOption "fish";
 
-    username = mkOption {
-      type = types.str;
-    };
-
-    hostname = mkOption {
-      type = types.str;
-    };
-
     configLocation = mkOption {
       type = types.str;
     };

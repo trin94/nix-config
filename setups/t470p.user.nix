@@ -41,8 +41,6 @@
 
       fish = {
         enable = true;
-        username = configVars.username;
-        hostname = "t470p";
         configLocation = configVars.configLocation;
         addUpdateHostFunction = false;
       };

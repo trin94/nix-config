@@ -45,8 +45,6 @@
 
       fish = {
         enable = true;
-        username = configVars.username;
-        hostname = "nixos";
         configLocation = configVars.configLocation;
       };
 

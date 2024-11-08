@@ -42,8 +42,6 @@
 
       fish = {
         enable = true;
-        username = configVars.username;
-        hostname = "fedora";
         configLocation = configVars.configLocation;
         addUpdateHostFunction = false;
       };
