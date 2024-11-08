@@ -126,6 +126,21 @@
           ];
         };
 
+        "elias@p16gen2" = home-manager.lib.homeManagerConfiguration {
+          extraSpecialArgs = extraSpecialArgs // {
+            pkgs = import nixpkgs {
+              system = "x86_64-linux";
+              overlays = [ nixgl.overlay ];
+            };
+          };
+
+          pkgs = nixpkgs.legacyPackages."x86_64-linux";
+
+          modules = [
+            ./setups/p16gen2.user.nix
+          ];
+        };
+
         "elias@nixos" = home-manager.lib.homeManagerConfiguration {
           inherit extraSpecialArgs;
 
