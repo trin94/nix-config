@@ -97,12 +97,12 @@ in
 
         nup-user = lib.mkIf cfg.addUpdateHomeFunction {
           description = "Update user packages";
-          body = "nh home switch --update --configuration ${cfg.username}@${cfg.hostname} ${cfg.configLocation}";
+          body = "just -f ${cfg.configLocation}/Justfile update-user";
         };
 
         nup-system = lib.mkIf cfg.addUpdateHostFunction {
           description = "Update system packages";
-          body = "nh os switch --update --hostname ${cfg.hostname} ${cfg.configLocation}";
+          body = "just -f ${cfg.configLocation}/Justfile update-system";
         };
 
         envpp = {

@@ -20,6 +20,11 @@ verify-user: format
 apply-user: format
     nh home switch --configuration "{{ USER }}@{{ HOSTNAME }}" . -- {{ ADDITIONAL_ARGS }}
 
+# Update then apply home configuration
+[group('user')]
+update-user: format
+    nh home switch --update --configuration "{{ USER }}@{{ HOSTNAME }}" . -- {{ ADDITIONAL_ARGS }}
+
 # Build system to 'result' directory
 [group('system')]
 verify-system: format
@@ -29,6 +34,11 @@ verify-system: format
 [group('system')]
 apply-system: format
     nh os switch --hostname {{ HOSTNAME }} .
+
+# Update then apply system configuration
+[group('system')]
+update-system: format
+    nh os switch --update --hostname {{ HOSTNAME }} .
 
 # Format source
 format:
