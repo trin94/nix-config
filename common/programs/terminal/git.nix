@@ -39,23 +39,48 @@ in
       userName = cfg.name;
       userEmail = cfg.email;
 
-      extraConfig = lib.mkIf cfg.signCommits {
-        gpg = {
-          format = "ssh";
-        };
+      extraConfig =
+        let
+          commonConfig = {
+            init = {
+              defaultBranch = "main";
+            };
 
-        "gpg \"ssh\"" = {
-          program = "${lib.getExe' pkgs._1password-gui "op-ssh-sign"}";
-        };
+            core = {
+              autocrlf = "input";
+            };
+          };
+        in
+        if cfg.signCommits then
+          commonConfig
+          // {
 
-        commit = {
-          gpgsign = true;
-        };
+            gpg = {
+              format = "ssh";
+            };
 
-        user = {
-          signingKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHd9tRbMZVCnF7obsvrgq1LSSL4xBm8fpQnwu0SKNUdg";
-        };
-      };
+            "gpg \"ssh\"" = {
+              program = "${lib.getExe' pkgs._1password-gui "op-ssh-sign"}";
+            };
+
+            commit = {
+              gpgsign = true;
+            };
+
+            user = {
+              signingKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHd9tRbMZVCnF7obsvrgq1LSSL4xBm8fpQnwu0SKNUdg";
+            };
+
+          }
+        else
+          commonConfig
+          // {
+
+            credential = {
+              helper = "${pkgs.git.override { withLibsecret = true; }}/bin/git-credential-libsecret";
+            };
+
+          };
     };
   };
 
