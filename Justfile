@@ -1,7 +1,11 @@
 #!/usr/bin/env just --justfile
 
+set dotenv-load
+
 USER := env_var("USER")
 HOSTNAME := `cat /etc/hostname`
+
+ADDITIONAL_ARGS := if HOSTNAME == "p16gen2" { "--impure" } else { "" }
 
 _default:
     @just --list
@@ -9,22 +13,22 @@ _default:
 # Build home to 'result' directory
 [group('user')]
 verify-user: format
-    nh home build --out-link result --configuration "{{ USER }}@{{ HOSTNAME }}" .
+    nh home build --out-link result --configuration "{{ USER }}@{{ HOSTNAME }}" . -- {{ ADDITIONAL_ARGS }}
 
 # Apply home configuration
 [group('user')]
 apply-user: format
-    nh home switch --configuration "{{ USER }}@{{ HOSTNAME }}" .
+    nh home switch --configuration "{{ USER }}@{{ HOSTNAME }}" . -- {{ ADDITIONAL_ARGS }}
 
 # Build system to 'result' directory
 [group('system')]
 verify-system: format
-    nh os build --out-link result --hostname nixos .
+    nh os build --out-link result --hostname {{ HOSTNAME }} .
 
 # Apply system configuration
 [group('system')]
 apply-system: format
-    nh os switch --hostname nixos .
+    nh os switch --hostname {{ HOSTNAME }} .
 
 # Format source
 format:
@@ -32,9 +36,9 @@ format:
 
 # Add a new program which needs to be enabled manually, though
 [group('scripts')]
-add-program NAME:
+add-program NAME TYPE="terminal":
     #!/usr/bin/env bash
-    TYPE="terminal"
+    TYPE="{{ TYPE }}"
 
     cat > common/programs/{{ NAME }}.nix << EOF
     {
