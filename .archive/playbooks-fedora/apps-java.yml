@@ -1,0 +1,37 @@
+- name: "Install & configure Java"
+  hosts: localhost
+
+  tasks:
+    - name: "Install latest LTS version"
+      become: yes
+      dnf:
+        state: present
+        name:
+          - java-17-openjdk
+          - java-17-openjdk-devel
+          - java-17-openjdk-headless
+          - java-17-openjdk-javadoc
+          - java-17-openjdk-src
+
+    - name: "Remove default Java installation"
+      become: yes
+      dnf:
+        state: absent
+        name:
+          - java-11-openjdk-src
+          - java-11-openjdk-headless
+
+    - name: "Set Java to remaining installed version"
+      args:
+        executable: /bin/bash
+      become: true
+      shell: |
+        alternatives --auto java
+
+    - name: "Set global Java environment variables"
+      become: true
+      copy:
+        dest: "/etc/profile.d/java-custom.sh"
+        content: |
+          # Set JAVA_HOME by reading current 'alternatives --config java' setting
+          export JAVA_HOME=$(readlink -e /usr/bin/java | sed "s:bin/java::")

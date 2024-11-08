@@ -1,0 +1,28 @@
+- name: "Install & configure Nodejs & Typescript"
+  hosts: localhost
+
+  tasks:
+    - name: "Install 'nodejs'"
+      become: yes
+      dnf:
+        state: present
+        name:
+          - nodejs
+
+    - name: "Install 'typescript'"
+      become: yes
+      community.general.npm:
+        name: typescript
+        global: yes
+
+    - name: "Install 'yarn'"
+      become: yes
+      community.general.npm:
+        name: yarn
+        global: yes
+
+    - name: "Install 'Angular CLI'"
+      become: yes
+      community.general.npm:
+        name: "@angular/cli"
+        global: yes
