@@ -83,7 +83,7 @@
       # jetbrains-toolbox.enable = true;
       # mpv.enable = true;
       # telegram-desktop.enable = true;
-
+      zed.enable = true;
     };
 
   };
@@ -96,6 +96,7 @@
       nixgl.nixGLIntel
 
       azure-storage-azcopy
+      nixd
     ];
 
     sessionPath = [
