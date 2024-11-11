@@ -26,6 +26,16 @@
       gnome = {
         configure = true;
         terminalApp = "${lib.getExe pkgs.nixgl.nixGLIntel} alacritty";
+        dockApps = [
+          "org.gnome.Nautilus.desktop"
+          "dev.zed.Zed.desktop"
+          "firefox.desktop"
+          "jetbrains-toolbox.desktop"
+          "jetbrains-idea.desktop"
+          "jetbrains-pycharm.desktop"
+          "com.slack.Slack.desktop"
+          "1password.desktop"
+        ];
       };
 
     };
