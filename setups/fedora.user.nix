@@ -27,6 +27,17 @@
         configure = true;
         terminalApp = "${lib.getExe pkgs.nixgl.nixGLIntel} alacritty";
         wallpaper = "${configVars.configLocation}/resources/wallpaper/space.jpg";
+        dockApps = [
+          "org.gnome.Nautilus.desktop"
+          "dev.zed.Zed.desktop"
+          "firefox.desktop"
+          "jetbrains-toolbox.desktop"
+          "jetbrains-idea.desktop"
+          "jetbrains-pycharm.desktop"
+          "org.telegram.desktop.desktop"
+          "com.teamspeak.TeamSpeak3.desktop"
+          "1password.desktop"
+        ];
       };
 
     };
