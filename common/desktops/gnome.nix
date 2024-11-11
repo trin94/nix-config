@@ -29,6 +29,11 @@ in
       default = cfg.wallpaper;
     };
 
+    dockApps = mkOption {
+      type = types.listOf types.str;
+      default = [ ];
+    };
+
   };
 
   config = lib.mkIf cfg.configure {
@@ -173,17 +178,7 @@ in
       };
 
       "org/gnome/shell" = {
-        favorite-apps = [
-          "org.gnome.Nautilus.desktop"
-          "org.gnome.TextEditor.desktop"
-          "firefox.desktop"
-          "jetbrains-toolbox.desktop"
-          "io.bassi.Amberol.desktop"
-          "discord.desktop"
-          "org.telegram.desktop.desktop"
-          "com.teamspeak.TeamSpeak3.desktop"
-          "1password.desktop"
-        ];
+        favorite-apps = cfg.dockApps;
       };
 
       "org/gnome/TextEditor" = {
