@@ -1,6 +1,6 @@
 # nixOS config
 
-This repo contains my work-in-progress nixOS and home-manager configuration. 
+This repo contains my work-in-progress nixOS and home-manager configuration.
 
 ## Install on new machine
 
@@ -30,5 +30,5 @@ flatpak remote-add --if-not-exists --user flathub https://dl.flathub.org/repo/fl
 
 # Links
 
-* https://www.zknotes.com/page/alternate-nixpkgs-in-flakes-nixos
-* https://github.com/EmergentMind/nix-config
+- https://www.zknotes.com/page/alternate-nixpkgs-in-flakes-nixos
+- https://github.com/EmergentMind/nix-config
