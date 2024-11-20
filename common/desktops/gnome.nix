@@ -57,7 +57,7 @@ in
         clock-show-weekday = true;
 
         enable-hot-corners = false;
-        enable-animations = false;
+        # enable-animations = false;
 
         font-name = "Inter 11";
         document-font-name = "Inter 11";
