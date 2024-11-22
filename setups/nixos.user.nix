@@ -26,6 +26,15 @@
         configure = true;
         terminalApp = "alacritty";
         wallpaper = "${configVars.configLocation}/resources/wallpaper/space.jpg";
+        dockApps = [
+          "org.gnome.Nautilus.desktop"
+          "dev.zed.Zed.desktop"
+          "firefox.desktop"
+          "jetbrains-toolbox.desktop"
+          "org.telegram.desktop.desktop"
+          "com.teamspeak.TeamSpeak3.desktop"
+          "1password.desktop"
+        ];
       };
 
       hyprland = {
