@@ -48,6 +48,22 @@ in
 
             core = {
               autocrlf = "input";
+              pager = "delta";
+            };
+
+            interactive = {
+              diffFilter = "delta --color-only";
+            };
+
+            delta = {
+              navigate = true;
+              dark = true;
+              side-by-side = true;
+              hyperlinks = true;
+            };
+
+            merge = {
+              conflictstyle = "zdiff3";
             };
           };
         in
