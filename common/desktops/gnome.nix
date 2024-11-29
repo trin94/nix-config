@@ -47,10 +47,10 @@ in
         automatic-timezone = true;
       };
 
-      "org/gnome/desktop/background" = {
-        "picture-uri" = lib.mkIf (cfg.wallpaper != null) cfg.wallpaper;
-        "picture-uri-dark" = lib.mkIf (cfg.wallpaperDark != null) cfg.wallpaperDark;
-      };
+      # "org/gnome/desktop/background" = {
+      #   "picture-uri" = lib.mkIf (cfg.wallpaper != null) cfg.wallpaper;
+      #   "picture-uri-dark" = lib.mkIf (cfg.wallpaperDark != null) cfg.wallpaperDark;
+      # };
 
       "org/gnome/desktop/interface" = {
         clock-format = "12h";
@@ -59,9 +59,9 @@ in
         enable-hot-corners = false;
         # enable-animations = false;
 
-        font-name = "Inter 11";
-        document-font-name = "Inter 11";
-        monospace-font-name = "CaskaydiaCove NF Bold 16";
+        # font-name = "Inter 11";
+        # document-font-name = "Inter 11";
+        # monospace-font-name = "CaskaydiaCove NF Bold 16";
       };
 
       "org/gnome/desktop/peripherals/mouse" = {

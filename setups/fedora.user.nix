@@ -16,17 +16,24 @@
       ../common/desktops
       ../common/programs
       ../common/fonts.nix
+      ../common/stylix.nix
     ];
   };
 
   myOS = {
+
+    stylix = {
+      configure = true;
+      wallpaper = "${configVars.configLocation}/resources/wallpaper/space.jpg";
+      base16Scheme = "${pkgs.base16-schemes}/share/themes/nord.yaml";
+      dark-theme = false;
+    };
 
     desktop = {
 
       gnome = {
         configure = true;
         terminalApp = "${lib.getExe pkgs.nixgl.nixGLIntel} alacritty";
-        wallpaper = "${configVars.configLocation}/resources/wallpaper/space.jpg";
         dockApps = [
           "org.gnome.Nautilus.desktop"
           "dev.zed.Zed.desktop"
