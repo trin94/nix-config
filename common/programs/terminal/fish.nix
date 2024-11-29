@@ -10,6 +10,8 @@ let
   hasHomeManagerPackage = pname: lib.any (p: p ? pname && p.pname == pname) config.home.packages;
   isYtDlpInstalled = hasHomeManagerPackage "yt-dlp";
   isEzaInstalled = hasHomeManagerPackage "eza";
+  isRipgrepInstalled = hasHomeManagerPackage "ripgrep";
+  isDeltaInstalled = hasHomeManagerPackage "delta";
 in
 {
 
@@ -122,6 +124,13 @@ in
                 --embed-metadata \
                 --convert-subs 'srt' \
                 -- $argv
+          '';
+        };
+
+        rg = lib.mkIf (isRipgrepInstalled && isDeltaInstalled) {
+          description = "Pipe ripgrep results through delta diff viewer";
+          body = ''
+            command rg --json -C 2 $argv | delta
           '';
         };
 
