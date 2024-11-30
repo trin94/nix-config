@@ -9,19 +9,13 @@
 
   home.packages = with pkgs; [
 
-    # Normal fonts
     google-fonts
     inter
     ubuntu_font_family
 
-    # Nerd fonts
-    (nerdfonts.override {
-      fonts = [
-        "CascadiaCode"
-        "JetBrainsMono"
-        "UbuntuMono"
-      ];
-    })
+    nerd-fonts.ubuntu-sans
+    nerd-fonts.jetbrains-mono
+    nerd-fonts.caskaydia-cove
 
   ];
 }

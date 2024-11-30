@@ -62,14 +62,8 @@ in
         };
 
         monospace = {
-          package = (
-            pkgs.nerdfonts.override {
-              fonts = [
-                "CascadiaCode"
-              ];
-            }
-          );
-          name = "CaskaydiaCove Nerd Font";
+          package = pkgs.nerd-fonts.caskaydia-cove;
+          name = "CaskaydiaCove NF";
         };
 
         sizes = {
