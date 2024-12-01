@@ -127,13 +127,6 @@ in
           '';
         };
 
-        rg = lib.mkIf (isRipgrepInstalled && isDeltaInstalled) {
-          description = "Pipe ripgrep results through delta diff viewer";
-          body = ''
-            command rg --json -C 2 $argv | delta
-          '';
-        };
-
       };
 
     };

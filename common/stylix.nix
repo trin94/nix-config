@@ -36,7 +36,7 @@ in
       enable = true;
 
       targets = {
-        gnome.enable = true;
+        gnome.enable = false;
         kde.enable = false;
       };
 
@@ -68,6 +68,7 @@ in
 
         sizes = {
           terminal = 15;
+          applications = 11;
         };
       };
 

@@ -21,6 +21,13 @@
   };
 
   myOS = {
+    
+    stylix = {
+      configure = true;
+      wallpaper = "${configVars.configLocation}/resources/wallpaper/space.jpg";
+      base16Scheme = "${pkgs.base16-schemes}/share/themes/nord.yaml";
+      dark-theme = false;
+    };
 
     stylix = {
       configure = true;
