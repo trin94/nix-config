@@ -5,7 +5,7 @@ This repo contains my work-in-progress nixOS and home-manager configuration.
 ## Install on new machine
 
 ```shell
-nix-shell -p git just home-manager nh nixfmt
+nix-shell -p git just home-manager nh nixfmt treefmt2
 
 git clone https://github.com/trin94/nix-config.git ~/.dotfiles
 cd ~/.dotfiles

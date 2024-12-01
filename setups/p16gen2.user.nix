@@ -76,7 +76,7 @@
       just.enable = true;
       # libwebp.enable = true;
       nh.enable = true;
-      nixfmt.enable = true;
+      treefmt.enable = true;
       nushell.enable = true;
       # poetry.enable = true;
       procs.enable = true;

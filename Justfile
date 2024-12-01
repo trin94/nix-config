@@ -1,10 +1,9 @@
 #!/usr/bin/env just --justfile
 
-set dotenv-load
+set dotenv-load := true
 
 USER := env_var("USER")
 HOSTNAME := `cat /etc/hostname`
-
 ADDITIONAL_ARGS := if HOSTNAME == "p16gen2" { "--impure" } else { "" }
 
 _default:
@@ -42,7 +41,7 @@ update-system: format
 
 # Format source
 format:
-    @nixfmt .
+    @treefmt --config-file config/treefmt.toml --tree-root .
 
 # Add a new program which needs to be enabled manually, though
 [group('scripts')]
