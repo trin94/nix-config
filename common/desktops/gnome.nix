@@ -47,10 +47,10 @@ in
         automatic-timezone = true;
       };
 
-      # "org/gnome/desktop/background" = {
-      #   "picture-uri" = lib.mkIf (cfg.wallpaper != null) cfg.wallpaper;
-      #   "picture-uri-dark" = lib.mkIf (cfg.wallpaperDark != null) cfg.wallpaperDark;
-      # };
+      "org/gnome/desktop/background" = {
+        "picture-uri" = lib.mkIf (cfg.wallpaper != null) cfg.wallpaper;
+        "picture-uri-dark" = lib.mkIf (cfg.wallpaperDark != null) cfg.wallpaperDark;
+      };
 
       "org/gnome/desktop/interface" = {
         clock-format = "12h";
