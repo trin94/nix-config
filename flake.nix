@@ -12,7 +12,7 @@
     };
 
     nixpkgsStable = {
-      url = "github:nixos/nixpkgs/nixos-24.05";
+      url = "github:nixos/nixpkgs/nixos-24.11";
     };
 
     nixvim = {
