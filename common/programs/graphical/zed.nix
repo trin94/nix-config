@@ -47,7 +47,7 @@ in
         };
 
         base_keymap = "JetBrains";
-        buffer_font_family = "JetBrainsMono Nerd Font";
+        buffer_font_family = "JetBrains Mono NL";
         buffer_font_size = 20;
 
         git = {
