@@ -107,7 +107,7 @@
       # jetbrains-toolbox.enable = true;
       # mpv.enable = true;
       # telegram-desktop.enable = true;
-      zed.enable = true;
+      # zed.enable = true;
     };
 
   };
