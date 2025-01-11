@@ -78,7 +78,12 @@
       nh.enable = true;
       treefmt.enable = true;
       nushell.enable = true;
-      # poetry.enable = true;
+
+      poetry = {
+        enable = false;
+        configure = true;
+      };
+
       procs.enable = true;
       ripgrep.enable = true;
       ruff.enable = true;
