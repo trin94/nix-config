@@ -34,10 +34,14 @@ in
     stylix = {
 
       enable = true;
+      autoEnable = false;
 
       targets = {
-        gnome.enable = false;
-        kde.enable = false;
+        alacritty.enable = true;
+        bat.enable = true;
+        fish.enable = true;
+        fzf.enable = true;
+        nushell.enable = true;
       };
 
       image = cfg.wallpaper;

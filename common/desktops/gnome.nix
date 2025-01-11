@@ -59,9 +59,9 @@ in
         enable-hot-corners = false;
         # enable-animations = false;
 
-        # font-name = "Inter 11";
-        # document-font-name = "Inter 11";
-        # monospace-font-name = "CaskaydiaCove NF Bold 16";
+        font-name = "Inter 11";
+        document-font-name = "Inter 11";
+        monospace-font-name = "CaskaydiaCove NF Bold 16";
       };
 
       "org/gnome/desktop/peripherals/mouse" = {
