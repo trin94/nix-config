@@ -38,6 +38,7 @@ in
 
       targets = {
         alacritty.enable = true;
+        kitty.enable = true;
         bat.enable = true;
         fish.enable = true;
         fzf.enable = true;

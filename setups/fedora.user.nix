@@ -101,6 +101,7 @@
       # eartag.enable = true;
       # hexchat.enable = true;
       # jetbrains-toolbox.enable = true;
+      kitty.enable = true;
       # mpv.enable = true;
       telegram-desktop.enable = true;
       zed.enable = true;
