@@ -33,7 +33,7 @@
 
       gnome = {
         configure = true;
-        terminalApp = "${lib.getExe pkgs.nixgl.nixGLIntel} alacritty";
+        terminalApp = "${lib.getExe pkgs.nixgl.nixGLIntel} ghostty";
         dockApps = [
           "org.gnome.Nautilus.desktop"
           "dev.zed.Zed.desktop"
@@ -91,7 +91,8 @@
 
     graphical = {
 
-      alacritty.enable = true;
+      alacritty.enable = false;
+      ghostty.enable = true;
       # amberol.enable = true;
       # dconf-editor.enable = true;
       # discord.enable = true;

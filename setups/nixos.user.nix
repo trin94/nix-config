@@ -32,7 +32,7 @@
 
       gnome = {
         configure = true;
-        terminalApp = "alacritty";
+        terminalApp = "ghostty";
         dockApps = [
           "org.gnome.Nautilus.desktop"
           "dev.zed.Zed.desktop"
@@ -95,7 +95,8 @@
 
     graphical = {
 
-      alacritty.enable = true;
+      alacritty.enable = false;
+      ghostty.enable = true;
       amberol.enable = true;
       dconf-editor.enable = true;
       discord.enable = true;
