@@ -73,6 +73,10 @@ add-program NAME TYPE="terminal":
           {{ NAME }}
         ];
 
+        programs.{{ NAME }} = {
+          enable = true;
+        };
+
       };
 
     }
