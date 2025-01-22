@@ -19,6 +19,7 @@ in
 
     home.packages = with pkgs; [
       yq-go # Portable command-line YAML processor
+      yamlfmt # Extensible command line tool or library to format yaml files
     ];
 
   };
