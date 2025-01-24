@@ -33,7 +33,7 @@
 
       gnome = {
         configure = true;
-        terminalApp = "${lib.getExe pkgs.nixgl.nixGLIntel} ghostty";
+        terminalApp = "ptyxis -x fish";
         dockApps = [
           "org.gnome.Nautilus.desktop"
           "dev.zed.Zed.desktop"
@@ -95,7 +95,7 @@
     graphical = {
 
       alacritty.enable = false;
-      ghostty.enable = true;
+      ghostty.enable = false;
       # amberol.enable = true;
       dconf-editor.enable = true;
       # discord.enable = true;
@@ -116,7 +116,6 @@
     homeDirectory = "/home/${configVars.username}";
 
     packages = with pkgs; [
-      nixgl.nixGLIntel
     ];
 
     # This value determines the Home Manager release that your

@@ -8,6 +8,7 @@
 let
   cfg = config.myOS.desktop.gnome;
   disabled = [ "" ];
+  ptyxisProfileUUID = "a6d8c5d2-7fdf-434d-b2c1-5a6e0df9696a";
 in
 {
 
@@ -61,7 +62,7 @@ in
 
         font-name = "Inter 11";
         document-font-name = "Inter 11";
-        monospace-font-name = "CaskaydiaCove NF Bold 16";
+        monospace-font-name = "CaskaydiaCove NF Bold 14";
       };
 
       "org/gnome/desktop/peripherals/mouse" = {
@@ -191,6 +192,24 @@ in
         style-scheme = "builder-dark";
         tab-width = mkUint32 4;
         use-system-font = true;
+      };
+
+      "org/gnome/Ptyxis" = {
+        audible-bell = false;
+        cursor-blink-mode = "system";
+        default-columns = mkUint32 120;
+        default-rows = mkUint32 30;
+        enable-a11y = false;
+        restore-window-size = false;
+        visual-bell = false;
+        default-profile-uuid = ptyxisProfileUUID;
+        profile-uuids = [ ptyxisProfileUUID ];
+      };
+
+      "org/gnome/Ptyxis/Profiles/${ptyxisProfileUUID}" = {
+        palette = "nord";
+        preseve-directory = "never";
+        scroll-on-output = true;
       };
 
       "org/gnome/settings-daemon/plugins/power" = {

@@ -25,11 +25,6 @@
       inputs.nixpkgs.follows = "nixpkgsUnstable";
     };
 
-    nixgl = {
-      url = "github:nix-community/nixGL";
-      inputs.nixpkgs.follows = "nixpkgsUnstable";
-    };
-
     stylix = {
       url = "github:danth/stylix";
       inputs.nixpkgs.follows = "nixpkgsUnstable";
@@ -43,7 +38,6 @@
       nixpkgs,
       nixpkgsStable,
       home-manager,
-      nixgl,
       stylix,
       ...
     }:
@@ -106,7 +100,6 @@
           extraSpecialArgs = extraSpecialArgs // {
             pkgs = import nixpkgs {
               system = "x86_64-linux";
-              overlays = [ nixgl.overlay ];
             };
           };
 
@@ -122,7 +115,6 @@
           extraSpecialArgs = extraSpecialArgs // {
             pkgs = import nixpkgs {
               system = "x86_64-linux";
-              overlays = [ nixgl.overlay ];
             };
           };
 
@@ -138,7 +130,6 @@
           extraSpecialArgs = extraSpecialArgs // {
             pkgs = import nixpkgs {
               system = "x86_64-linux";
-              overlays = [ nixgl.overlay ];
             };
           };
 
