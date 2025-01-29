@@ -22,6 +22,13 @@ in
       extraConfig = ''
         Host *
             IdentityAgent ${onePassPath}
+
+        Host home-lab
+            IgnoreUnknown UseKeychain
+            HostName home-lab
+            AddKeysToAgent yes
+            User elias
+            Port 22
       '';
     };
 
