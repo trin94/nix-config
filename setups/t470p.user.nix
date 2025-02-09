@@ -91,7 +91,6 @@
 
     graphical = {
 
-      alacritty.enable = false;
       ghostty.enable = false;
       # amberol.enable = true;
       # dconf-editor.enable = true;
