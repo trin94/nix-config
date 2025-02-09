@@ -42,7 +42,6 @@ in
         fish.enable = true;
         fzf.enable = true;
         ghostty.enable = true;
-        kitty.enable = true;
         nushell.enable = true;
       };
 
@@ -58,13 +57,13 @@ in
       fonts = {
 
         serif = {
-          package = pkgs.inter;
-          name = "Inter";
+          package = pkgs.adwaita-fonts;
+          name = "Adwaita Sans";
         };
 
         sansSerif = {
-          package = pkgs.inter;
-          name = "Inter";
+          package = pkgs.adwaita-fonts;
+          name = "Adwaita Sans";
         };
 
         monospace = {
