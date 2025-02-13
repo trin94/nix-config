@@ -25,11 +25,6 @@
       inputs.nixpkgs.follows = "nixpkgsUnstable";
     };
 
-    stylix = {
-      url = "github:danth/stylix";
-      inputs.nixpkgs.follows = "nixpkgsUnstable";
-    };
-
   };
 
   outputs =
@@ -38,7 +33,6 @@
       nixpkgs,
       nixpkgsStable,
       home-manager,
-      stylix,
       ...
     }:
 
@@ -107,7 +101,6 @@
 
           modules = [
             ./setups/fedora.user.nix
-            stylix.homeManagerModules.stylix
           ];
         };
 
@@ -122,7 +115,6 @@
 
           modules = [
             ./setups/t470p.user.nix
-            stylix.homeManagerModules.stylix
           ];
         };
 
@@ -137,7 +129,6 @@
 
           modules = [
             ./setups/p16gen2.user.nix
-            stylix.homeManagerModules.stylix
           ];
         };
 
@@ -148,7 +139,6 @@
 
           modules = [
             ./setups/nixos.user.nix
-            stylix.homeManagerModules.stylix
           ];
         };
 
