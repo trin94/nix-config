@@ -13,9 +13,9 @@
 
   imports = dirImport {
     paths = [
-      ../common/desktops
       ../common/programs
       ../common/fonts.nix
+      ../common/gnome.nix
     ];
   };
 
