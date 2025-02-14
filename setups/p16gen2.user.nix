@@ -53,7 +53,6 @@
       fish = {
         enable = true;
         configLocation = configVars.configLocation;
-        addUpdateHostFunction = false;
       };
 
       git = {

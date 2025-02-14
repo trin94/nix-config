@@ -53,17 +53,6 @@
         config.allowUnfree = true;
       };
 
-      specialArgs = {
-        inherit
-          inputs
-          outputs
-          configVars
-          nixpkgs
-          pkgs
-          pkgsStable
-          ;
-      };
-
       extraSpecialArgs = {
         inherit
           inputs
@@ -76,17 +65,6 @@
     in
 
     {
-
-      nixosConfigurations = {
-
-        nixos = nixpkgs.lib.nixosSystem {
-          inherit specialArgs;
-          modules = [
-            ./setups/nixos.system.nix
-          ];
-        };
-
-      };
 
       homeConfigurations = {
 
@@ -129,16 +107,6 @@
 
           modules = [
             ./setups/p16gen2.user.nix
-          ];
-        };
-
-        "elias@nixos" = home-manager.lib.homeManagerConfiguration {
-          inherit extraSpecialArgs;
-
-          pkgs = nixpkgs.legacyPackages."x86_64-linux";
-
-          modules = [
-            ./setups/nixos.user.nix
           ];
         };
 

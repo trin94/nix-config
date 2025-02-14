@@ -1,6 +1,6 @@
 # nixOS config
 
-This repo contains my work-in-progress nixOS and home-manager configuration.
+This repo contains my work-in-progress home-manager configuration.
 
 ## Install on new machine
 
@@ -10,16 +10,11 @@ nix-shell -p git just home-manager nh nixfmt treefmt2
 git clone https://github.com/trin94/nix-config.git ~/.dotfiles
 cd ~/.dotfiles
 
-# Configure new setup
-cp /etc/nixos/hardware-configuration.nix setups/<hostname>.hardware.nix
-cp /etc/nixos/configuration.nix setups/<hostname>.system.nix
-touch <hostname>.user.nix
-
 export NIX_CONFIG="experimental-features = nix-command flakes"
 
 # nix flake update --commit-lock-file
 
-just apply-system apply-user
+just update
 ```
 
 ## Flatpak

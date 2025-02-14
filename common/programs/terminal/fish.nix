@@ -23,16 +23,6 @@ in
       type = types.str;
     };
 
-    addUpdateHostFunction = mkOption {
-      type = types.bool;
-      default = true;
-    };
-
-    addUpdateHomeFunction = mkOption {
-      type = types.bool;
-      default = true;
-    };
-
   };
 
   config = lib.mkIf cfg.enable {
@@ -72,31 +62,9 @@ in
 
       functions = {
 
-        nup = lib.mkIf (cfg.addUpdateHostFunction || cfg.addUpdateHomeFunction) {
-          description =
-            if (cfg.addUpdateHostFunction && cfg.addUpdateHomeFunction) then
-              "Update system packages and home packages"
-            else if cfg.addUpdateHostFunction then
-              "Update system packages"
-            else
-              "Update home packages";
-          body =
-            if (cfg.addUpdateHostFunction && cfg.addUpdateHomeFunction) then
-              "nup-system && nup-user"
-            else if cfg.addUpdateHostFunction then
-              "nup-system"
-            else
-              "nup-user";
-        };
-
-        nup-user = lib.mkIf cfg.addUpdateHomeFunction {
+        nup = {
           description = "Update user packages";
-          body = "just -f ${cfg.configLocation}/Justfile update-user";
-        };
-
-        nup-system = lib.mkIf cfg.addUpdateHostFunction {
-          description = "Update system packages";
-          body = "just -f ${cfg.configLocation}/Justfile update-system";
+          body = "just -f ${cfg.configLocation}/Justfile update";
         };
 
         envpp = {
