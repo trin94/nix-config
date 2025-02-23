@@ -13,18 +13,27 @@ in
 
     enable = mkEnableOption "zed";
 
+    configure = mkOption {
+      type = types.nullOr types.bool;
+      default = cfg.enable;
+    };
+
   };
 
-  config = lib.mkIf cfg.enable {
+  config = {
 
-    home.packages = with pkgs; [
-      zed-editor
-    ];
+    home.packages = lib.mkIf cfg.enable (
+      with pkgs;
+      [
+        zed-editor
+      ]
+    );
 
-    programs.zed-editor = {
-      enable = true;
+    programs.zed-editor.enable = lib.mkIf cfg.enable true;
 
-      userSettings = {
+    home.file = lib.mkIf cfg.configure {
+
+      ".config/zed/settings.json".text = builtins.toJSON {
 
         auto_install_extensions = {
           "dockerfile" = true;
@@ -82,6 +91,7 @@ in
         ui_font_size = 20;
 
       };
+
     };
 
   };
