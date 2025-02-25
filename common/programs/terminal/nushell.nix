@@ -21,6 +21,10 @@ in
       nushell
     ];
 
+    programs.nushell = {
+      enable = true;
+    };
+
   };
 
 }
