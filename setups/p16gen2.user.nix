@@ -59,7 +59,6 @@
         enable = true;
         name = "Elias Mueller";
         email = builtins.getEnv "EMAIL";
-        signCommits = false;
       };
 
       # hugo.enable = true;

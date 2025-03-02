@@ -21,10 +21,6 @@ in
       type = types.str;
     };
 
-    signCommits = mkOption {
-      type = types.bool;
-    };
-
   };
 
   config = lib.mkIf cfg.enable {
@@ -39,64 +35,37 @@ in
       userName = cfg.name;
       userEmail = cfg.email;
 
-      extraConfig =
-        let
-          commonConfig = {
-            init = {
-              defaultBranch = "main";
-            };
+      extraConfig = {
 
-            core = {
-              autocrlf = "input";
-              pager = "delta";
-            };
+        credential = {
+          helper = "${pkgs.git.override { withLibsecret = true; }}/bin/git-credential-libsecret";
+        };
 
-            interactive = {
-              diffFilter = "delta --color-only";
-            };
+        init = {
+          defaultBranch = "main";
+        };
 
-            delta = {
-              navigate = true;
-              dark = true;
-              side-by-side = true;
-              hyperlinks = true;
-            };
+        core = {
+          autocrlf = "input";
+          pager = "delta";
+        };
 
-            merge = {
-              conflictstyle = "zdiff3";
-            };
-          };
-        in
-        if cfg.signCommits then
-          commonConfig
-          // {
+        interactive = {
+          diffFilter = "delta --color-only";
+        };
 
-            gpg = {
-              format = "ssh";
-            };
+        delta = {
+          navigate = true;
+          dark = true;
+          side-by-side = true;
+          hyperlinks = true;
+        };
 
-            "gpg \"ssh\"" = {
-              program = "${lib.getExe' pkgs._1password-gui "op-ssh-sign"}";
-            };
+        merge = {
+          conflictstyle = "zdiff3";
+        };
 
-            commit = {
-              gpgsign = true;
-            };
-
-            user = {
-              signingKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHd9tRbMZVCnF7obsvrgq1LSSL4xBm8fpQnwu0SKNUdg";
-            };
-
-          }
-        else
-          commonConfig
-          // {
-
-            credential = {
-              helper = "${pkgs.git.override { withLibsecret = true; }}/bin/git-credential-libsecret";
-            };
-
-          };
+      };
     };
   };
 

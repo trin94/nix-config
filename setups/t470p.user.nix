@@ -60,7 +60,6 @@
         enable = true;
         name = "Elias Mueller";
         email = "elias.mr1@gmail.com";
-        signCommits = false;
       };
 
       jq.enable = true;
