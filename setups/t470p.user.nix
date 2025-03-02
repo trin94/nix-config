@@ -81,7 +81,6 @@
 
     graphical = {
 
-      ghostty.enable = false;
       # amberol.enable = true;
       # dconf-editor.enable = true;
       # discord.enable = true;
