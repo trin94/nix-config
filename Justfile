@@ -6,30 +6,30 @@ USER := env_var("USER")
 HOSTNAME := `cat /etc/hostname`
 ADDITIONAL_ARGS := if HOSTNAME == "p16gen2" { "--impure" } else { "" }
 
-_default:
-    @just --list
+@_default:
+    just --list
+
+# Format source
+@format:
+    treefmt --config-file config/treefmt.toml --tree-root .
 
 # Build home to 'result' directory
-[group('user')]
+[group('run')]
 verify: format
     nh home build --out-link result --configuration "{{ USER }}@{{ HOSTNAME }}" . -- {{ ADDITIONAL_ARGS }}
 
 # Apply home configuration
-[group('user')]
+[group('run')]
 apply: format
     nh home switch --configuration "{{ USER }}@{{ HOSTNAME }}" . -- {{ ADDITIONAL_ARGS }}
 
 # Update then apply home configuration
-[group('user')]
+[group('run')]
 update: format
     nh home switch --update --configuration "{{ USER }}@{{ HOSTNAME }}" . -- {{ ADDITIONAL_ARGS }}
 
-# Format source
-format:
-    @treefmt --config-file config/treefmt.toml --tree-root .
-
-# Add a new program which needs to be enabled manually, though
-[group('scripts')]
+# Add a new program, needs to be enabled manually
+[group('configure')]
 add-program NAME:
     #!/usr/bin/env bash
 
