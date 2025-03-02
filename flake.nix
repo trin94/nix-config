@@ -63,7 +63,7 @@
           pkgs = nixpkgs.legacyPackages."x86_64-linux";
 
           modules = [
-            ./setups/fedora.user.nix
+            ./setups/fedora.nix
           ];
         };
 
@@ -77,7 +77,7 @@
           pkgs = nixpkgs.legacyPackages."x86_64-linux";
 
           modules = [
-            ./setups/t470p.user.nix
+            ./setups/t470p.nix
           ];
         };
 
@@ -91,7 +91,7 @@
           pkgs = nixpkgs.legacyPackages."x86_64-linux";
 
           modules = [
-            ./setups/p16gen2.user.nix
+            ./setups/p16gen2.nix
           ];
         };
 
