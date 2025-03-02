@@ -30,10 +30,10 @@ format:
 
 # Add a new program which needs to be enabled manually, though
 [group('scripts')]
-add-program NAME TYPE="terminal":
+add-program NAME:
     #!/usr/bin/env bash
 
-    cat > common/programs/{{ TYPE }}/{{ NAME }}.nix << EOF
+    cat > common/programs/{{ NAME }}.nix << EOF
     {
       config,
       pkgs,
@@ -41,11 +41,11 @@ add-program NAME TYPE="terminal":
       ...
     }:
     let
-      cfg = config.myOS.{{ TYPE }}.{{ NAME }};
+      cfg = config.myOS.programs.{{ NAME }};
     in
     {
 
-      options.myOS.{{ TYPE }}.{{ NAME }} = with lib; {
+      options.myOS.programs.{{ NAME }} = with lib; {
 
         enable = mkEnableOption "{{ NAME }}";
 

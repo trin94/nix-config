@@ -41,7 +41,7 @@
 
     };
 
-    terminal = {
+    programs = {
 
       bat.enable = true;
       delta.enable = true;
@@ -77,20 +77,10 @@
       vim.enable = true;
       yq.enable = true;
 
-    };
-
-    graphical = {
-
-      # amberol.enable = true;
-      # dconf-editor.enable = true;
-      # discord.enable = true;
-      # eartag.enable = true;
-      # hexchat.enable = true;
-      # jetbrains-toolbox.enable = true;
-      # mpv.enable = true;
-      telegram-desktop.enable = true;
-      zed.enable = false;
-      zed.configure = true;
+      zed = {
+        enable = false;
+        configure = true;
+      };
 
     };
 
