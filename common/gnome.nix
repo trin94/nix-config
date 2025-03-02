@@ -221,6 +221,10 @@ in
       "org/gtk/Settings/FileChooser".clock-format = "12h";
       "org/gtk/gtk4/Settings/FileChooser".clock-format = "12h";
 
+      "org/gnome/desktop/input-sources" = {
+        xkb-options = [ "lv3:rwin_switch" ]; # altGr on my keyboards :|
+      };
+
       #
       # Set custom keybindings
 
