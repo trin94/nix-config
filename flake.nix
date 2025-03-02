@@ -7,22 +7,14 @@
       url = "github:nixos/nixpkgs/nixos-unstable";
     };
 
-    nixpkgsUnstable = {
-      url = "github:nixos/nixpkgs/nixos-unstable";
-    };
-
-    nixpkgsStable = {
-      url = "github:nixos/nixpkgs/nixos-24.11";
-    };
-
     nixvim = {
       url = "github:nix-community/nixvim";
-      inputs.nixpkgs.follows = "nixpkgsUnstable";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     home-manager = {
       url = "github:nix-community/home-manager";
-      inputs.nixpkgs.follows = "nixpkgsUnstable";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
   };
@@ -31,7 +23,6 @@
     inputs@{
       self,
       nixpkgs,
-      nixpkgsStable,
       home-manager,
       ...
     }:
@@ -48,18 +39,12 @@
         config.allowUnfree = true;
       };
 
-      pkgsStable = import nixpkgsStable {
-        system = "x86_64-linux";
-        config.allowUnfree = true;
-      };
-
       extraSpecialArgs = {
         inherit
           inputs
           dirImport
           configVars
           pkgs
-          pkgsStable
           ;
       };
     in
