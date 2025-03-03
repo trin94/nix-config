@@ -1,0 +1,92 @@
+- name: "Configure Linux Distribution"
+  hosts: localhost
+
+  vars:
+    dnf_config: '/etc/dnf/dnf.conf'
+
+  tasks:
+    - name: "Remove dnf repositories"
+      become: yes
+      file:
+        path: '{{ item }}'
+        state: absent
+      with_items:
+        - /etc/yum.repos.d/_copr:copr.fedorainfracloud.org:peterwu:rendezvous.repo
+        - /etc/yum.repos.d/_copr:copr.fedorainfracloud.org:phracek:PyCharm.repo
+        - /etc/yum.repos.d/fedora-cisco-openh264.repo
+        - /etc/yum.repos.d/fedora-updates-testing.repo
+        - /etc/yum.repos.d/google-chrome-canary.repo
+        - /etc/yum.repos.d/google-chrome.repo
+        - /etc/yum.repos.d/rpmfusion-nonfree-nvidia-driver.repo
+
+    - name: "Install: dnf-plugins-core"
+      become: yes
+      dnf:
+        state: present
+        name:
+          - dnf-plugins-core
+
+    - name: "Add 1password repo"
+      become: true
+      copy:
+        dest: "/etc/yum.repos.d/1password.repo"
+        content: |
+          [1password]
+          name=1Password Stable Channel
+          baseurl=https://downloads.1password.com/linux/rpm/stable/$basearch
+          enabled=1
+          gpgcheck=1
+          repo_gpgcheck=1
+          gpgkey="https://downloads.1password.com/linux/keys/1password.asc"
+
+    - name: "Add 1password key"
+      become: yes
+      ansible.builtin.rpm_key:
+        state: present
+        key: https://downloads.1password.com/linux/keys/1password.asc
+
+    - name: "Set dnf defaultyes to True"
+      become: yes
+      ansible.builtin.lineinfile:
+        path: '{{ dnf_config }}'
+        regexp: 'defaultyes='
+        line: defaultyes=True
+
+    - name: "Set dnf max_parallel_downloads to 10"
+      become: yes
+      ansible.builtin.lineinfile:
+        path: '{{ dnf_config }}'
+        regexp: 'max_parallel_downloads='
+        line: max_parallel_downloads=20
+
+    - name: "Set deltarpm to False"
+      become: yes
+      ansible.builtin.lineinfile:
+        path: '{{ dnf_config }}'
+        regexp: 'deltarpm='
+        line: deltarpm=False
+
+    - name: "Remove Flatpak Remote: fedora system"
+      community.general.flatpak_remote:
+        name: fedora
+        state: absent
+        method: system
+
+    - name: "Remove Flatpak Remote: fedora user"
+      community.general.flatpak_remote:
+        name: fedora
+        state: absent
+        method: user
+
+    - name: "Remove Flatpak Remote: flathub system"
+      community.general.flatpak_remote:
+        name: flathub
+        state: absent
+        method: system
+
+    - name: "Add Flatpak Remote: flathub user"
+      community.general.flatpak_remote:
+        name: flathub
+        state: present
+        method: user
+        flatpakrepo_url: https://dl.flathub.org/repo/flathub.flatpakrepo

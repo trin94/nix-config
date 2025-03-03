@@ -49,10 +49,3 @@
       become: true
       shell: |
         docker ps -a
-
-    - name: "Install 'docker-compose'"
-      become: yes
-      dnf:
-        state: present
-        name:
-          - docker-compose
