@@ -1,0 +1,24 @@
+#!/usr/bin/env just --justfile
+
+@_default:
+    just --list
+
+# Install dependencies
+init:
+    sudo dnf install ansible git python3-pip
+    ansible-galaxy collection install community.general
+
+# Configure distribution
+[group('configure')]
+configure-01-fedora:
+    ansible-playbook --ask-become-pass 00-fedora.yml
+
+# Configure graphical apps
+[group('configure')]
+configure-02-apps:
+    ansible-playbook --ask-become-pass 10-apps.yml
+
+# Configure remaining stuff
+[group('configure')]
+configure-misc PLAYBOOK:
+    ansible-playbook --ask-become-pass {{ PLAYBOOK }}
