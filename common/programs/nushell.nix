@@ -23,6 +23,10 @@ in
 
     programs.nushell = {
       enable = true;
+
+      plugins = with pkgs; [
+        nushellPlugins.polars
+      ];
     };
 
   };
