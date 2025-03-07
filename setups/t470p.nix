@@ -57,7 +57,8 @@
       };
 
       git = {
-        enable = true;
+        enable = false;
+        configure = true;
         name = "Elias Mueller";
         email = "elias.mr1@gmail.com";
       };

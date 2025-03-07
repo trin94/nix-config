@@ -56,7 +56,8 @@
       };
 
       git = {
-        enable = true;
+        enable = false;
+        configure = true;
         name = "Elias Mueller";
         email = builtins.getEnv "EMAIL";
       };

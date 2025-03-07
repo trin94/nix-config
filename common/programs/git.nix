@@ -13,6 +13,11 @@ in
 
     enable = mkEnableOption "git";
 
+    configure = mkOption {
+      type = types.nullOr types.bool;
+      default = cfg.enable;
+    };
+
     name = mkOption {
       type = types.str;
     };
@@ -23,49 +28,47 @@ in
 
   };
 
-  config = lib.mkIf cfg.enable {
+  config = {
 
-    home.packages = with pkgs; [
-      git # Distributed version control system
-      git-credential-manager # Secure, cross-platform Git credential storage with authentication to GitHub, Azure Repos, and other popular Git hosting services
-    ];
+    home.packages = lib.mkIf cfg.enable (
+      with pkgs;
+      [
+        git # Distributed version control system
+        git-credential-manager # Secure, cross-platform Git credential storage with authentication to GitHub, Azure Repos, and other popular Git hosting services
+      ]
+    );
 
-    programs.git = {
-      enable = true;
-      userName = cfg.name;
-      userEmail = cfg.email;
+    programs.git.enable = lib.mkIf cfg.enable true;
 
-      extraConfig = {
+    home.file = lib.mkIf cfg.configure {
+      ".config/git/config".text = ''
+        [core]
+            autocrlf = "input"
+            pager = "delta"
 
-        credential = {
-          helper = "${pkgs.git.override { withLibsecret = true; }}/bin/git-credential-libsecret";
-        };
+        [credential]
+            helper = "git-credential-libsecret"
 
-        init = {
-          defaultBranch = "main";
-        };
+        [delta]
+            dark = true
+            hyperlinks = true
+            navigate = true
+            side-by-side = true
 
-        core = {
-          autocrlf = "input";
-          pager = "delta";
-        };
+        [init]
+            defaultBranch = "main"
 
-        interactive = {
-          diffFilter = "delta --color-only";
-        };
+        [interactive]
+            diffFilter = "delta --color-only"
 
-        delta = {
-          navigate = true;
-          dark = true;
-          side-by-side = true;
-          hyperlinks = true;
-        };
+        [merge]
+            conflictstyle = "zdiff3"
 
-        merge = {
-          conflictstyle = "zdiff3";
-        };
+        [user]
+            email = "${cfg.email}"
+            name = "${cfg.name}"
 
-      };
+      '';
     };
   };
 
