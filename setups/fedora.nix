@@ -65,6 +65,7 @@
       hugo.enable = true;
       jq.enable = true;
       just.enable = true;
+      jsonfmt.enable = true;
       libwebp.enable = true;
       nh.enable = true;
       treefmt.enable = true;
