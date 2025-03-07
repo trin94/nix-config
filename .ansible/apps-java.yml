@@ -7,19 +7,22 @@
       dnf:
         state: present
         name:
-          - java-17-openjdk
-          - java-17-openjdk-devel
-          - java-17-openjdk-headless
-          - java-17-openjdk-javadoc
-          - java-17-openjdk-src
+          - java-21-openjdk
+          - java-21-openjdk-devel
+          - java-21-openjdk-headless
+          - java-21-openjdk-javadoc
+          - java-21-openjdk-src
 
     - name: "Remove default Java installation"
       become: yes
       dnf:
         state: absent
         name:
-          - java-11-openjdk-src
-          - java-11-openjdk-headless
+          - java-17-openjdk
+          - java-17-openjdk-devel
+          - java-17-openjdk-headless
+          - java-17-openjdk-javadoc
+          - java-17-openjdk-src
 
     - name: "Set Java to remaining installed version"
       args:
