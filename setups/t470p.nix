@@ -74,6 +74,7 @@
       ripgrep.enable = true;
       ruff.enable = true;
       ssh.enable = true;
+      taplo.enable = true;
       tokei.enable = true;
       vim.enable = true;
       yq.enable = true;
