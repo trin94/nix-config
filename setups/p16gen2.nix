@@ -77,7 +77,7 @@
 
       procs.enable = true;
       ripgrep.enable = true;
-      ruff.enable = true;
+      ruff.enable = false;
       # ssh.enable = true;
       tokei.enable = true;
       # uv.enable = true;
