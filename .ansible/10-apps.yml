@@ -10,8 +10,14 @@
           - eog
           - evince
           - gedit
+          - gnome-contacts
+          - gnome-help
+          - gnome-maps
           - gnome-photos
+          - gnome-tour
           - loupe
+          - nheko
+          - rhythmbox
           - totem
 
     - name: "Install Native Apps"
