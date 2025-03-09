@@ -47,7 +47,7 @@
     - name: "Install: JetBrains Toolbox"
       args:
         executable: /bin/bash
-      shell: |
+      shell: |-
         # Source: https://gist.github.com/abn/022c5f9eae491687a766f25bd8322fc0
         # Reference: https://github.com/nagygergo/jetbrains-toolbox-install/blob/master/jetbrains-toolbox.sh
 

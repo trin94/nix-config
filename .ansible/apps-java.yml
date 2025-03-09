@@ -35,6 +35,6 @@
       become: true
       copy:
         dest: "/etc/profile.d/java-custom.sh"
-        content: |
+        content: |-
           # Set JAVA_HOME by reading current 'alternatives --config java' setting
           export JAVA_HOME=$(readlink -e /usr/bin/java | sed "s:bin/java::")

@@ -95,6 +95,17 @@ in
           '';
         };
 
+        qfmt = {
+          description = "Format code with a set of preconfigured formatters";
+          body = ''
+            treefmt \
+                --no-cache \
+                --config-file "${cfg.configLocation}/config/treefmt.toml" \
+                --tree-root "$PWD" \
+                $argv
+          '';
+        };
+
       };
 
     };

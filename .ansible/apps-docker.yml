@@ -47,5 +47,5 @@
 
     - name: "Run 'docker ps -a'"
       become: true
-      shell: |
+      shell: |-
         docker ps -a

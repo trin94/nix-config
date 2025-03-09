@@ -2,7 +2,7 @@
 
 # Do not exit with error if a configured formatter is missing
 # Env $TREEFMT_ALLOW_MISSING_FORMATTER
-# allow-missing-formatter = true
+allow-missing-formatter = true
 
 # The file into which a cpu profile will be written
 # Env $TREEFMT_CPU_PROFILE
@@ -10,7 +10,27 @@
 
 # Exclude files or directories matching the specified globs
 # Env $TREEFMT_EXCLUDES
-excludes = ["*.gif", "*.yml", "*yaml"]
+excludes = [
+    "*.conf",
+    "*.flac",
+    "*.gitignore",
+    "*.ico",
+    "*.jpg",
+    "*.lock",
+    "*.mp3",
+    "*.png",
+    "*.qml",
+    "*.sh",
+    "*.svg",
+    "*.template",
+    "*.ts",
+    "*.ttf",
+    "*.txt",
+    "*.web",
+    "*Justfile",
+    "*LICENSE",
+    "*qmldir",
+]
 
 # Exit with error if any changes were made during execution
 # Useful for CI
@@ -25,7 +45,7 @@ excludes = ["*.gif", "*.yml", "*yaml"]
 # Log paths that did not match any formatters at the specified log level
 # Possible values are <debug|info|warn|error|fatal>
 # Env $TREEFMT_ON_UNMATCHED
-on-unmatched = "info"
+on-unmatched = "warn"
 
 # The root directory from which treefmt will start walking the filesystem
 # Defaults to the directory containing the config file
@@ -46,13 +66,102 @@ on-unmatched = "info"
 # Env $TREEFMT_WALK
 # walk = "filesystem"
 
+#[formatter.mylanguage]
+## Command to execute
+#command = "command-to-run"
+## Command-line arguments for the command
+#options = []
+## Glob pattern of files to include
+#includes = [ "*.<language-extension>" ]
+## Glob patterns of files to exclude
+#excludes = []
+## Controls the order of application when multiple formatters match the same file
+## Lower the number, the higher the precedence
+## Default is 0
+#priority = 0
+
 [formatter.nix]
 command = "nixfmt"
 options = []
 includes = ["*.nix"]
 
+[formatter.javascript]
+command = "biome"
+includes = ["*.js"]
+options = [
+    "format",
+    "--arrow-parentheses=as-needed",
+    "--bracket-spacing=true",
+    "--fix",
+    "--indent-size=4",
+    "--indent-style=space",
+    "--indent-width=4",
+    "--line-ending=lf",
+    "--line-width=120",
+    "--semicolons=as-needed",
+]
+
+[formatter.json]
+command = "biome"
+includes = ["*.json"]
+options = [
+    "format",
+    "--bracket-spacing=true",
+    "--fix",
+    "--indent-size=4",
+    "--indent-style=space",
+    "--indent-width=4",
+    "--json-formatter-enabled=true",
+    "--line-ending=lf",
+    "--line-width=120",
+]
+
 [formatter.markdown]
 command = "mdformat"
-options = ["--end-of-line", "lf", "--number", "--wrap", "keep"]
-includes = ["*.md"]
-excludes = []
+includes = ["*.md", "*.MD"]
+options = ["--number", "--wrap", "keep", "--end-of-line", "lf"]
+
+[formatter.python-1]
+command = "ruff"
+includes = ["*.py", "*.pyi"]
+options = ["check", "--fix"]
+priority = 1
+
+[formatter.python-2]
+command = "ruff"
+includes = ["*.py", "*.pyi"]
+options = ["format"]
+priority = 2
+
+[formatter.toml]
+command = "taplo"
+includes = ["*.toml"]
+options = [
+    "format",
+    "--option",
+    "align_comments=true",
+    "--option",
+    "allowed_blank_lines=1",
+    "--option",
+    "array_auto_collapse=false",
+    "--option",
+    "indent_string=    ",
+    "--option",
+    "trailing_newline=true",
+]
+
+[formatter.yml]
+command = "yamlfmt"
+includes = ["*.yaml", "*.yml"]
+options = [
+    "-formatter",
+    "line_ending=lf",
+    "-formatter",
+    "retain_line_breaks_single=true",
+    "-formatter",
+    "scan_folded_as_literal=true",
+    "-formatter",
+    "trim_trailing_whitespace=true",
+    "-formatter",
+    "eof_newline=true",
+]
