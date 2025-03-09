@@ -10,7 +10,7 @@
 
 # Exclude files or directories matching the specified globs
 # Env $TREEFMT_EXCLUDES
-excludes = ["*.md", "*.gif", "*.yml", "*yaml"]
+excludes = ["*.gif", "*.yml", "*yaml"]
 
 # Exit with error if any changes were made during execution
 # Useful for CI
@@ -50,3 +50,9 @@ on-unmatched = "info"
 command = "nixfmt"
 options = []
 includes = ["*.nix"]
+
+[formatter.markdown]
+command = "mdformat"
+options = ["--end-of-line", "lf", "--number", "--wrap", "keep"]
+includes = ["*.md"]
+excludes = []
