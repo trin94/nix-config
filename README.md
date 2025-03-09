@@ -1,8 +1,8 @@
-# nixOS config
+# Fedora + home-manager configuration
 
-This repo contains my work-in-progress home-manager configuration.
+This repo contains my work-in-progress fedora and home-manager configuration.
 
-## Install on new machine
+## Setup
 
 ```shell
 nix-shell -p git just home-manager nh nixfmt treefmt2
@@ -12,18 +12,11 @@ cd ~/.dotfiles
 
 export NIX_CONFIG="experimental-features = nix-command flakes"
 
-# nix flake update --commit-lock-file
-
 just update
 ```
 
-## Flatpak
+# Misc
 
-```shell
-flatpak remote-add --if-not-exists --user flathub https://dl.flathub.org/repo/flathub.flatpakrepo
-```
-
-# Links
-
+- `nix flake update --commit-lock-file`
 - https://www.zknotes.com/page/alternate-nixpkgs-in-flakes-nixos
 - https://github.com/EmergentMind/nix-config
