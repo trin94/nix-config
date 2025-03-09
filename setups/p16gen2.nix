@@ -43,6 +43,7 @@
     programs = {
 
       bat.enable = true;
+      biome.enable = true;
       delta.enable = true;
       dtrx.enable = true;
       eza.enable = true;
