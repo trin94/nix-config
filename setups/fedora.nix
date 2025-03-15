@@ -74,6 +74,7 @@
       mdformat.enable = true;
       nushell.enable = true;
       poetry.enable = true;
+      pre-commit.enable = true;
       procs.enable = true;
       ripgrep.enable = true;
       ruff.enable = true;
