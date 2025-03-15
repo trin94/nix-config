@@ -11,7 +11,7 @@ ADDITIONAL_ARGS := if HOSTNAME == "p16gen2" { "--impure" } else { "" }
 
 # Format source
 @format:
-    treefmt --config-file config/treefmt.toml --tree-root .
+    pre-commit run --all-files
 
 # Build home to 'result' directory
 [group('run')]

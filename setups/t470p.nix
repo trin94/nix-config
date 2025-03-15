@@ -69,7 +69,6 @@
       jsonfmt.enable = true;
       libwebp.enable = true;
       nh.enable = true;
-      treefmt.enable = true;
       mdformat.enable = true;
       nushell.enable = true;
       poetry.enable = true;
