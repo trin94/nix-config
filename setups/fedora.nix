@@ -69,8 +69,9 @@
       just.enable = true;
       jsonfmt.enable = true;
       libwebp.enable = true;
-      nh.enable = true;
       mdformat.enable = true;
+      nh.enable = true;
+      nixfmt.enable = true;
       nushell.enable = true;
       poetry.enable = true;
       pre-commit.enable = true;
