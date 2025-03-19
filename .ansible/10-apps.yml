@@ -16,9 +16,11 @@
           - gnome-photos
           - gnome-tour
           - loupe
+          - malcontent-control
           - nheko
           - rhythmbox
           - totem
+          - vlc
 
     - name: "Install Native Apps"
       become: yes
