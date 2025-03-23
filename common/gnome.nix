@@ -204,10 +204,18 @@ in
         profile-uuids = [ ptyxisProfileUUID ];
       };
 
+      # "org/gnome/Ptyxis/Shortcuts" = {
+      #   copy-clipboard = "<Control>c";
+      #   paste-clipboard = "<Control>v";
+      # };
+
       "org/gnome/Ptyxis/Profiles/${ptyxisProfileUUID}" = {
+        bold-is-bright = true;
+        custom-command = "fish";
+        label = "frupp.nix";
         palette = "nord";
-        preseve-directory = "never";
-        scroll-on-output = true;
+        preserve-directory = "never";
+        scroll-on-output = false;
       };
 
       "org/gnome/settings-daemon/plugins/power" = {

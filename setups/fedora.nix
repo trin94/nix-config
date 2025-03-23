@@ -25,7 +25,7 @@
 
       gnome = {
         configure = true;
-        terminalApp = "ptyxis -x fish";
+        terminalApp = "ptyxis -s";
         dockApps = [
           "org.gnome.Nautilus.desktop"
           "dev.zed.Zed.desktop"
