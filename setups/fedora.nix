@@ -29,7 +29,7 @@
         dockApps = [
           "org.gnome.Nautilus.desktop"
           "dev.zed.Zed.desktop"
-          "firefox.desktop"
+          "org.mozilla.firefox.desktop"
           "jetbrains-toolbox.desktop"
           "jetbrains-idea.desktop"
           "jetbrains-pycharm.desktop"
