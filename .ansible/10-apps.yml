@@ -28,6 +28,7 @@
         state: present
         name:
           - 1password
+          - gnome-backgrounds-extras
 
     - name: "Install Flatpaks"
       community.general.flatpak:
