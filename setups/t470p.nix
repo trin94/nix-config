@@ -44,7 +44,6 @@
     programs = {
 
       bat.enable = true;
-      biome.enable = true;
       delta.enable = true;
       dtrx.enable = true;
       eza.enable = true;
@@ -66,18 +65,14 @@
 
       jq.enable = true;
       just.enable = true;
-      jsonfmt.enable = true;
       libwebp.enable = true;
-      mdformat.enable = true;
       nh.enable = true;
       nixfmt.enable = true;
       nushell.enable = true;
       poetry.enable = true;
       procs.enable = true;
       ripgrep.enable = true;
-      ruff.enable = true;
       ssh.enable = true;
-      taplo.enable = true;
       tokei.enable = true;
       vim.enable = true;
       yq.enable = true;

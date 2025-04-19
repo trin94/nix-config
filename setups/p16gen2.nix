@@ -43,7 +43,6 @@
     programs = {
 
       bat.enable = true;
-      biome.enable = true;
       delta.enable = true;
       dtrx.enable = true;
       eza.enable = true;
@@ -66,7 +65,6 @@
       # hugo.enable = true;
       jq.enable = true;
       just.enable = true;
-      jsonfmt.enable = true;
       # libwebp.enable = true;
       nh.enable = true;
       nixfmt.enable = true;
@@ -79,9 +77,7 @@
 
       procs.enable = true;
       ripgrep.enable = true;
-      ruff.enable = false;
       # ssh.enable = true;
-      taplo.enable = true;
       tokei.enable = true;
       # uv.enable = true;
       vim.enable = true;
