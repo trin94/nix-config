@@ -95,8 +95,10 @@
     username = configVars.username;
     homeDirectory = "/home/${configVars.username}";
 
-    packages = with pkgs; [
-    ];
+    packages =
+      with pkgs;
+      [
+      ];
 
     sessionPath = [
       "$HOME/.local/bin"

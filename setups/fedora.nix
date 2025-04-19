@@ -44,8 +44,9 @@
     programs = {
 
       bat.enable = true;
-      biome.enable = true;
+      biome.enable = false;
       delta.enable = true;
+      devenv.enable = true;
       dtrx.enable = true;
       eza.enable = true;
       fastfetch.enable = true;
@@ -67,9 +68,9 @@
       hugo.enable = true;
       jq.enable = true;
       just.enable = true;
-      jsonfmt.enable = true;
+      jsonfmt.enable = false;
       libwebp.enable = true;
-      mdformat.enable = true;
+      mdformat.enable = false;
       nh.enable = true;
       nixfmt.enable = true;
       nushell.enable = true;
@@ -79,7 +80,7 @@
       ripgrep.enable = true;
       ruff.enable = true;
       ssh.enable = true;
-      taplo.enable = true;
+      taplo.enable = false;
       tokei.enable = true;
       uv.enable = false;
       vim.enable = true;
@@ -99,8 +100,10 @@
     username = configVars.username;
     homeDirectory = "/home/${configVars.username}";
 
-    packages = with pkgs; [
-    ];
+    packages =
+      with pkgs;
+      [
+      ];
 
     # This value determines the Home Manager release that your
     # configuration is compatible with. This helps avoid breakage
