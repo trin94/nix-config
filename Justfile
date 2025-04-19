@@ -25,7 +25,7 @@ apply: format
 
 # Update then apply home configuration
 [group('run')]
-update: format
+update:
     nh home switch --update --configuration "{{ USER }}@{{ HOSTNAME }}" . -- {{ ADDITIONAL_ARGS }}
 
 # Add a new program, needs to be enabled manually
