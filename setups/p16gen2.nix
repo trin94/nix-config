@@ -44,6 +44,7 @@
 
       bat.enable = true;
       delta.enable = true;
+      devenv.enable = true;
       dtrx.enable = true;
       eza.enable = true;
       fastfetch.enable = true;

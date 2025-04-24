@@ -10,6 +10,8 @@ let
 in
 
 {
+  dotenv.enable = true;
+
   # See full reference at https://devenv.sh/reference/options/
 
   # https://devenv.sh/basics/
