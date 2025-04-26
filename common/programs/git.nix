@@ -43,11 +43,20 @@ in
     home.file = lib.mkIf cfg.configure {
       ".config/git/config".text = ''
         [core]
-            autocrlf = "input"
-            pager = "delta"
+            autocrlf = input
+            pager = delta
+            preloadindex = true
+            whitespace = trailing-space,space-before-tab
 
         [credential]
-            helper = "git-credential-libsecret"
+            helper = git-credential-libsecret
+
+        [user]
+            email = ${cfg.email}
+            name = ${cfg.name}
+
+        [init]
+            defaultBranch = main
 
         [delta]
             dark = true
@@ -55,18 +64,61 @@ in
             navigate = true
             side-by-side = true
 
-        [init]
-            defaultBranch = "main"
-
         [interactive]
-            diffFilter = "delta --color-only"
+            diffFilter = delta --color-only
 
         [merge]
-            conflictstyle = "zdiff3"
+            conflictstyle = zdiff3
 
-        [user]
-            email = "${cfg.email}"
-            name = "${cfg.name}"
+        [rebase]
+            autoStash = true
+            missingCommitsCheck = warn
+
+        [pull]
+            default = current
+            rebase = true
+            ff = only
+
+        [push]
+            default = current
+            autoSetupRemote = true
+            followTags = true
+
+        [status]
+            short = true
+            branch = true
+            showStash = true
+            showUntrackedFiles = all
+
+        [branch]
+            sort = -committerdate
+
+        [tag]
+            sort = -taggerdate
+
+        [log]
+            abbrevCommit = true
+            graphColors = blue,yellow,cyan,magenta,green,red
+
+        [alias]
+            lg = log --all --graph --pretty=format:'%C(auto)%h%C(reset) %C(blue)%an%C(reset) %C(dim white)%ar%C(reset) %C(yellow)%d%C(reset)%n%s%n'
+
+        [pager]
+            branch = false
+            tag = false
+
+        [color "decorate"]
+            HEAD = red
+            branch = blue
+            tag = yellow
+            remoteBranch = magenta
+
+        [color "branch"]
+            current  = magenta
+            local    = default
+            remote   = yellow
+            upstream = green
+            plain    = blue
 
       '';
     };
