@@ -79,6 +79,7 @@
       procs.enable = true;
       ripgrep.enable = true;
       # ssh.enable = true;
+      slides.enable = true;
       tokei.enable = true;
       # uv.enable = true;
       vim.enable = true;
