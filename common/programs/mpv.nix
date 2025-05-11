@@ -13,93 +13,95 @@ in
 
     enable = mkEnableOption "mpv";
 
+    configure = mkOption {
+      type = types.nullOr types.bool;
+      default = cfg.enable;
+    };
+
   };
 
-  config = lib.mkIf cfg.enable {
+  config = {
 
-    home.packages = with pkgs; [
-      mpv # General-purpose media player, fork of MPlayer and mplayer2
-    ];
+    home.packages = lib.mkIf cfg.enable (
+      with pkgs;
+      [
+        mpv # General-purpose media player, fork of MPlayer and mplayer2
+      ]
+    );
 
-    programs.mpv = {
-      enable = true;
+    programs.mpv.enable = cfg.enable;
 
-      config = {
-
+    home.file = lib.mkIf cfg.configure {
+      ".var/app/io.mpv.Mpv/config/mpv/mpv.conf".text = ''
         # General
-        "keep-open" = "yes";
-        "autofit" = "65%";
-        "cursor-autohide" = 500;
+        keep-open="yes"
+        autofit="65%"
+        cursor-autohide="500"
 
         # Audio
-        "volume" = 100;
-        "volume-max" = 100;
+        volume="100"
+        volume-max="100"
 
         # Subs
-        "demuxer-mkv-subtitle-preroll" = "yes";
-        "sub-ass-vsfilter-blur-compat" = "no";
-        "sub-fix-timing" = "yes";
-        "sub-font" = "Open Sans Semibold";
-        "sub-bold" = "yes";
-        "sub-font-size" = 54;
-        "sub-border-size" = 2.5;
-        "sub-margin-y" = 28;
-        "sub-color" = "#ffffffff";
+        demuxer-mkv-subtitle-preroll="yes"
+        sub-ass-use-video-data="none"
+        sub-fix-timing="yes"
+        sub-font="Open Sans Semibold"
+        # sub-bold="yes"
+        sub-font-size="54"
+        sub-border-size="2.5"
+        sub-margin-y="28"
+        sub-color="#ffffffff"
 
         # Audio & Subs Prop
-        "alang" = "ja,jp,jpn,en,eng,de,deu,ger";
-        "slang" = "en,eng,de,deu,ger";
+        alang="ja,jp,jpn,en,eng,de,deu,ger"
+        slang="en,eng,de,deu,ger"
 
         #Screenshot
-        "screenshot-format" = "png";
-        "screenshot-high-bit-depth" = "no";
-        "screenshot-png-compression" = 1;
-        "screenshot-jpeg-quality" = 95;
-        "screenshot-template" = "%f-%wH.%wM.%wS.%wT-#%#00n";
+        screenshot-format="png"
+        screenshot-high-bit-depth="no"
+        screenshot-png-compression="1"
+        screenshot-jpeg-quality="95"
+        screenshot-template="%f-%wH.%wM.%wS.%wT-#%#00n"
 
         # Deband
-        "deband" = "no";
-        "deband-iterations" = 4;
-        "deband-threshold" = 50;
-        "deband-range" = 16;
-        "deband-grain" = 0;
+        deband="no"
+        deband-iterations="4"
+        deband-threshold="50"
+        deband-range="16"
+        deband-grain="0"
 
         # Resizer
-        "scale" = "ewa_lanczossharp";
-        "dscale" = "catmull_rom";
-        "cscale" = "sinc";
-        "cscale-window" = "blackman";
-        "cscale-radius" = 3;
+        scale="ewa_lanczossharp"
+        dscale="catmull_rom"
+        cscale="sinc"
+        cscale-window="blackman"
+        cscale-radius="3"
 
-        # Interpolation
-        "blend-subtitles" = "yes";
-        "video-sync" = "display-resample";
-        "interpolation" = "yes";
-        "tscale" = "box";
-        "tscale-window" = "sphinx";
-        "tscale-radius" = 1.05;
-        "tscale-clamp" = 0.0;
-      };
+        [EraiRaws]
+        profile-cond=string.match(get("filename"), "%[Erai%-raws%]")
+        deband="yes"
 
-      profiles = {
+        [HorribleSubs]
+        profile-cond=string.match(get("filename"), "%[HorribleSubs%]")
+        deband="yes"
 
-        HorribleSubs = {
-          profile-cond = "string.match(p.filename, \"%[1080p%+%]\")~=nil";
-          deband = "yes";
-        };
+        [SubsPlease]
+        profile-cond=string.match(get("filename"), "%[SubsPlease%]")
+        deband="yes"
 
-        EraiRaws = {
-          profile-cond = "string.match(p.filename, \"Erai%-raws\")~=nil";
-          deband = "yes";
-        };
-
-        SubsPlease = {
-          profile-cond = "string.match(p.filename, \"SubsPlease\")~=nil";
-          deband = "yes";
-        };
-
-      };
+        [Interpolation]
+        profile-cond=p["container_fps"] <= 24
+        blend-subtitles="yes"
+        video-sync="display-resample"
+        interpolation="yes"
+        tscale="gaussian"
+        tscale-window="sphinx"
+        tscale-radius="1.05"
+        tscale-clamp="0.0"
+      '';
     };
+
   };
 
 }

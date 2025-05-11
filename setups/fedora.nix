@@ -68,6 +68,12 @@
       jq.enable = true;
       just.enable = true;
       libwebp.enable = true;
+
+      mpv = {
+        enable = false;
+        configure = true;
+      };
+
       nh.enable = true;
       nixfmt.enable = true;
       nushell.enable = true;
@@ -95,10 +101,8 @@
     username = configVars.username;
     homeDirectory = "/home/${configVars.username}";
 
-    packages =
-      with pkgs;
-      [
-      ];
+    packages = with pkgs; [
+    ];
 
     # This value determines the Home Manager release that your
     # configuration is compatible with. This helps avoid breakage
