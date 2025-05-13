@@ -11,7 +11,7 @@ ADDITIONAL_ARGS := if HOSTNAME == "p16gen2" { "--impure" } else { "" }
 
 # Format source
 @format:
-    pre-commit run --all-files
+    #pre-commit run --all-files
 
 # Build home to 'result' directory
 [group('run')]
@@ -33,3 +33,15 @@ update:
 add-program NAME:
     cat common/programs/_template | sed 's/@@NAME@@/{{NAME}}/g' > common/programs/{{NAME}}.nix
     just format
+
+[group('silverblue')]
+silverblue-update:
+    nh home switch --update --configuration "elias@silverblue" .
+
+[group('silverblue')]
+silverblue-verify: format
+    nh home build --out-link result --configuration "elias@silverblue" .
+
+[group('silverblue')]
+silverblue-apply: format
+    nh home switch --configuration "elias@silverblue" .
