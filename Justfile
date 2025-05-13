@@ -31,38 +31,5 @@ update:
 # Add a new program, needs to be enabled manually
 [group('configure')]
 add-program NAME:
-    #!/usr/bin/env bash
-
-    cat > common/programs/{{ NAME }}.nix << EOF
-    {
-      config,
-      pkgs,
-      lib,
-      ...
-    }:
-    let
-      cfg = config.myOS.programs.{{ NAME }};
-    in
-    {
-
-      options.myOS.programs.{{ NAME }} = with lib; {
-
-        enable = mkEnableOption "{{ NAME }}";
-
-      };
-
-      config = lib.mkIf cfg.enable {
-
-        home.packages = with pkgs; [
-          {{ NAME }}
-        ];
-
-        programs.{{ NAME }} = {
-          enable = true;
-        };
-
-      };
-
-    }
-    EOF
+    cat common/programs/_template | sed 's/@@NAME@@/{{NAME}}/g' > common/programs/{{NAME}}.nix
     just format
