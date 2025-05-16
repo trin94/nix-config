@@ -20,16 +20,6 @@ in
       type = types.str;
     };
 
-    wallpaper = mkOption {
-      type = types.nullOr types.str;
-      default = null;
-    };
-
-    wallpaperDark = mkOption {
-      type = types.nullOr types.str;
-      default = cfg.wallpaper;
-    };
-
     dockApps = mkOption {
       type = types.listOf types.str;
       default = [ ];
@@ -46,11 +36,6 @@ in
 
       "org/gnome/desktop/datetime" = {
         automatic-timezone = true;
-      };
-
-      "org/gnome/desktop/background" = {
-        "picture-uri" = lib.mkIf (cfg.wallpaper != null) cfg.wallpaper;
-        "picture-uri-dark" = lib.mkIf (cfg.wallpaperDark != null) cfg.wallpaperDark;
       };
 
       "org/gnome/desktop/interface" = {
