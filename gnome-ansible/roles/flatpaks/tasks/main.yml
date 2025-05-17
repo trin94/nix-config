@@ -1,5 +1,3 @@
-# tasks file for flatpaks
-
 - name: Add Flatpak remote for Flathub
   community.general.flatpak_remote:
     name: "{{ item.name }}"

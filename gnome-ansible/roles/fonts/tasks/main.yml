@@ -32,4 +32,4 @@
 
 - name: "Update Fonts Cache"
   ansible.builtin.command:
-    cmd: fc-cache -f -v
+    cmd: fc-cache -f "{{ ansible_env.HOME }}/.local/share/fonts"
