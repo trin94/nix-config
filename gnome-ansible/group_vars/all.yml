@@ -235,7 +235,6 @@ idle_timeout: '600'
 # The 'workstation' role #
 ##########################
 global_workstation_settings:
-  install_jetbrains_toolbox: true
   install_docker: true
   repos:
     absent:
@@ -262,4 +261,8 @@ global_workstation_settings:
     - {state: 'absent', name: 'totem'}
     - {state: 'absent', name: 'vlc'}
     - {state: 'present', name: 'gnome-backgrounds-extras'}
-    - {state: 'present', name: '1password'}
+    - {state: 'present', name: '1password',}
+
+# The 'jetbrains_toolbox' role #
+################################
+install_jetbrains_toolbox: true
