@@ -10,6 +10,7 @@ dconf_settings:
       - org.telegram.desktop.desktop
       - com.teamspeak.TeamSpeak3.desktop
       - 1password.desktop
+  - {key: '/org/gnome/Ptyxis/Profiles/a6d8c5d2-7fdf-434d-b2c1-5a6e0df9696a/custom-command', value: "'bash'",}
 
 flatpak_remote_install: []
 
