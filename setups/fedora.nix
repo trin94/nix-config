@@ -84,7 +84,7 @@ in
 
   home = {
     username = username;
-    homeDirectory = configLocation;
+    homeDirectory = homeDirectory;
 
     packages =
       with pkgs;
