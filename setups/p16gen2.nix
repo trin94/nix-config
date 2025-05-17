@@ -3,12 +3,19 @@
   pkgs,
   lib,
   pkgsStable,
-  configVars,
   inputs,
   dirImport,
   ...
 }:
-
+let
+  configLocation = "${homeDirectory}/.dotfiles";
+  defaultLocale = "en_US.UTF-8";
+  extraLocale = "de_DE.UTF-8";
+  homeDirectory = "/home/${username}";
+  keyboardLayout = "de+us";
+  timezone = "Europe/Berlin";
+  username = "elias";
+in
 {
 
   imports = dirImport {
@@ -32,7 +39,7 @@
 
       fish = {
         enable = true;
-        configLocation = configVars.configLocation;
+        configLocation = configLocation;
       };
 
       git = {
@@ -75,8 +82,8 @@
   };
 
   home = {
-    username = configVars.username;
-    homeDirectory = "/home/${configVars.username}";
+    username = username;
+    homeDirectory = homeDirectory;
 
     packages = with pkgs; [
       azure-storage-azcopy

@@ -3,14 +3,18 @@
   pkgs,
   lib,
   pkgsStable,
-  configVars,
   inputs,
   dirImport,
   ...
 }:
 let
-  username = "elias";
+  configLocation = "${homeDirectory}/.dotfiles";
+  defaultLocale = "en_US.UTF-8";
+  extraLocale = "de_DE.UTF-8";
   homeDirectory = "/var/home/${username}";
+  keyboardLayout = "de+us";
+  timezone = "Europe/Berlin";
+  username = "elias";
 in
 {
 
@@ -51,7 +55,7 @@ in
   #
   #      fish = {
   #        enable = true;
-  #        configLocation = configVars.configLocation;
+  #        configLocation = configLocation;
   #      };
   #
   #      git = {

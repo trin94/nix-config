@@ -31,7 +31,6 @@
       inherit (nixpkgs) lib;
       inherit (self) outputs;
 
-      configVars = import ./common/vars.nix { inherit inputs lib; };
       dirImport = (import ./common/lib/dirImport.nix { inherit (nixpkgs) lib; }).dirImport;
 
       pkgs = import nixpkgs {
@@ -43,7 +42,6 @@
         inherit
           inputs
           dirImport
-          configVars
           pkgs
           ;
       };
