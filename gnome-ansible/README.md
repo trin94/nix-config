@@ -2,11 +2,10 @@
 
 - Install Prerequisites
   - Silverblue:
-    - Layer ansible and python3-psutil
-      ```shell
-      rpm-ostree install ansible python3-psutil
-      ```
-    - Reboot
+    ```shell
+    rpm-ostree install ansible python3-psutil
+    reboot
+    ```
   - Fedora:
     ```shell
     sudo dnf install ansible git python3-pip
@@ -15,9 +14,9 @@
   ```shell
   ansible-galaxy collection install community.general
   ```
-- Run the playbooks
+- Run the playbook
   ```shell
-  ansible-playbook --ask-become-pass --verbose --inventory-file hosts.ini --limit "$HOSTNAME" playbook_base.yml
+  ./run-playbook.sh
   ```
 
 ## License
