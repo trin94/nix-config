@@ -1,43 +1,35 @@
-
-- name: Check for the presence of the 'fontconfig' package
-  ansible.builtin.stat:
-    path: /usr/lib/fontconfig
-  register: fontconfig
-
-- debug:
-    msg: "NOTE! The fontconfig package will now be installed, but this role won't work until the package is fully installed after a reboot."
-  when: fontconfig.stat.exists != true
-
-- name: Install fontconfig layered package
-  community.general.rpm_ostree_pkg:
-    name: fontconfig
-    state: present
-    # apply_live: true
-  become: yes
-  become_method: sudo
-  when: fontconfig.stat.exists != true
-
-- name: Download powerline fonts git repository
-  ansible.builtin.git:
-    repo: 'https://github.com/powerline/fonts.git'
-    dest: /tmp/fonts
-
-- name: Ensure the user has a '~/.local/share/fonts' directory
-  ansible.builtin.file:
-    dest: "{{ ansible_env.HOME }}/.local/share/fonts"
-    state: directory
-    owner: "{{ ansible_env.USER }}"
-    group: "{{ ansible_env.USER }}"
-
-- name: Copy fonts to the user's '~/.local/share/fonts' directory
-  ansible.builtin.command: cp -r /tmp/fonts/{{ item }} {{ ansible_env.HOME }}/.local/share/fonts/
-  loop: "{{ install_fonts }}"
-  notify: Update font cache
-
-- name: Set fonts directory ownership
+- name: "Create Directories for Nerd Fonts in '~/.local/share/fonts'"
   ansible.builtin.file:
     dest: "{{ ansible_env.HOME }}/.local/share/fonts/{{ item }}"
     state: directory
     owner: "{{ ansible_env.USER }}"
     group: "{{ ansible_env.USER }}"
-  loop: "{{ install_fonts }}"
+  loop: "{{ global_nerd_fonts + (nerd_fonts | default([])) }}"
+
+- name: "Download Nerd Fonts"
+  ansible.builtin.unarchive:
+    remote_src: yes
+    src: "https://github.com/ryanoasis/nerd-fonts/releases/download/{{ global_nerd_fonts_version }}/{{ item }}.zip"
+    dest: "{{ ansible_env.HOME }}/.local/share/fonts/{{ item }}"
+  loop: "{{ global_nerd_fonts + (nerd_fonts | default([])) }}"
+
+- name: "Create Directories for Fonts in '~/.local/share/fonts'"
+  ansible.builtin.file:
+    dest: "{{ ansible_env.HOME }}/.local/share/fonts/{{ item.directory }}"
+    state: directory
+    owner: "{{ ansible_env.USER }}"
+    group: "{{ ansible_env.USER }}"
+  loop: "{{ global_fonts | default([]) }}"
+
+- name: "Download Fonts"
+  get_url:
+    url: "{{ item.1 | regex_replace('https://github.com/([^/]+)/([^/]+)/blob/(.+)', 'https://raw.githubusercontent.com/\\1/\\2/\\3') }}"
+    dest: "{{ ansible_env.HOME }}/.local/share/fonts/{{ item.0.directory }}/{{ item.1 | urlsplit('path') | basename }}"
+    mode: '0644'
+  loop: "{{ global_fonts | subelements('urls') }}"
+  loop_control:
+    label: "{{ item.0.directory }}/{{ item.1 | urlsplit('path') | basename }}"
+
+- name: "Update Fonts Cache"
+  ansible.builtin.command:
+    cmd: fc-cache -f -v

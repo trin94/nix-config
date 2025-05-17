@@ -32,13 +32,27 @@ global_flatpak_package_install: []
 
 # The 'fonts' role #
 ####################
-install_fonts:
-  - DejaVuSansMono
-  - FiraMono
-  - Hack
-  - RobotoMono
-  - SourceCodePro
-  - UbuntuMono
+# https://github.com/ryanoasis/nerd-fonts
+global_nerd_fonts_version: 'v3.4.0'
+global_nerd_fonts:
+  - CascadiaCode
+  - UbuntuSans
+  - JetBrainsMono
+
+# https://github.com/google/fonts
+global_fonts:
+  - directory: 'Noto Sans'
+    urls:
+      - "https://github.com/google/fonts/blob/main/ofl/notosans/NotoSans-Italic[wdth,wght].ttf"
+      - "https://github.com/google/fonts/blob/main/ofl/notosans/NotoSans[wdth,wght].ttf"
+  - directory: 'Ubuntu Sans'
+    urls:
+      - "https://github.com/google/fonts/blob/main/ufl/ubuntusans/UbuntuSans-Italic[wdth,wght].ttf"
+      - "https://github.com/google/fonts/blob/main/ufl/ubuntusans/UbuntuSans[wdth,wght].ttf"
+  - directory: 'Inter'
+    urls:
+      - "https://github.com/google/fonts/blob/main/ofl/inter/Inter-Italic[opsz,wght].ttf"
+      - "https://github.com/google/fonts/blob/main/ofl/inter/Inter[opsz,wght].ttf"
 
 # The 'gnome_settings' role #
 #############################
