@@ -3,7 +3,7 @@ dconf_settings:
     value:
       - org.gnome.Nautilus.desktop
       - dev.zed.Zed.desktop
-      - firefox.desktop
+      - org.mozilla.firefox.desktop
       - jetbrains-toolbox.desktop
       - jetbrains-idea.desktop
       - jetbrains-pycharm.desktop
@@ -11,11 +11,7 @@ dconf_settings:
       - com.teamspeak.TeamSpeak3.desktop
       - 1password.desktop
 
-flatpak_remote_install:
-  - name: 'mpvQC'
-    method: 'user'
-    state: 'present'
-    url: 'https://mpvqc.github.io/mpvQC-flatpak/mpvQC.flatpakref'
+flatpak_remote_install: []
 
 flatpak_package_install:
   - name: app.drey.EarTag
@@ -27,6 +23,3 @@ flatpak_package_install:
   - name: org.gnome.Papers
   - name: org.gnome.TextEditor
   - name: org.telegram.desktop
-
-  - name: io.github.mpvqc.mpvQC
-    remote: 'mpvQC'
