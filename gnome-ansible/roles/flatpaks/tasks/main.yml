@@ -3,18 +3,26 @@
 - name: Add Flatpak remote for Flathub
   community.general.flatpak_remote:
     name: "{{ item.name }}"
-    state: present
-    method: user
-    flatpakrepo_url: "{{ item.url }}"
-  loop: "{{ flatpak_remote_install }}"
+    state: "{{ item.state }}"
+    method: "{{ item.method }}"
+    flatpakrepo_url: "{{ item.url | default(omit) }}"
+  loop: "{{ global_flatpak_remote_install + (flatpak_remote_install | default([])) }}"
 
-- name: Update metadata to show newly-available software
-  ansible.builtin.command: flatpak update --appstream
+- name: Get list of Flatpak apps from 'fedora' remote
+  shell: |
+    flatpak list --app --columns=application,origin | awk '$2 == "fedora" {print $1}'
+  register: fedora_flatpak_apps
+  changed_when: false
+
+- name: Uninstall Flatpak apps from 'fedora' remote
+  shell: "flatpak uninstall -y {{ item }}"
+  loop: "{{ fedora_flatpak_apps.stdout_lines }}"
+  when: fedora_flatpak_apps.stdout != ""
 
 - name: Install Flatpak packages
   community.general.flatpak:
-    name: "{{ item.package }}"
-    state: present
-    method: user
-    remote: "{{ item.remote }}"
-  loop: "{{ flatpak_package_install }}"
+    name: "{{ item.name }}"
+    state: "{{ item.state | default('present') }}"
+    method: "{{ item.method | default('user') }}"
+    remote: "{{ item.remote | default('flathub') }}"
+  loop: "{{ global_flatpak_package_install + (flatpak_package_install | default([])) }}"

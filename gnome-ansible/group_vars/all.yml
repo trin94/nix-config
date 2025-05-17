@@ -13,21 +13,22 @@ base_package_remove:
 
 # The 'flatpak' role #
 ######################
-flatpak_remote_install:
-  - {name: 'flathub', url: 'https://dl.flathub.org/repo/flathub.flatpakrepo'} # Flathub
-# - { name: 'fedora', url: 'oci+https://registry.fedoraproject.org' }                           # Fedora
-# - { name: 'flathub-beta', url: 'https://flathub.org/beta-repo/flathub-beta.flatpakrepo' }     # Flathub Beta
-# - { name: 'gnome-nightly', url: 'https://nightly.gnome.org/gnome-nightly.flatpakrepo' }       # GNOME nightly
-# - { name: 'kdeapps', url: 'https://distribute.kde.org/kdeapps.flatpakrepo' }                  # KDE applications
+global_flatpak_remote_install:
+  - name: 'flathub'
+    method: 'user'
+    state: 'present'
+    url: 'https://dl.flathub.org/repo/flathub.flatpakrepo'
+  - name: 'flathub'
+    method: 'system'
+    state: 'absent'
+  - name: 'fedora'
+    method: 'system'
+    state: 'absent'
+  - name: 'fedora'
+    method: 'user'
+    state: 'absent'
 
-flatpak_package_install:
-  - {remote: 'flathub', package: 'org.glimpse_editor.Glimpse'}
-  - {remote: 'flathub', package: 'org.gnome.eog'}
-  - {remote: 'flathub', package: 'org.gnome.Firmware'}
-  - {remote: 'flathub', package: 'org.gnome.Podcasts'}
-  - {remote: 'flathub', package: 'org.gnome.Totem'}
-  - {remote: 'flathub', package: 'org.mozilla.firefox'}
-  - {remote: 'flathub', package: 'org.remmina.Remmina',}
+global_flatpak_package_install: []
 
 # The 'fonts' role #
 ####################
