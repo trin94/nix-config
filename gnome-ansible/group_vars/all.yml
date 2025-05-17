@@ -14,19 +14,19 @@ base_package_remove:
 # The 'flatpak' role #
 ######################
 global_flatpak_remote_install:
-  - name: 'flathub'
-    method: 'user'
-    state: 'present'
+  - name: flathub
+    method: user
+    state: present
     url: 'https://dl.flathub.org/repo/flathub.flatpakrepo'
-  - name: 'flathub'
-    method: 'system'
-    state: 'absent'
-  - name: 'fedora'
-    method: 'system'
-    state: 'absent'
-  - name: 'fedora'
-    method: 'user'
-    state: 'absent'
+  - name: flathub
+    method: system
+    state: absent
+  - name: fedora
+    method: system
+    state: absent
+  - name: fedora
+    method: user
+    state: absent
 
 global_flatpak_package_install: []
 
@@ -246,22 +246,22 @@ global_workstation_settings:
       - /etc/yum.repos.d/google-chrome.repo
       - /etc/yum.repos.d/rpmfusion-nonfree-nvidia-driver.repo
   apps:
-    - {state: 'absent', name: 'eog'}
-    - {state: 'absent', name: 'evince'}
-    - {state: 'absent', name: 'gedit'}
-    - {state: 'absent', name: 'gnome-contacts'}
-    - {state: 'absent', name: 'gnome-help'}
-    - {state: 'absent', name: 'gnome-maps'}
-    - {state: 'absent', name: 'gnome-photos'}
-    - {state: 'absent', name: 'gnome-tour'}
-    - {state: 'absent', name: 'loupe'}
-    - {state: 'absent', name: 'malcontent-control'}
-    - {state: 'absent', name: 'nheko'}
-    - {state: 'absent', name: 'rhythmbox'}
-    - {state: 'absent', name: 'totem'}
-    - {state: 'absent', name: 'vlc'}
-    - {state: 'present', name: 'gnome-backgrounds-extras'}
-    - {state: 'present', name: '1password',}
+    - {state: absent, name: 'eog'}
+    - {state: absent, name: 'evince'}
+    - {state: absent, name: 'gedit'}
+    - {state: absent, name: 'gnome-contacts'}
+    - {state: absent, name: 'gnome-help'}
+    - {state: absent, name: 'gnome-maps'}
+    - {state: absent, name: 'gnome-photos'}
+    - {state: absent, name: 'gnome-tour'}
+    - {state: absent, name: 'loupe'}
+    - {state: absent, name: 'malcontent-control'}
+    - {state: absent, name: 'nheko'}
+    - {state: absent, name: 'rhythmbox'}
+    - {state: absent, name: 'totem'}
+    - {state: absent, name: 'vlc'}
+    - {state: present, name: 'gnome-backgrounds-extras'}
+    - {state: present, name: '1password',}
 
 # The 'jetbrains_toolbox' role #
 ################################
