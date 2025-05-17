@@ -1,28 +1,32 @@
 - hosts: fedora # fedora workstation
   roles:
-    - role: gnome_settings
     - role: flatpaks
     - role: fonts
+    - role: gnome_settings
+    - role: jetbrains_toolbox
     - role: workstation
 
 - hosts: p16gen2 # fedora workstation
   roles:
-    - role: gnome_settings
     - role: flatpaks
     - role: fonts
+    - role: gnome_settings
+    - role: jetbrains_toolbox
     - role: workstation
 
 - hosts: t470p # fedora workstation
   roles:
-    - role: gnome_settings
     - role: flatpaks
     - role: fonts
+    - role: gnome_settings
+    - role: jetbrains_toolbox
     - role: workstation
 
 - hosts: silverblue
   roles:
-    # - role: layered_packages
-    # - role: os_updates
-    - role: gnome_settings
     - role: flatpaks
     - role: fonts
+    - role: gnome_settings
+    - role: jetbrains_toolbox
+  # - role: layered_packages
+  # - role: os_updates
