@@ -1,8 +1,25 @@
-
-- hosts: all
+- hosts: fedora # fedora workstation
   roles:
-    - {role: layered_packages}
-    - {role: flatpaks}
-    - {role: fonts}
-    - {role: gnome_settings}
-    - {role: os_updates}
+    - role: gnome_settings
+    - role: flatpaks
+    - role: fonts
+
+- hosts: p16gen2 # fedora workstation
+  roles:
+    - role: gnome_settings
+    - role: flatpaks
+    - role: fonts
+
+- hosts: t470p # fedora workstation
+  roles:
+    - role: gnome_settings
+    - role: flatpaks
+    - role: fonts
+
+- hosts: silverblue
+  roles:
+    # - role: layered_packages
+    # - role: os_updates
+    - role: gnome_settings
+    - role: flatpaks
+    - role: fonts
