@@ -1,0 +1,11 @@
+dconf_settings:
+  - key: '/org/gnome/shell/favorite-apps'
+    value:
+      - org.gnome.Nautilus.desktop
+      - dev.zed.Zed.desktop
+      - org.mozilla.firefox.desktop
+      - jetbrains-toolbox.desktop
+      - jetbrains-idea.desktop
+      - jetbrains-pycharm.desktop
+      - com.slack.Slack.desktop
+      - 1password.desktop
