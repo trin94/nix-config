@@ -14,32 +14,10 @@
   imports = dirImport {
     paths = [
       ../common/programs
-      ../common/fonts.nix
-      ../common/gnome.nix
     ];
   };
 
   myOS = {
-
-    desktop = {
-
-      gnome = {
-        configure = true;
-        terminalApp = "ptyxis -s";
-        dockApps = [
-          "org.gnome.Nautilus.desktop"
-          "dev.zed.Zed.desktop"
-          "org.mozilla.firefox.desktop"
-          "jetbrains-toolbox.desktop"
-          "jetbrains-idea.desktop"
-          "jetbrains-pycharm.desktop"
-          "org.telegram.desktop.desktop"
-          "com.teamspeak.TeamSpeak3.desktop"
-          "1password.desktop"
-        ];
-      };
-
-    };
 
     programs = {
 
