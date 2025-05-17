@@ -39,19 +39,177 @@ install_fonts:
   - SourceCodePro
   - UbuntuMono
 
-# The 'settings' role #
-#######################
-dconf_settings:
-  - {key: '/org/gnome/settings-daemon/plugins/color/night-light-enabled', value: 'true'}
-  - {key: '/org/gnome/desktop/privacy/remember-recent-files', value: 'true'}
+# The 'gnome_settings' role #
+#############################
+global_dconf_settings:
+  - {key: '/org/gnome/desktop/datetime/automatic-timezone', value: 'true'}
+
+  - {key: '/org/gnome/desktop/input-sources/xkb-options', value: "['lv3:rwin_switch']"}
+
+  - {key: '/org/gnome/desktop/interface/clock-format', value: "'12h'"}
+  - {key: '/org/gnome/desktop/interface/clock-show-weekday', value: 'true'}
+  - {key: '/org/gnome/desktop/interface/enable-hot-corners', value: 'false'}
+  - {key: '/org/gnome/desktop/interface/monospace-font-name', value: "'CaskaydiaCove NF Bold 14'"}
+
+  - {key: '/org/gnome/desktop/peripherals/mouse/accel-profile', value: "'flat'"}
+  - {key: '/org/gnome/desktop/peripherals/mouse/speed', value: '0.6'}
+
+  - {key: '/org/gnome/desktop/privacy/remember-recent-files', value: 'false'}
   - {key: '/org/gnome/desktop/privacy/remove-old-trash-files', value: 'true'}
   - {key: '/org/gnome/desktop/privacy/remove-old-temp-files', value: 'true'}
   - {key: '/org/gnome/desktop/privacy/old-files-age', value: 'uint32 14'}
-  - {key: '/org/gnome/desktop/session/idle-delay', value: 'uint32 480'}
-  - {key: '/org/gnome/desktop/screensaver/lock-delay', value: 'uint32 1800'}
-  - {key: '/org/gnome/desktop/interface/clock-format', value: "'12h'"}
-  - {key: '/org/gtk/settings/file-chooser/clock-format', value: "'12h'"}
-  - {key: '/org/gnome/desktop/wm/preferences/button-layout', value: "'appmenu:minimize,maximize,close'",}
+
+  - {key: '/org/gnome/desktop/screen-time-limits/daily-limit-enabled', value: 'false'}
+  - {key: '/org/gnome/desktop/screen-time-limits/history-enabled', value: 'false'}
+
+  - {key: '/org/gnome/desktop/session/idle-delay', value: 'uint32 900'}
+
+  - {key: '/org/gnome/desktop/wm/keybindings/activate-window-menu', value: "['']"}
+  - {key: '/org/gnome/desktop/wm/keybindings/always-on-top', value: "['']"}
+  - {key: '/org/gnome/desktop/wm/keybindings/begin-move', value: "['']"}
+  - {key: '/org/gnome/desktop/wm/keybindings/begin-resize', value: "['']"}
+  - {key: '/org/gnome/desktop/wm/keybindings/close', value: "['<Shift><Super>q']"}
+  - {key: '/org/gnome/desktop/wm/keybindings/cycle-group', value: "['']"}
+  - {key: '/org/gnome/desktop/wm/keybindings/cycle-group-backward', value: "['']"}
+  - {key: '/org/gnome/desktop/wm/keybindings/cycle-panels', value: "['']"}
+  - {key: '/org/gnome/desktop/wm/keybindings/cycle-panels-backward', value: "['']"}
+  - {key: '/org/gnome/desktop/wm/keybindings/cycle-windows', value: "['']"}
+  - {key: '/org/gnome/desktop/wm/keybindings/cycle-windows-backward', value: "['']"}
+  - {key: '/org/gnome/desktop/wm/keybindings/lower', value: "['']"}
+  - {key: '/org/gnome/desktop/wm/keybindings/maximize', value: "['<Super>Up']"}
+  - {key: '/org/gnome/desktop/wm/keybindings/maximize-horizontally', value: "['']"}
+  - {key: '/org/gnome/desktop/wm/keybindings/maximize-vertically', value: "['']"}
+  - {key: '/org/gnome/desktop/wm/keybindings/minimize', value: "['']"}
+  - {key: '/org/gnome/desktop/wm/keybindings/move-to-center', value: "['']"}
+  - {key: '/org/gnome/desktop/wm/keybindings/move-to-corner-ne', value: "['']"}
+  - {key: '/org/gnome/desktop/wm/keybindings/move-to-corner-nw', value: "['']"}
+  - {key: '/org/gnome/desktop/wm/keybindings/move-to-corner-se', value: "['']"}
+  - {key: '/org/gnome/desktop/wm/keybindings/move-to-corner-sw', value: "['']"}
+  - {key: '/org/gnome/desktop/wm/keybindings/move-to-monitor-down', value: "['']"}
+  - {key: '/org/gnome/desktop/wm/keybindings/move-to-monitor-left', value: "['']"}
+  - {key: '/org/gnome/desktop/wm/keybindings/move-to-monitor-right', value: "['']"}
+  - {key: '/org/gnome/desktop/wm/keybindings/move-to-monitor-up', value: "['']"}
+  - {key: '/org/gnome/desktop/wm/keybindings/move-to-side-e', value: "['']"}
+  - {key: '/org/gnome/desktop/wm/keybindings/move-to-side-n', value: "['']"}
+  - {key: '/org/gnome/desktop/wm/keybindings/move-to-side-s', value: "['']"}
+  - {key: '/org/gnome/desktop/wm/keybindings/move-to-side-w', value: "['']"}
+  - {key: '/org/gnome/desktop/wm/keybindings/move-to-workspace-1', value: "['']"}
+  - {key: '/org/gnome/desktop/wm/keybindings/move-to-workspace-2', value: "['']"}
+  - {key: '/org/gnome/desktop/wm/keybindings/move-to-workspace-3', value: "['']"}
+  - {key: '/org/gnome/desktop/wm/keybindings/move-to-workspace-4', value: "['']"}
+  - {key: '/org/gnome/desktop/wm/keybindings/move-to-workspace-5', value: "['']"}
+  - {key: '/org/gnome/desktop/wm/keybindings/move-to-workspace-6', value: "['']"}
+  - {key: '/org/gnome/desktop/wm/keybindings/move-to-workspace-7', value: "['']"}
+  - {key: '/org/gnome/desktop/wm/keybindings/move-to-workspace-8', value: "['']"}
+  - {key: '/org/gnome/desktop/wm/keybindings/move-to-workspace-9', value: "['']"}
+  - {key: '/org/gnome/desktop/wm/keybindings/move-to-workspace-10', value: "['']"}
+  - {key: '/org/gnome/desktop/wm/keybindings/move-to-workspace-11', value: "['']"}
+  - {key: '/org/gnome/desktop/wm/keybindings/move-to-workspace-12', value: "['']"}
+  - {key: '/org/gnome/desktop/wm/keybindings/move-to-workspace-down', value: "['']"}
+  - {key: '/org/gnome/desktop/wm/keybindings/move-to-workspace-last', value: "['']"}
+  - {key: '/org/gnome/desktop/wm/keybindings/move-to-workspace-left', value: "['<Control><Shift><Alt>Left']"}
+  - {key: '/org/gnome/desktop/wm/keybindings/move-to-workspace-right', value: "['<Control><Shift><Alt>Right']"}
+  - {key: '/org/gnome/desktop/wm/keybindings/move-to-workspace-up', value: "['']"}
+  - {key: '/org/gnome/desktop/wm/keybindings/panel-main-menu', value: "['']"}
+  - {key: '/org/gnome/desktop/wm/keybindings/panel-run-dialog', value: "['<Alt>F2']"}
+  - {key: '/org/gnome/desktop/wm/keybindings/raise', value: "['']"}
+  - {key: '/org/gnome/desktop/wm/keybindings/raise-or-lower', value: "['']"}
+  - {key: '/org/gnome/desktop/wm/keybindings/set-spew-mark', value: "['']"}
+  - {key: '/org/gnome/desktop/wm/keybindings/show-desktop', value: "['']"}
+  - {key: '/org/gnome/desktop/wm/keybindings/switch-applications', value: "['<Alt>Tab']"}
+  - {key: '/org/gnome/desktop/wm/keybindings/switch-applications-backward', value: "['<Shift><Alt>Tab']"}
+  - {key: '/org/gnome/desktop/wm/keybindings/switch-group', value: "['']"}
+  - {key: '/org/gnome/desktop/wm/keybindings/switch-group-backward', value: "['']"}
+  - {key: '/org/gnome/desktop/wm/keybindings/switch-input-source', value: "['']"}
+  - {key: '/org/gnome/desktop/wm/keybindings/switch-input-source-backward', value: "['']"}
+  - {key: '/org/gnome/desktop/wm/keybindings/switch-panels', value: "['']"}
+  - {key: '/org/gnome/desktop/wm/keybindings/switch-panels-backward', value: "['']"}
+  - {key: '/org/gnome/desktop/wm/keybindings/switch-to-workspace-1', value: "['']"}
+  - {key: '/org/gnome/desktop/wm/keybindings/switch-to-workspace-2', value: "['']"}
+  - {key: '/org/gnome/desktop/wm/keybindings/switch-to-workspace-3', value: "['']"}
+  - {key: '/org/gnome/desktop/wm/keybindings/switch-to-workspace-4', value: "['']"}
+  - {key: '/org/gnome/desktop/wm/keybindings/switch-to-workspace-5', value: "['']"}
+  - {key: '/org/gnome/desktop/wm/keybindings/switch-to-workspace-6', value: "['']"}
+  - {key: '/org/gnome/desktop/wm/keybindings/switch-to-workspace-7', value: "['']"}
+  - {key: '/org/gnome/desktop/wm/keybindings/switch-to-workspace-8', value: "['']"}
+  - {key: '/org/gnome/desktop/wm/keybindings/switch-to-workspace-9', value: "['']"}
+  - {key: '/org/gnome/desktop/wm/keybindings/switch-to-workspace-10', value: "['']"}
+  - {key: '/org/gnome/desktop/wm/keybindings/switch-to-workspace-11', value: "['']"}
+  - {key: '/org/gnome/desktop/wm/keybindings/switch-to-workspace-12', value: "['']"}
+  - {key: '/org/gnome/desktop/wm/keybindings/switch-to-workspace-down', value: "['']"}
+  - {key: '/org/gnome/desktop/wm/keybindings/switch-to-workspace-last', value: "['']"}
+  - {key: '/org/gnome/desktop/wm/keybindings/switch-to-workspace-left', value: "['<Control><Alt>Left']"}
+  - {key: '/org/gnome/desktop/wm/keybindings/switch-to-workspace-right', value: "['<Control><Alt>Right']"}
+  - {key: '/org/gnome/desktop/wm/keybindings/switch-to-workspace-up', value: "['']"}
+  - {key: '/org/gnome/desktop/wm/keybindings/switch-windows', value: "['']"}
+  - {key: '/org/gnome/desktop/wm/keybindings/switch-windows-backward', value: "['']"}
+  - {key: '/org/gnome/desktop/wm/keybindings/toggle-above', value: "['']"}
+  - {key: '/org/gnome/desktop/wm/keybindings/toggle-fullscreen', value: "['']"}
+  - {key: '/org/gnome/desktop/wm/keybindings/toggle-maximized', value: "['']"}
+  - {key: '/org/gnome/desktop/wm/keybindings/toggle-on-all-workspaces', value: "['']"}
+  - {key: '/org/gnome/desktop/wm/keybindings/unmaximize', value: "['<Super>Down']"}
+
+  - {key: '/org/gnome/mutter/dynamic-workspaces', value: 'true'}
+  - {key: '/org/gnome/mutter/workspaces-only-on-primary', value: 'true'}
+
+  - {key: '/org/gnome/nautilus/list-view/default-zoom-level', value: "'small'"}
+  - {key: '/org/gnome/nautilus/preferences/default-folder-viewer', value: "'list-view'"}
+
+  - {key: '/org/gnome/settings-daemon/plugins/power/power-button-action', value: "'interactive'"}
+  - {key: '/org/gnome/settings-daemon/plugins/power/sleep-inactive-ac-timeout', value: 'uint32 0'}
+  - {key: '/org/gnome/settings-daemon/plugins/power/sleep-inactive-ac-type', value: "'nothing'"}
+
+  - {key: '/org/gnome/shell/disabled-extensions', value: "['background-logo@fedorahosted.org']"}
+  - {key: '/org/gnome/shell/enabled-extensions', value: '@as []'}
+
+  - {key: '/org/gtk/gtk4/settings/file-chooser/sort-directories-first', value: 'true'}
+
+  - {key: '/org/gtk/gtk4/Settings/FileChooser/clock-format', value: "'12h'"}
+  - {key: '/org/gtk/Settings/FileChooser/clock-format', value: "'12h'"}
+
+  # Ptyxis
+  - {key: '/org/gnome/Ptyxis/audible-bell', value: 'false'}
+  - {key: '/org/gnome/Ptyxis/cursor-blink-mode', value: "'system'"}
+  - {key: '/org/gnome/Ptyxis/default-columns', value: 'uint32 120'}
+  - {key: '/org/gnome/Ptyxis/default-profile-uuid', value: "'a6d8c5d2-7fdf-434d-b2c1-5a6e0df9696a'"}
+  - {key: '/org/gnome/Ptyxis/default-rows', value: 'uint32 30'}
+  - {key: '/org/gnome/Ptyxis/enable-a11y', value: 'false'}
+  - {key: '/org/gnome/Ptyxis/profile-uuids', value: "['a6d8c5d2-7fdf-434d-b2c1-5a6e0df9696a']"}
+  - {key: '/org/gnome/Ptyxis/restore-window-size', value: 'false'}
+  - {key: '/org/gnome/Ptyxis/use-system-font', value: 'true'}
+  - {key: '/org/gnome/Ptyxis/visual-bell', value: 'false'}
+
+  # Ptyxis Profile
+  - {key: '/org/gnome/Ptyxis/Profiles/a6d8c5d2-7fdf-434d-b2c1-5a6e0df9696a/bold-is-bright', value: 'true'}
+  - {key: '/org/gnome/Ptyxis/Profiles/a6d8c5d2-7fdf-434d-b2c1-5a6e0df9696a/custom-command', value: "'fish'"}
+  - {key: '/org/gnome/Ptyxis/Profiles/a6d8c5d2-7fdf-434d-b2c1-5a6e0df9696a/label', value: "'frupp.nix'"}
+  - {key: '/org/gnome/Ptyxis/Profiles/a6d8c5d2-7fdf-434d-b2c1-5a6e0df9696a/palette', value: "'nord'"}
+  - {key: '/org/gnome/Ptyxis/Profiles/a6d8c5d2-7fdf-434d-b2c1-5a6e0df9696a/preserve-directory', value: "'never'"}
+  - {key: '/org/gnome/Ptyxis/Profiles/a6d8c5d2-7fdf-434d-b2c1-5a6e0df9696a/scroll-on-output', value: 'false'}
+  - {key: '/org/gnome/Ptyxis/Profiles/a6d8c5d2-7fdf-434d-b2c1-5a6e0df9696a/use-custom-command', value: 'true'}
+
+  # GNOME Text Editor
+  - {key: '/org/gnome/TextEditor/highlight-current-line', value: 'true'}
+  - {key: '/org/gnome/TextEditor/indent-style', value: "'space'"}
+  - {key: '/org/gnome/TextEditor/show-grid', value: 'false'}
+  - {key: '/org/gnome/TextEditor/show-line-numbers', value: 'true'}
+  - {key: '/org/gnome/TextEditor/show-map', value: 'true'}
+  - {key: '/org/gnome/TextEditor/show-right-margin', value: 'true'}
+  - {key: '/org/gnome/TextEditor/style-scheme', value: "'builder-dark'"}
+  - {key: '/org/gnome/TextEditor/tab-width', value: 'uint32 4'}
+  - {key: '/org/gnome/TextEditor/use-system-font', value: 'true'}
+
+  # Custom Keybindings
+  - key: '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings'
+    value:
+      - /org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/
+
+  - key: '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/binding'
+    value: "'<Super>Return'"
+  - key: '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/command'
+    value: "'ptyxis -s'"
+  - key: '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/name'
+    value: "'Terminal'"
 
 # The 'os_updates' role #
 #########################
