@@ -65,7 +65,7 @@
           ];
         };
 
-        "elias@silverblue" = home-manager.lib.homeManagerConfiguration {
+        "elias@container.nix-box" = home-manager.lib.homeManagerConfiguration {
           extraSpecialArgs = extraSpecialArgs // {
             pkgs = import nixpkgs {
               system = "x86_64-linux";
@@ -75,7 +75,7 @@
           pkgs = nixpkgs.legacyPackages."x86_64-linux";
 
           modules = [
-            ./setups/silverblue.nix
+            ./setups/container.nix-box.nix
           ];
         };
 

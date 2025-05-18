@@ -33,3 +33,15 @@ update:
 add-program NAME:
     cat common/programs/_template | sed 's/@@NAME@@/{{NAME}}/g' > common/programs/{{NAME}}.nix
     just format
+
+[group('container')]
+container-verify:
+    nh home build --out-link result --configuration "elias@container.nix-box" .
+
+[group('container')]
+container-apply:
+    nh home switch --configuration "elias@container.nix-box" .
+
+[group('container')]
+container-update:
+    nh home switch --update --configuration "elias@container.nix-box" .
