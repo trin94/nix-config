@@ -1,50 +1,149 @@
-# Install home-manager
+# Fedora Silverblue Setup Guide
 
-Source: https://gist.github.com/queeup/1666bc0a5558464817494037d612f094#nix-package-manager-on-fedora-silverblue
+> ⚠️ This guide is a work in progress.
 
-```shell
-sudo tee /etc/ostree/prepare-root.conf <<'EOL'
-[composefs]
-enabled = yes
-[root]
-transient = true
-EOL
-```
+## Overview
 
-Then apply and reboot
+This guide walks you through setting up Fedora Silverblue with Ansible, Distrobox, and Nix.
 
-```shell
-rpm-ostree initramfs-etc --reboot --track=/etc/ostree/prepare-root.conf
-```
+______________________________________________________________________
 
-Finally install home-manager (**attention**: replace *elias* with the actual username)
+## 1. Install Fedora Silverblue
+
+Install Fedora Silverblue as you normally would.
+
+______________________________________________________________________
+
+## 2. Update the System
 
 ```shell
-curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | \
-   sh -s -- install ostree \
-      --no-confirm \
-      --persistence=/var/lib/nix \
-      --extra-conf 'trusted-users = root elias'
+[HOST] $ rpm-ostree update
 ```
 
-# Install dotfiles
+> 🔁 Reboot after updating.
+
+______________________________________________________________________
+
+## 3. Install Required Packages
+
+Install Ansible and `python3-psutil`:
 
 ```shell
-nix-shell -p git just home-manager nh
-
-git clone https://github.com/trin94/nix-config.git ~/.dotfiles
-cd ~/.dotfiles
-
-export NIX_CONFIG="experimental-features = nix-command flakes"
-
-just silverblue-update
+[HOST] $ rpm-ostree install ansible python3-psutil
 ```
 
-# Install Distrobox
+______________________________________________________________________
 
-1. Install [distrobox](https://distrobox.it/#alternative-methods)
-   ```shell
-   curl -s https://raw.githubusercontent.com/89luca89/distrobox/main/install | sh -s -- --prefix ~/.local
-   ```
-   - Shell scripts are located in /var/home/elias/.local/bin
-   - Manpages are located in /var/home/elias/.local/share/man/man1
+## 4. Set Hostname
+
+```shell
+[HOST] $ hostnamectl hostname silverblue
+```
+
+> 🔁 Reboot after setting the hostname to make new rpm-ostree commit active.
+
+______________________________________________________________________
+
+## 5. Configure the Host
+
+Clone your configuration repository and apply the host playbook:
+
+```shell
+[HOST] $ git clone https://github.com/trin94/nix-config.git ~/.dotfiles
+[HOST] $ cd ~/.dotfiles/gnome-ansible/
+[HOST] $ ./run-host-playbook.sh
+```
+
+______________________________________________________________________
+
+## 6. Prepare Directory for Nix Store
+
+```shell
+[HOST] $ sudo mkdir -p /var/home/nix-store/store
+[HOST] $ sudo mkdir -p /var/home/nix-store/var/nix/db
+[HOST] $ sudo chown -R "$USER:$USER" /var/home/nix-store
+```
+
+______________________________________________________________________
+
+## 7. Install Distrobox
+
+Install Distrobox via alternative method:
+
+```shell
+[HOST] $ curl -s https://raw.githubusercontent.com/89luca89/distrobox/main/install | sh -s -- --prefix ~/.local
+```
+
+______________________________________________________________________
+
+## 8. Create `nix-box` Container
+
+```shell
+[HOST] $ distrobox create \
+  --name nix-box \
+  --image registry.fedoraproject.org/fedora:latest \
+  --volume /var/home/nix-store:/nix \
+  --init --yes
+```
+
+______________________________________________________________________
+
+## 9. Enter `nix-box`
+
+```shell
+[HOST] $ distrobox enter nix-box
+```
+
+______________________________________________________________________
+
+## 10. Install and Activate Nix
+
+```shell
+[NIX-BOX] $ sh <(curl --proto '=https' --tlsv1.2 -L https://nixos.org/nix/install) --no-daemon
+[NIX-BOX] $ . /var/home/elias/.nix-profile/etc/profile.d/nix.sh
+```
+
+______________________________________________________________________
+
+## 11. Setup Home Manager
+
+```shell
+[NIX-BOX] $ nix-shell -p git just home-manager nh
+[NIX-BOX@nix-shell] $ export NIX_CONFIG="experimental-features = nix-command flakes"
+[NIX-BOX@nix-shell] $ just container-update
+```
+
+______________________________________________________________________
+
+## 12. Create `fedora-box` Container
+
+```shell
+[HOST] $ distrobox create \
+  --name fedora-box \
+  --image registry.fedoraproject.org/fedora:latest \
+  --volume /var/home/nix-store:/nix:ro \
+  --init --yes
+```
+
+______________________________________________________________________
+
+## 13. Enter `fedora-box`
+
+```shell
+[HOST] $ distrobox enter fedora-box
+```
+
+______________________________________________________________________
+
+## 14. Enable Nix in `fedora-box`
+
+```shell
+[FEDORA-BOX] $ export PATH="$HOME/.nix-profile/bin:$PATH"
+
+# Optional: Add to shell profile for persistence
+# if [ -d "$HOME/.nix-profile/bin" ]; then
+#   export PATH="$HOME/.nix-profile/bin:$PATH"
+# fi
+```
+
+______________________________________________________________________
