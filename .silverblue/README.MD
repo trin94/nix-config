@@ -30,7 +30,7 @@ curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix 
 # Install dotfiles
 
 ```shell
-nix-shell -p git just home-manager nh devenv direnv
+nix-shell -p git just home-manager nh
 
 git clone https://github.com/trin94/nix-config.git ~/.dotfiles
 cd ~/.dotfiles

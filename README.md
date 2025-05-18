@@ -5,7 +5,7 @@ This repo contains my work-in-progress fedora and home-manager configuration.
 ## Setup
 
 ```shell
-nix-shell -p git just home-manager nh devenv direnv
+nix-shell -p git just home-manager nh
 
 git clone https://github.com/trin94/nix-config.git ~/.dotfiles
 cd ~/.dotfiles
