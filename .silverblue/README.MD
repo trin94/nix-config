@@ -76,58 +76,28 @@ Install Distrobox via alternative method:
 
 ______________________________________________________________________
 
-## 8. Create `nix-box` Container
+## 8. Boostrap `nix-box` Container
 
 ```shell
-[HOST] $ distrobox create \
-  --name nix-box \
-  --image registry.fedoraproject.org/fedora:latest \
-  --volume /var/home/nix-store:/nix \
-  --init --yes
+./nix-box-1-assemble.sh     # Recreates the nix-box container
+./nix-box-2-bootstrap-a.sh  # Enters nix-box and installs home-manager config
 ```
 
 ______________________________________________________________________
 
-## 9. Enter `nix-box`
-
-```shell
-[HOST] $ distrobox enter nix-box
-```
-
-______________________________________________________________________
-
-## 10. Install and Activate Nix
-
-```shell
-[NIX-BOX] $ sh <(curl --proto '=https' --tlsv1.2 -L https://nixos.org/nix/install) --no-daemon
-[NIX-BOX] $ . /var/home/elias/.nix-profile/etc/profile.d/nix.sh
-```
-
-______________________________________________________________________
-
-## 11. Setup Home Manager
-
-```shell
-[NIX-BOX] $ nix-shell -p git just home-manager nh
-[NIX-BOX@nix-shell] $ export NIX_CONFIG="experimental-features = nix-command flakes"
-[NIX-BOX@nix-shell] $ just container-update
-```
-
-______________________________________________________________________
-
-## 12. Create `fedora-box` Container
+## 9. Create `fedora-box` Container
 
 ```shell
 [HOST] $ distrobox create \
   --name fedora-box \
-  --image registry.fedoraproject.org/fedora:latest \
+  --image quay.io/fedora/fedora-toolbox:42 \
   --volume /var/home/nix-store:/nix:ro \
   --init --yes
 ```
 
 ______________________________________________________________________
 
-## 13. Enter `fedora-box`
+## 10. Enter `fedora-box`
 
 ```shell
 [HOST] $ distrobox enter fedora-box
@@ -135,7 +105,7 @@ ______________________________________________________________________
 
 ______________________________________________________________________
 
-## 14. Enable Nix in `fedora-box`
+## 11. Enable Nix in `fedora-box`
 
 ```shell
 [FEDORA-BOX] $ export PATH="$HOME/.nix-profile/bin:$PATH"

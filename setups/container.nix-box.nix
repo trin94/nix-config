@@ -126,6 +126,8 @@ in
     ];
   };
 
+  home.enableNixpkgsReleaseCheck = false;
+
   # Allow fontconfig to discover fonts and configurations installed through home.packages and nix-env.
   fonts.fontconfig.enable = true;
 }
