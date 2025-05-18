@@ -62,3 +62,33 @@ alternative 2: distrobox
     uv run main.py
 
     distrobox enter --name fedora-toolbox-42 -- bin/pycharm
+
+
+##################################################
+
+Install packages as layer: rpm-ostree install python3.12
+
+rpm-ostree install podman-compose
+
+nix package manager https://gist.github.com/queeup/1666bc0a5558464817494037d612f094
+
+elias@fedora:~$ flatpak list --app
+Name                        Application ID                        Version          Branch         Installation
+Fedora Media Writer         org.fedoraproject.MediaWriter         5.2.5            stable         system
+Calculator                  org.gnome.Calculator                  48.1             stable         system
+Calendar                    org.gnome.Calendar                    48.1             stable         system
+Characters                  org.gnome.Characters                  48.0             stable         system
+Connections                 org.gnome.Connections                 48.0             stable         system
+Contacts                    org.gnome.Contacts                    48.0             stable         system
+Document Viewer             org.gnome.Evince                      48.0             stable         system
+Extensions                  org.gnome.Extensions                  48.alpha         stable         system
+Logs                        org.gnome.Logs                        45.0             stable         system
+Image Viewer                org.gnome.Loupe                       48.1             stable         system
+Maps                        org.gnome.Maps                        48.2             stable         system
+Sushi                       org.gnome.NautilusPreviewer           46.0             stable         system
+Camera                      org.gnome.Snapshot                    48.0.1           stable         system
+Text Editor                 org.gnome.TextEditor                  48.2             stable         system
+Weather                     org.gnome.Weather                     48.0             stable         system
+Disk Usage Analyzer         org.gnome.baobab                      48.0             stable         system
+Clocks                      org.gnome.clocks                      48.0             stable         system
+Fonts                       org.gnome.font-viewer                 48.0             stable         system
