@@ -30,12 +30,20 @@ in
     delta.enable = true;
     devenv.enable = true;
 
+    fish = {
+      enable = true;
+      configLocation = configLocation;
+    };
+
     git = {
       enable = false;
       configure = true;
       name = "Elias Mueller";
       email = "elias.mr1@gmail.com";
     };
+
+    just.enable = true;
+    nh.enable = true;
 
     pre-commit.enable = true;
 
@@ -52,22 +60,9 @@ in
   #      fastfetch.enable = true;
   #      fd.enable = true;
   #      ffmpeg.enable = true;
-  #
-  #      fish = {
-  #        enable = true;
-  #        configLocation = configLocation;
-  #      };
-  #
-  #      git = {
-  #        enable = false;
-  #        configure = true;
-  #        name = "Elias Mueller";
-  #        email = "elias.mr1@gmail.com";
-  #      };
-  #
+
   #      hugo.enable = true;
   #      jq.enable = true;
-  #      just.enable = true;
   #      libwebp.enable = true;
   #
   #      mpv = {
@@ -75,7 +70,6 @@ in
   #        configure = true;
   #      };
   #
-  #      nh.enable = true;
   #      nixfmt.enable = true;
   #      nushell.enable = true;
   #      poetry.enable = true;
