@@ -16,7 +16,7 @@
   ```
 - Run the playbook
   ```shell
-  ./run-playbook.sh
+  ./run-host-playbook.sh
   ```
 
 ## License
