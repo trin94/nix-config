@@ -17,7 +17,8 @@ ______________________________________________________________________
 ## 2. Update the System
 
 ```shell
-[HOST] $ rpm-ostree update
+# On HOST
+rpm-ostree update
 ```
 
 > 🔁 Reboot after updating.
@@ -29,7 +30,8 @@ ______________________________________________________________________
 Install Ansible and `python3-psutil`:
 
 ```shell
-[HOST] $ rpm-ostree install ansible python3-psutil
+# On HOST
+rpm-ostree install ansible python3-psutil
 ```
 
 ______________________________________________________________________
@@ -37,7 +39,8 @@ ______________________________________________________________________
 ## 4. Set Hostname
 
 ```shell
-[HOST] $ hostnamectl hostname silverblue
+# On HOST
+hostnamectl hostname silverblue
 ```
 
 > 🔁 Reboot after setting the hostname to make new rpm-ostree commit active.
@@ -49,9 +52,10 @@ ______________________________________________________________________
 Clone your configuration repository and apply the host playbook:
 
 ```shell
-[HOST] $ git clone https://github.com/trin94/nix-config.git ~/.dotfiles
-[HOST] $ cd ~/.dotfiles/gnome-ansible/
-[HOST] $ ./run-host-playbook.sh
+# On HOST
+git clone https://github.com/trin94/nix-config.git ~/.dotfiles
+cd ~/.dotfiles/gnome-ansible/
+./run-host-playbook.sh
 ```
 
 ______________________________________________________________________
@@ -59,9 +63,10 @@ ______________________________________________________________________
 ## 6. Prepare Directory for Nix Store
 
 ```shell
-[HOST] $ sudo mkdir -p /var/home/nix-store/store
-[HOST] $ sudo mkdir -p /var/home/nix-store/var/nix/db
-[HOST] $ sudo chown -R "$USER:$USER" /var/home/nix-store
+# On HOST
+sudo mkdir -p /var/home/nix-store/store
+sudo mkdir -p /var/home/nix-store/var/nix/db
+sudo chown -R "$USER:$USER" /var/home/nix-store
 ```
 
 ______________________________________________________________________
@@ -71,7 +76,8 @@ ______________________________________________________________________
 Install Distrobox via alternative method:
 
 ```shell
-[HOST] $ curl -s https://raw.githubusercontent.com/89luca89/distrobox/main/install | sh -s -- --prefix ~/.local
+# On HOST
+curl -s https://raw.githubusercontent.com/89luca89/distrobox/main/install | sh -s -- --prefix ~/.local
 ```
 
 ______________________________________________________________________
@@ -79,41 +85,28 @@ ______________________________________________________________________
 ## 8. Boostrap `nix-box` Container
 
 ```shell
-./nix-box-1-assemble.sh     # Recreates the nix-box container
-./nix-box-2-bootstrap-a.sh  # Enters nix-box and installs home-manager config
+# On HOST
+./run-1-1-nix-box-assemble.sh     # Recreates the nix-box container
+./run-1-2-nix-box-bootstrap-a.sh  # Enters nix-box and installs home-manager config
 ```
 
 ______________________________________________________________________
 
-## 9. Create `fedora-box` Container
+## 9. Boostrap `fedora-box` Container
 
+````shell
 ```shell
-[HOST] $ distrobox create \
-  --name fedora-box \
-  --image quay.io/fedora/fedora-toolbox:42 \
-  --volume /var/home/nix-store:/nix:ro \
-  --init --yes
-```
+# On HOST
+./run-2-1-fedora-box-assemble.sh     # Recreates the fedora-box container
+./run-2-2-fedora-box-bootstrap-a.sh  # Enters fedora-box and runs ansible setup for container
+````
 
 ______________________________________________________________________
 
-## 10. Enter `fedora-box`
+## 10. Update HOST's .bashrc `fedora-box`
 
+````shell
 ```shell
-[HOST] $ distrobox enter fedora-box
-```
-
-______________________________________________________________________
-
-## 11. Enable Nix in `fedora-box`
-
-```shell
-[FEDORA-BOX] $ export PATH="$HOME/.nix-profile/bin:$PATH"
-
-# Optional: Add to shell profile for persistence
-# if [ -d "$HOME/.nix-profile/bin" ]; then
-#   export PATH="$HOME/.nix-profile/bin:$PATH"
-# fi
-```
-
-______________________________________________________________________
+# On HOST
+./run-3-modify-host-bashrc.sh  # Modifies the .bashrc with wire things together
+````
