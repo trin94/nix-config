@@ -15,4 +15,4 @@ fi
 . "$HOME/.nix-profile/etc/profile.d/nix.sh"
 
 # Run the nix-shell bootstrap script
-nix-shell -p git just home-manager nh --run "$(dirname "$0")/nix-box-2-bootstrap-c.sh"
+nix-shell -p git just home-manager nh --run "$(dirname "$0")/run-1-2-nix-box-bootstrap-c.sh"
