@@ -71,3 +71,10 @@ repos:
           - "--fix"
       - id: ruff-format
         name: "format python"
+  - repo: local
+    hooks:
+      - id: nixfmt
+        name: Nix Format
+        entry: nixfmt
+        language: system
+        types: [nix]
