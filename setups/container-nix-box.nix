@@ -29,6 +29,11 @@ in
     bat.enable = true;
     delta.enable = true;
     devenv.enable = true;
+    dtrx.enable = true;
+    eza.enable = true;
+    fastfetch.enable = true;
+    fd.enable = true;
+    ffmpeg.enable = true;
 
     fish = {
       enable = true;
@@ -42,64 +47,47 @@ in
       email = "elias.mr1@gmail.com";
     };
 
+    hugo.enable = true;
     just.enable = true;
+    jq.enable = true;
+    libwebp.enable = true;
+
+    mpv = {
+      enable = false;
+      configure = true;
+    };
+
     nh.enable = true;
+    nixfmt.enable = true;
+    nushell.enable = true;
+
+    poetry = {
+      enable = false;
+      configure = true;
+    };
 
     pre-commit.enable = true;
+    procs.enable = true;
+    ripgrep.enable = true;
+    ssh.enable = true;
+    tokei.enable = true;
+    uv.enable = false;
+    vim.enable = true;
+    yq.enable = true;
+    ytdlp.enable = true;
 
+    zed = {
+      enable = false;
+      configure = true;
+    };
   };
 
-  #  myOS = {
-  #    programs = {
-  #
-  #      bat.enable = true;
-  #      delta.enable = true;
-  #      devenv.enable = true;
-  #      dtrx.enable = true;
-  #      eza.enable = true;
-  #      fastfetch.enable = true;
-  #      fd.enable = true;
-  #      ffmpeg.enable = true;
-
-  #      hugo.enable = true;
-  #      jq.enable = true;
-  #      libwebp.enable = true;
-  #
-  #      mpv = {
-  #        enable = false;
-  #        configure = true;
-  #      };
-  #
-  #      nixfmt.enable = true;
-  #      nushell.enable = true;
-  #      poetry.enable = true;
-  #      pre-commit.enable = true;
-  #      procs.enable = true;
-  #      ripgrep.enable = true;
-  #      ssh.enable = true;
-  #      tokei.enable = true;
-  #      uv.enable = false;
-  #      vim.enable = true;
-  #      yq.enable = true;
-  #      ytdlp.enable = true;
-  #
-  #      zed = {
-  #        enable = false;
-  #        configure = true;
-  #      };
-  #
-  #    };
-  #
-  #  };
-  #
   home = {
     username = username;
     homeDirectory = homeDirectory;
 
-    packages =
-      with pkgs;
-      [
-      ];
+    packages = with pkgs; [
+    ];
 
     # This value determines the Home Manager release that your
     # configuration is compatible with. This helps avoid breakage
