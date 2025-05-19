@@ -30,3 +30,7 @@
     - role: jetbrains_toolbox
   # - role: layered_packages
   # - role: os_updates
+
+- hosts: container-fedora-box
+  roles:
+    - role: workstation

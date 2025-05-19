@@ -1,0 +1,5 @@
+workstation_settings:
+  install_docker: false
+  apps:
+    - {state: absent, name: 'gnome-backgrounds-extras'}
+    - {state: absent, name: '1password'}
