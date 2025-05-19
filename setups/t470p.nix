@@ -75,10 +75,8 @@ in
     username = username;
     homeDirectory = homeDirectory;
 
-    packages =
-      with pkgs;
-      [
-      ];
+    packages = with pkgs; [
+    ];
 
     sessionPath = [
       "$HOME/.local/bin"
