@@ -11,6 +11,6 @@ distrobox create \
   --image quay.io/fedora/fedora-toolbox:42 \
   --volume /var/home/nix-store:/nix:ro \
   --hostname container-fedora-box \
-  --additional-packages "ansible python3-pip" \
+  --additional-packages "ansible python3-pip libXrender libXtst libXi freetype libXrandr libXext libXfixes libX11 libXau libxcb libXdmcp gtk3" \
   --pull \
   --yes
