@@ -18,6 +18,7 @@ if [[ "$(hostname)" == *-box ]]; then
 
   # Start fish shell only in interactive, non-fish shells
   if [[ $- == *i* ]] && command -v fish >/dev/null && [[ "$SHELL" != *fish ]]; then
+    export fish_history=${HOSTNAME//[-]/_}_history  # use a different fish history per container
     exec fish
   fi
 else
