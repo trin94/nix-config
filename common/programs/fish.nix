@@ -35,6 +35,14 @@ in
     programs.starship = {
       enable = true;
       enableFishIntegration = true;
+
+      settings = {
+        container = {
+          symbol = "📦";
+          style = "bold blue";
+          format = "[$symbol \\[$name\\]]($style) ";
+        };
+      };
     };
 
     programs.fish = {
