@@ -24,6 +24,8 @@ else
   # Special configuration for the host
   alias box-fedora='distrobox enter fedora-box'
   alias box-nix='distrobox enter nix-box'
+
+  alias pycharm-fedora='distrobox enter fedora-box -- pycharm >/dev/null 2>&1 &'
 fi
 # <<< CUSTOM BASH BLOCK END <<<
 EOF
