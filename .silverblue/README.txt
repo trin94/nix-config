@@ -8,14 +8,14 @@ Note: All commands are to be run on the host system unless specified otherwise.
 
 2. Update System
    - rpm-ostree update
-   - Reboot afterwards.
+   - reboot
 
 3. Install Required Packages
    - rpm-ostree install ansible python3-psutil
 
 4. Set Hostname
    - hostnamectl hostname silverblue
-   - Reboot to apply change.
+   - reboot
 
 5. Apply Host Configuration
    - git clone https://github.com/trin94/nix-config.git ~/.dotfiles

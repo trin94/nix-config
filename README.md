@@ -1,22 +1,21 @@
-# Fedora + home-manager configuration
+# Fedora (Workstation / Silverblue) with Home Manager Configuration
 
-This repo contains my work-in-progress fedora and home-manager configuration.
+This repository includes my current Fedora setup along with a work-in-progress Home Manager configuration.
 
-## Setup
+## Installation
 
 ```shell
 nix-shell -p git just home-manager nh
 
 git clone https://github.com/trin94/nix-config.git ~/.dotfiles
 cd ~/.dotfiles
-
-export NIX_CONFIG="experimental-features = nix-command flakes"
-
 just update
 ```
 
-# Misc
+## Additional Notes
 
-- `nix flake update --commit-lock-file`
-- https://www.zknotes.com/page/alternate-nixpkgs-in-flakes-nixos
-- https://github.com/EmergentMind/nix-config
+To update flake inputs and commit the new lock file:
+
+```shell
+nix flake update --commit-lock-file
+```
