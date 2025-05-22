@@ -31,6 +31,6 @@
   # - role: layered_packages
   # - role: os_updates
 
-- hosts: container-fedora-box
+- hosts: toolbx
   roles:
     - role: workstation

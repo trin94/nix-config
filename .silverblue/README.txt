@@ -22,20 +22,8 @@ Note: All commands are to be run on the host system unless specified otherwise.
    - cd ~/.dotfiles/gnome-ansible/
    - ./run-host-playbook.sh
 
-6. Prepare Nix Store Directory
-   - sudo mkdir -p /var/home/nix-store/store /var/home/nix-store/var/nix/db
-   - sudo chown -R "$USER:$USER" /var/home/nix-store
+6. Bootstrap toolbox
+   - ./bootstrap-toolbox.sh
 
-7. Install Distrobox
-   - curl -s https://raw.githubusercontent.com/89luca89/distrobox/main/install | sh -s -- --prefix ~/.local
-
-8. Bootstrap nix-box Container
-   - ./run-1-1-nix-box-assemble.sh
-   - ./run-1-2-nix-box-bootstrap-a.sh
-
-9. Bootstrap fedora-box Container
-   - ./run-2-1-fedora-box-assemble.sh
-   - ./run-2-2-fedora-box-bootstrap-a.sh
-
-10. Update .bashrc for Host
-    - ./run-3-modify-host-bashrc.sh
+7. Update .bashrc for Host
+    - ./update-host-bashrc.sh

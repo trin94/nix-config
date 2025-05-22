@@ -9,8 +9,11 @@ END_TAG="# <<< CUSTOM BASH BLOCK END <<<"
 
 CUSTOM_CONTENT=$(cat <<'EOF'
 # >>> CUSTOM BASH BLOCK START >>>
+
+CURRENT_HOSTNAME="$(hostname)"
+
 # Conditional configuration based on hostname
-if [[ "$(hostname)" == *-box ]]; then
+if [[ "$CURRENT_HOSTNAME" == toolbx ]]; then
   # Add Nix profile to PATH if present
   if [ -d "$HOME/.nix-profile/bin" ]; then
     export PATH="$HOME/.nix-profile/bin:$PATH"
@@ -18,15 +21,14 @@ if [[ "$(hostname)" == *-box ]]; then
 
   # Start fish shell only in interactive, non-fish shells
   if [[ $- == *i* ]] && command -v fish >/dev/null && [[ "$SHELL" != *fish ]]; then
-    export fish_history=${HOSTNAME//[-]/_}_history  # use a different fish history per container
+    export fish_history=${CURRENT_HOSTNAME//[-]/_}_history  # use a different fish history per container
     exec fish
   fi
 else
   # Special configuration for the host
-  alias box-fedora='distrobox enter fedora-box'
-  alias box-nix='distrobox enter nix-box'
+  alias box='toolbox enter'
 
-  alias pycharm-fedora='distrobox enter fedora-box -- pycharm >/dev/null 2>&1 &'
+  alias box-pycharm='toolbox run -- pycharm >/dev/null 2>&1 &'
 fi
 # <<< CUSTOM BASH BLOCK END <<<
 EOF

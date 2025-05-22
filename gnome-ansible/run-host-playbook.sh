@@ -5,6 +5,7 @@ set -euo pipefail
 # Default values
 target_host="${HOSTNAME:-}"
 interactive=true
+ask_become_pass=true
 
 # Parse arguments
 while [[ $# -gt 0 ]]; do
@@ -15,6 +16,12 @@ while [[ $# -gt 0 ]]; do
       ;;
     --non-interactive)
       interactive=false
+      ;;
+    --ask-become-pass)
+      ask_become_pass=true
+      ;;
+    --no-ask-become-pass)
+      ask_become_pass=false
       ;;
     *)
       echo "Unknown argument: $1"
@@ -44,9 +51,18 @@ fi
 
 set -x  # Enable command tracing for ansible call
 
-ansible-playbook \
-  --verbose \
-  --ask-become-pass \
-  --inventory-file hosts.ini \
-  --limit "$target_host" \
-  playbook_base.yml
+# Build ansible-playbook command dynamically
+ansible_cmd=(
+  ansible-playbook
+  --inventory-file hosts.ini
+  --limit "$target_host"
+)
+
+if [[ "$ask_become_pass" == true ]]; then
+  ansible_cmd+=(--ask-become-pass)
+fi
+
+ansible_cmd+=(playbook_base.yml)
+
+# Run the command
+"${ansible_cmd[@]}"
