@@ -1,7 +1,5 @@
 - name: "Evaluate Configuration"
   set_fact:
-    install_1password: >-
-      {{ global_workstation_settings | is_app_present(workstation_settings, '1password') }}
     install_docker: >-
       {{ global_workstation_settings | resolve_setting(workstation_settings, 'install_docker', false) }}
     install_fusion_repos: >-
@@ -45,40 +43,18 @@
     regexp: 'deltarpm='
     line: deltarpm=False
 
+- name: Install 1Password
+  block:
+    - name: "Install 1Password"
+      include_tasks: 1password_setup.yml
+  become: true
+
 - name: "Configure Native Apps"
   become: true
   dnf:
     state: "{{ item.state }}"
     name: "{{ item.name }}"
   loop: "{{ global_workstation_settings | merge_dict_lists_by_key(workstation_settings, 'apps', 'name') }}"
-
-- name: "Add 1password repo using yum_repository"
-  become: true
-  when: install_1password
-  ansible.builtin.yum_repository:
-    name: 1password
-    description: 1Password Stable Channel
-    baseurl: https://downloads.1password.com/linux/rpm/stable/$basearch
-    enabled: yes
-    gpgcheck: yes
-    repo_gpgcheck: yes
-    gpgkey: https://downloads.1password.com/linux/keys/1password.asc
-    state: present
-
-- name: "Add 1password key"
-  become: yes
-  when: install_1password
-  ansible.builtin.rpm_key:
-    state: present
-    key: https://downloads.1password.com/linux/keys/1password.asc
-
-- name: "Install 1password"
-  become: yes
-  when: install_1password
-  dnf:
-    state: present
-    name:
-      - 1password
 
 - name: "Remove Distribution Docker Packages"
   become: yes
