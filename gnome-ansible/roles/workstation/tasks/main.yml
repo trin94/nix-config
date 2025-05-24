@@ -56,63 +56,9 @@
     name: "{{ item.name }}"
   loop: "{{ global_workstation_settings | merge_dict_lists_by_key(workstation_settings, 'apps', 'name') }}"
 
-- name: "Remove Distribution Docker Packages"
-  become: yes
-  when: install_docker
-  dnf:
-    state: absent
-    name:
-      - docker
-      - docker-client
-      - docker-client-latest
-      - docker-common
-      - docker-latest
-      - docker-latest-logrotate
-      - docker-logrotate
-      - docker-engine-selinux
-      - docker-engine
-
-- name: "Configure Docker DNF Repository"
+- name: "Install Docker CE"
+  block:
+    - name: "Install Docker CE"
+      include_tasks: docker_setup.yml
   become: true
   when: install_docker
-  # dnf-3 config-manager --add-repo https://download.docker.com/linux/fedora/docker-ce.repo
-  ansible.builtin.yum_repository:
-    name: docker-ce-stable
-    description: Docker CE Stable - $basearch
-    baseurl: https://download.docker.com/linux/fedora/$releasever/$basearch/stable
-    enabled: yes
-    gpgcheck: yes
-    gpgkey: https://download.docker.com/linux/fedora/gpg
-    state: "{{ 'present' if install_docker else 'absent' }}"
-
-- name: "Install Official Docker Packages"
-  become: yes
-  when: install_docker
-  dnf:
-    state: present
-    name:
-      - docker-ce
-      - docker-ce-cli
-      - containerd.io
-      - docker-buildx-plugin
-      - docker-compose-plugin
-
-- name: "Start Docker"
-  become: yes
-  when: install_docker
-  ansible.builtin.systemd:
-    state: started
-    name: docker
-
-- name: "Fix 'docker.sock' File Permissions"
-  become: yes
-  when: install_docker
-  ansible.builtin.file:
-    path: /var/run/docker.sock
-    mode: '666'
-
-- name: "Run 'docker ps -a'"
-  become: true
-  when: install_docker
-  shell: |-
-    docker ps -a
