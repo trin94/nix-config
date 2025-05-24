@@ -20,7 +20,7 @@ in
 
   imports = dirImport {
     paths = [
-      ../common/programs
+      ./programs
     ];
   };
 

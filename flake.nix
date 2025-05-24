@@ -31,7 +31,7 @@
       inherit (nixpkgs) lib;
       inherit (self) outputs;
 
-      dirImport = (import ./common/lib/dirImport.nix { inherit (nixpkgs) lib; }).dirImport;
+      dirImport = (import ./setups/lib/dirImport.nix { inherit (nixpkgs) lib; }).dirImport;
 
       pkgs = import nixpkgs {
         system = "x86_64-linux";
