@@ -1,5 +1,11 @@
 workstation_settings:
   install_docker: false
+  install_fusion_repos: true
   apps:
     - {state: absent, name: 'gnome-backgrounds-extras'}
     - {state: absent, name: '1password'}
+
+    # Allows to work with Appls HEIC images
+    - {state: present, name: 'libheif-tools'}
+    - {state: present, name: 'libheif-freeworld'}
+    - {state: present, name: 'libheif'}

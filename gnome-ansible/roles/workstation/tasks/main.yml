@@ -4,6 +4,8 @@
       {{ global_workstation_settings | is_app_present(workstation_settings, '1password') }}
     install_docker: >-
       {{ global_workstation_settings | resolve_setting(workstation_settings, 'install_docker', false) }}
+    install_fusion_repos: >-
+      {{ global_workstation_settings | resolve_setting(workstation_settings, 'install_fusion_repos', false) }}
 
 - name: "Remove dnf Repositories"
   become: yes
@@ -11,6 +13,16 @@
     path: '{{ item }}'
     state: absent
   loop: "{{ global_workstation_settings | merge_lists(workstation_settings, 'repos.absent') }}"
+
+- name: "Enable RPM Fusion"
+  become: true
+  when: install_fusion_repos
+  ansible.builtin.dnf:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - "https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-{{ ansible_distribution_major_version }}.noarch.rpm"
+    - "https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-{{ ansible_distribution_major_version }}.noarch.rpm"
 
 - name: "Configure dnf defaultyes"
   become: yes
@@ -33,12 +45,12 @@
     regexp: 'deltarpm='
     line: deltarpm=False
 
-- name: "Configure Native apps"
+- name: "Configure Native Apps"
   become: true
   dnf:
     state: "{{ item.state }}"
     name: "{{ item.name }}"
-  loop: "{{ global_workstation_settings | merge_apps_by_name(workstation_settings) }}"
+  loop: "{{ global_workstation_settings | merge_dict_lists_by_key(workstation_settings, 'apps', 'name') }}"
 
 - name: "Add 1password repo using yum_repository"
   become: true

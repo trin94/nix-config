@@ -236,6 +236,7 @@ global_dconf_settings:
 ##########################
 global_workstation_settings:
   install_docker: true
+  install_fusion_repos: false
   repos:
     absent:
       - /etc/yum.repos.d/_copr:copr.fedorainfracloud.org:peterwu:rendezvous.repo

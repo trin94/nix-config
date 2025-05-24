@@ -31,32 +31,6 @@ def is_app_present(global_settings, host_settings, app_name):
     return find_app_state(global_settings) == "present"
 
 
-def merge_apps_by_name(global_settings, host_settings):
-    """
-    Merge workstation_settings.apps with global_workstation_settings.apps,
-    overriding by 'name'. Host settings take priority.
-
-    Returns a list of unique app dicts.
-    """
-
-    def get_app_map(settings):
-        if not isinstance(settings, dict):
-            return {}
-        apps = settings.get("apps", [])
-        return {
-            app["name"]: app for app in apps if isinstance(app, dict) and "name" in app
-        }
-
-    global_apps = get_app_map(global_settings)
-    host_apps = get_app_map(host_settings)
-
-    # Host overrides global
-    merged = {**global_apps, **host_apps}
-
-    # Return as a list
-    return list(merged.values())
-
-
 def resolve_setting(global_settings, host_settings, key, default: bool):
     """
     Resolve a scalar setting with override logic:
@@ -71,11 +45,35 @@ def resolve_setting(global_settings, host_settings, key, default: bool):
     return default
 
 
+def merge_dict_lists_by_key(global_settings, host_settings, identifier, merge_key="name"):
+    def get_nested(settings, key_path):
+        keys = key_path.split(".")
+        for key in keys:
+            if not isinstance(settings, dict) or key not in settings:
+                return []
+            settings = settings[key]
+        return settings if isinstance(settings, list) else []
+
+    def get_item_map(settings):
+        items = get_nested(settings, identifier)
+        return {
+            item[merge_key]: item
+            for item in items
+            if isinstance(item, dict) and merge_key in item
+        }
+
+    global_items = get_item_map(global_settings)
+    host_items = get_item_map(host_settings)
+
+    merged = {**global_items, **host_items}
+    return list(merged.values())
+
+
 class FilterModule:
     @staticmethod
     def filters():
         return {
             "is_app_present": is_app_present,
-            "merge_apps_by_name": merge_apps_by_name,
             "resolve_setting": resolve_setting,
+            "merge_dict_lists_by_key": merge_dict_lists_by_key,
         }
