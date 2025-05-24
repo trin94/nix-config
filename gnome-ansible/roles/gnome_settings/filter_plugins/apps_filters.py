@@ -45,7 +45,12 @@ def resolve_setting(global_settings, host_settings, key, default: bool):
     return default
 
 
-def merge_dict_lists_by_key(global_settings, host_settings, identifier, merge_key="name"):
+def merge_dict_lists_by_key(
+    global_settings,
+    host_settings,
+    identifier,
+    merge_key="name",
+):
     def get_nested(settings, key_path):
         keys = key_path.split(".")
         for key in keys:

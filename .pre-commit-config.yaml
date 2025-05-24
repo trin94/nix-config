@@ -61,3 +61,13 @@ repos:
           #    hooks:
           #      - id: alejandra-nix
           #        name: "format nix"
+
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.11.9
+    hooks:
+      - id: ruff
+        name: "lint python"
+        args:
+          - "--fix"
+      - id: ruff-format
+        name: "format python"
