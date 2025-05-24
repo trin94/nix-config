@@ -28,8 +28,8 @@
     - role: fonts
     - role: gnome_settings
     - role: jetbrains_toolbox
-  # - role: layered_packages
-  # - role: os_updates
+      # - role: layered_packages
+      # - role: os_updates
 
 - hosts: toolbx
   roles:
