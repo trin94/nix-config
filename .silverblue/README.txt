@@ -2,6 +2,7 @@ Fedora Silverblue Setup (WIP)
 =============================
 
 Note: All commands are to be run on the host system unless specified otherwise.
+Note: These scripts are not intended for general use. They hardcode a bunch of paths and names.
 
 1. Install Fedora Silverblue
    - Install as usual.
