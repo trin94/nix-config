@@ -23,7 +23,9 @@ Note: All commands are to be run on the host system unless specified otherwise.
    - ./run-host-playbook.sh
 
 6. Bootstrap toolbox
+   - cd ~/.dotfiles/.silverblue
    - ./bootstrap-toolbox.sh
 
 7. Update .bashrc for Host
-    - ./update-host-bashrc.sh
+   - cd ~/.dotfiles/.silverblue
+   - ./update-host-bashrc.sh
