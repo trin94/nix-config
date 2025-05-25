@@ -1,15 +1,9 @@
 ## The 'layered_packages' role #
 ################################
-#layered_package_install:
-#  - gnome-tweaks
-#  - net-tools
-#  - python3-psutil
-#  - vim
-#  - yamllint
-#
-#base_package_remove:
-#  - firefox
-#  - firefox-lang-packs
+layered_package_install: []
+base_package_remove:
+  - firefox-langpacks
+  - firefox
 
 ## The 'os_updates' role #
 ##########################
@@ -34,7 +28,8 @@ global_flatpak_remote_install:
     method: user
     state: absent
 
-global_flatpak_package_install: []
+global_flatpak_package_install:
+  - name: org.mozilla.firefox
 
 # The 'fonts' role #
 ####################
