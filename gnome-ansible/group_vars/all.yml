@@ -204,7 +204,7 @@ global_dconf_settings:
   - {key: '/org/gnome/Ptyxis/Profiles/a6d8c5d2-7fdf-434d-b2c1-5a6e0df9696a/bold-is-bright', value: 'true'}
   - {key: '/org/gnome/Ptyxis/Profiles/a6d8c5d2-7fdf-434d-b2c1-5a6e0df9696a/custom-command', value: "'fish'"}
   - {key: '/org/gnome/Ptyxis/Profiles/a6d8c5d2-7fdf-434d-b2c1-5a6e0df9696a/label', value: "'frupp.nix'"}
-  - {key: '/org/gnome/Ptyxis/Profiles/a6d8c5d2-7fdf-434d-b2c1-5a6e0df9696a/palette', value: "'nord'"}
+  - {key: '/org/gnome/Ptyxis/Profiles/a6d8c5d2-7fdf-434d-b2c1-5a6e0df9696a/palette', value: "'dracula'"}
   - {key: '/org/gnome/Ptyxis/Profiles/a6d8c5d2-7fdf-434d-b2c1-5a6e0df9696a/preserve-directory', value: "'never'"}
   - {key: '/org/gnome/Ptyxis/Profiles/a6d8c5d2-7fdf-434d-b2c1-5a6e0df9696a/scroll-on-output', value: 'false'}
   - {key: '/org/gnome/Ptyxis/Profiles/a6d8c5d2-7fdf-434d-b2c1-5a6e0df9696a/use-custom-command', value: 'true'}
