@@ -29,6 +29,12 @@ global_flatpak_remote_install:
     state: absent
 
 global_flatpak_package_install:
+  - name: com.github.tchx84.Flatseal
+  - name: io.mpv.Mpv
+  - name: org.gnome.Loupe
+  - name: org.gnome.Papers
+  - name: org.gnome.TextEditor
+  - name: org.gnome.Weather
   - name: org.mozilla.firefox
 
 # The 'fonts' role #

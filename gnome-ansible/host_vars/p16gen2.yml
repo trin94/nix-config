@@ -10,9 +10,4 @@ dconf_settings:
       - com.slack.Slack.desktop
       - 1password.desktop
 
-flatpak_package_install:
-  - name: com.github.tchx84.Flatseal
-  - name: io.mpv.Mpv
-  - name: org.gnome.Loupe
-  - name: org.gnome.Papers
-  - name: org.gnome.TextEditor
+flatpak_package_install: []

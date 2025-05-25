@@ -17,10 +17,5 @@ flatpak_remote_install: []
 flatpak_package_install:
   - name: app.drey.EarTag
   - name: com.discordapp.Discord
-  - name: com.github.tchx84.Flatseal
   - name: com.teamspeak.TeamSpeak3
-  - name: io.mpv.Mpv
-  - name: org.gnome.Loupe
-  - name: org.gnome.Papers
-  - name: org.gnome.TextEditor
   - name: org.telegram.desktop
