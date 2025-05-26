@@ -29,10 +29,11 @@ in
       viAlias = true;
       vimAlias = true;
 
-      colorschemes.nord.enable = true;
+      colorschemes.dracula-nvim.enable = true;
 
       extraPlugins = with pkgs.vimPlugins; [
         vim-just
+        dracula-vim  # Dracula theme plugin
       ];
 
       plugins = {
@@ -110,7 +111,7 @@ in
 
       extraConfigLua = ''
         vim.g.lightline = {
-          colorscheme = "nord"
+          colorscheme = "dracula"
         }
 
         -- Add new line to the end of files
