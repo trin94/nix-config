@@ -1,3 +1,11 @@
+- hosts: fedora # fedora workstation
+  roles:
+    - role: flatpaks
+    - role: fonts
+    - role: gnome_settings
+    - role: jetbrains_toolbox
+    - role: workstation
+
 - hosts: silverblue
   roles:
     - role: flatpaks

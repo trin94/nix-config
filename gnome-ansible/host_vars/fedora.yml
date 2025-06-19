@@ -1,0 +1,33 @@
+dconf_settings:
+  - key: '/org/gnome/shell/favorite-apps'
+    value:
+      - org.gnome.Nautilus.desktop
+      - dev.zed.Zed.desktop
+      - org.mozilla.firefox.desktop
+      - jetbrains-toolbox.desktop
+      - jetbrains-idea.desktop
+      - jetbrains-pycharm.desktop
+      - org.telegram.desktop.desktop
+      - com.teamspeak.TeamSpeak3.desktop
+      - 1password.desktop
+
+flatpak_remote_install: []
+
+flatpak_package_install:
+  - name: app.drey.EarTag
+  - name: com.discordapp.Discord
+  - name: com.github.tchx84.Flatseal
+  - name: com.teamspeak.TeamSpeak3
+  - name: io.mpv.Mpv
+  - name: org.gnome.Loupe
+  - name: org.gnome.Papers
+  - name: org.gnome.TextEditor
+  - name: org.telegram.desktop
+
+workstation_settings:
+  install_fusion_repos: true
+  apps:
+    # Allows to work with Appls HEIC images
+    - {state: present, name: 'libheif-tools'}
+    - {state: present, name: 'libheif-freeworld'}
+    - {state: present, name: 'libheif'}
