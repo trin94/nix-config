@@ -33,7 +33,7 @@ in
     eza.enable = true;
     fastfetch.enable = true;
     fd.enable = true;
-    # ffmpeg.enable = true;
+    ffmpeg.enable = true;
 
     fish = {
       enable = true;
