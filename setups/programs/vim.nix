@@ -33,7 +33,7 @@ in
 
       extraPlugins = with pkgs.vimPlugins; [
         vim-just
-        dracula-vim  # Dracula theme plugin
+        dracula-vim # Dracula theme plugin
       ];
 
       plugins = {
