@@ -70,6 +70,16 @@ in
 
       functions = {
 
+        as-branchname = {
+          description = "Transform a string into a branch name";
+          body = ''
+            set s (string join " " -- $argv)
+            set s (string replace -ra '[^[:alnum:]]+' '-' -- $s)
+            set s (string trim -c '-' -- $s)   # removes leading/trailing dashes
+            string lower -- $s
+          '';
+        };
+
         nup = {
           description = "Update user packages";
           body = "just -f ${cfg.configLocation}/Justfile update";
