@@ -87,7 +87,7 @@ in
           dark = "One Dark";
         };
 
-        ui_font_family = "Noto Sans";
+        ui_font_family = "Inter";
         ui_font_size = 20;
 
       };
