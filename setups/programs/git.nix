@@ -30,13 +30,18 @@ in
 
   config = {
 
-    home.packages = lib.mkIf cfg.enable (
-      with pkgs;
-      [
-        git # Distributed version control system
-        git-credential-manager # Secure, cross-platform Git credential storage with authentication to GitHub, Azure Repos, and other popular Git hosting services
-      ]
-    );
+    home.packages =
+      if cfg.enable then
+        with pkgs;
+        [
+          git
+        ]
+      else if cfg.configure then
+        with pkgs;
+        [
+        ]
+      else
+        [ ];
 
     programs.git.enable = lib.mkIf cfg.enable true;
 
@@ -49,7 +54,10 @@ in
             whitespace = trailing-space,space-before-tab
 
         [credential]
-            helper = git-credential-libsecret
+            credentialStore = secretservice
+
+        [credential "https://dev.azure.com"]
+            credentialStore = secretservice
 
         [user]
             email = ${cfg.email}
@@ -82,7 +90,6 @@ in
         [push]
             default = current
             autoSetupRemote = true
-            followTags = true
 
         [status]
             short = true
