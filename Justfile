@@ -13,7 +13,7 @@ ADDITIONAL_ARGS := if HOSTNAME == "p16gen2" { "--impure" } else { "" }
 
 # Format source
 @format:
-    pre-commit run --all-files
+    uvx prek run --all-files
 
 # Build home to 'result' directory
 [group('run')]
