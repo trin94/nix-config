@@ -66,7 +66,6 @@ in
       configure = true;
     };
 
-    pre-commit.enable = true;
     procs.enable = true;
     ripgrep.enable = true;
     ssh.enable = true;
