@@ -35,10 +35,12 @@ in
         with pkgs;
         [
           git
+          difftastic
         ]
       else if cfg.configure then
         with pkgs;
         [
+          difftastic
         ]
       else
         [ ];
@@ -49,7 +51,6 @@ in
       ".config/git/config".text = ''
         [core]
             autocrlf = input
-            pager = delta
             preloadindex = true
             whitespace = trailing-space,space-before-tab
 
@@ -66,14 +67,8 @@ in
         [init]
             defaultBranch = main
 
-        [delta]
-            dark = true
-            hyperlinks = true
-            navigate = true
-            side-by-side = true
-
-        [interactive]
-            diffFilter = delta --color-only
+        [diff]
+            external = difft
 
         [merge]
             conflictstyle = zdiff3

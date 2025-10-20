@@ -29,7 +29,6 @@ in
     programs = {
 
       bat.enable = true;
-      delta.enable = true;
       dtrx.enable = true;
       eza.enable = true;
       fastfetch.enable = true;

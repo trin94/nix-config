@@ -27,7 +27,6 @@ in
   myOS.programs = {
 
     bat.enable = true;
-    delta.enable = true;
     devenv.enable = true;
     dtrx.enable = true;
     eza.enable = true;

@@ -29,7 +29,6 @@ in
     programs = {
 
       bat.enable = true;
-      delta.enable = true;
       devenv.enable = true;
       dtrx.enable = true;
       duckdb.enable = true;
