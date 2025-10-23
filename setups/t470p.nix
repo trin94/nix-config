@@ -79,6 +79,8 @@ in
 
     sessionPath = [
       "$HOME/.local/bin"
+      "$HOME/.cargo/bin" # rust binaries
+      "$HOME/go" # GOPATH
     ];
 
     # This value determines the Home Manager release that your

@@ -89,7 +89,8 @@ in
 
     sessionPath = [
       "$HOME/.local/bin"
-      "$HOME/.cargo/bin"
+      "$HOME/.cargo/bin" # rust binaries
+      "$HOME/go" # GOPATH
     ];
 
     sessionVariables = {
