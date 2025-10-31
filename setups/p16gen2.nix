@@ -96,7 +96,7 @@ in
     ];
 
     sessionVariables = {
-      # SKIP = "sqlfluff-fix";
+      SKIP = "reuse-lint-file";
     };
 
     # This value determines the Home Manager release that your

@@ -7,6 +7,11 @@
       url = "github:nixos/nixpkgs/nixos-unstable";
     };
 
+    darwin = {
+      url = "github:nix-darwin/nix-darwin";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     nixvim = {
       url = "github:nix-community/nixvim";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -104,6 +109,20 @@
 
           modules = [
             ./setups/p16gen2.nix
+          ];
+        };
+
+        "elias@mac" = home-manager.lib.homeManagerConfiguration {
+          extraSpecialArgs = extraSpecialArgs // {
+            pkgs = import nixpkgs {
+              system = "aarch64-darwin"; # or "x86_64-darwin" for Intel
+            };
+          };
+
+          pkgs = nixpkgs.legacyPackages."aarch64-darwin";
+
+          modules = [
+            ./setups/mac.nix
           ];
         };
 
