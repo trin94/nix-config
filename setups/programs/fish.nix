@@ -66,6 +66,7 @@ in
           "kctx" = "kubectx";
           "kns" = "kubens";
           "qmltestrunner" = "qmltestrunner-qt6";
+          "pre-commit" = "prek";
         };
 
       functions = {
