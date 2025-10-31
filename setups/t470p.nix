@@ -9,11 +9,7 @@
 }:
 let
   configLocation = "${homeDirectory}/.dotfiles";
-  defaultLocale = "en_US.UTF-8";
-  extraLocale = "de_DE.UTF-8";
   homeDirectory = "/home/${username}";
-  keyboardLayout = "de+us";
-  timezone = "Europe/Berlin";
   username = "elias";
 in
 {
