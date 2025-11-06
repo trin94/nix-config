@@ -67,6 +67,7 @@ in
       tokei.enable = true;
       # uv.enable = true;
       vim.enable = true;
+      yazi.enable = true;
       yq.enable = true;
       # ytdlp.enable = true;
 
