@@ -20,50 +20,61 @@ in
     ];
   };
 
-  myOS = {
+  myOS.programs = {
 
-    programs = {
+    bat.enable = true;
+    devenv.enable = true;
+    dtrx.enable = true;
+    eza.enable = true;
+    fastfetch.enable = true;
+    fd.enable = true;
+    ffmpeg.enable = true;
 
-      bat.enable = true;
-      dtrx.enable = true;
-      eza.enable = true;
-      fastfetch.enable = true;
-      fd.enable = true;
-      ffmpeg.enable = true;
-
-      fish = {
-        enable = true;
-        configLocation = configLocation;
-      };
-
-      git = {
-        enable = false;
-        configure = true;
-        name = "Elias Mueller";
-        email = "elias.mr1@gmail.com";
-      };
-
-      jq.enable = true;
-      just.enable = true;
-      libwebp.enable = true;
-      nh.enable = true;
-      nixfmt.enable = true;
-      nushell.enable = true;
-      poetry.enable = true;
-      procs.enable = true;
-      ripgrep.enable = true;
-      ssh.enable = true;
-      tokei.enable = true;
-      vim.enable = true;
-      yq.enable = true;
-
-      zed = {
-        enable = false;
-        configure = true;
-      };
-
+    fish = {
+      enable = true;
+      configLocation = configLocation;
     };
 
+    git = {
+      enable = false;
+      configure = true;
+      name = "Elias Mueller";
+      email = "elias.mr1@gmail.com";
+    };
+
+    hugo.enable = false;
+    jq.enable = true;
+    just.enable = true;
+    libwebp.enable = true;
+
+    mpv = {
+      enable = false;
+      configure = true;
+    };
+
+    nh.enable = true;
+    nixfmt.enable = true;
+    nushell.enable = true;
+
+    poetry = {
+      enable = false;
+      configure = true;
+    };
+
+    procs.enable = true;
+    ripgrep.enable = true;
+    ssh.enable = true;
+    slides.enable = true;
+    tokei.enable = true;
+    vim.enable = true;
+    yq.enable = true;
+    yazi.enable = true;
+    ytdlp.enable = true;
+
+    zed = {
+      enable = false;
+      configure = true;
+    };
   };
 
   home = {
@@ -104,5 +115,8 @@ in
     ];
   };
 
+  home.enableNixpkgsReleaseCheck = false;
+
+  # Allow fontconfig to discover fonts and configurations installed through home.packages and nix-env.
   fonts.fontconfig.enable = true;
 }
