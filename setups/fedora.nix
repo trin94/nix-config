@@ -68,6 +68,7 @@ in
     tokei.enable = true;
     vim.enable = true;
     yq.enable = true;
+    yazi.enable = true;
     ytdlp.enable = true;
 
     zed = {
