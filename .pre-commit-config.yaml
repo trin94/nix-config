@@ -31,7 +31,7 @@ repos:
           - "--option"
           - "indent_string=    "
   - repo: https://github.com/google/yamlfmt
-    rev: v0.19.0
+    rev: v0.20.0
     hooks:
       - id: yamlfmt
         name: "format yml"
@@ -63,7 +63,7 @@ repos:
           #        name: "format nix"
 
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.14.1
+    rev: v0.14.4
     hooks:
       - id: ruff
         name: "lint python"
