@@ -4,18 +4,18 @@ repos:
     hooks:
       - id: end-of-file-fixer
       - id: trailing-whitespace
-        #  - repo: https://github.com/biomejs/pre-commit
-        #    rev: v2.2.6
-        #    hooks:
-        #      - id: biome-check
-        #        name: "format json"
-        #        files: "\\.(jsonc?)$"
-        #        args:
-        #          - "--bracket-spacing=true"
-        #          - "--indent-style=space"
-        #          - "--indent-width=4"
-        #          - "--line-ending=lf"
-        #          - "--line-width=120"
+  - repo: https://github.com/biomejs/pre-commit
+    rev: v2.3.4
+    hooks:
+      - id: biome-check
+        name: "format json"
+        files: "\\.(jsonc?)$"
+        args:
+          - "--bracket-spacing=true"
+          - "--indent-style=space"
+          - "--indent-width=4"
+          - "--line-ending=lf"
+          - "--line-width=120"
   - repo: https://github.com/ComPWA/taplo-pre-commit
     rev: v0.9.3
     hooks:
