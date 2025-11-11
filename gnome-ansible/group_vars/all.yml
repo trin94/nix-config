@@ -260,6 +260,7 @@ global_workstation_settings:
     - {state: absent, name: 'malcontent-control'}
     - {state: absent, name: 'nheko'}
     - {state: absent, name: 'rhythmbox'}
+    - {state: absent, name: 'showtime'}
     - {state: absent, name: 'totem'}
     - {state: absent, name: 'vlc'}
     - {state: present, name: 'gnome-backgrounds-extras'}
