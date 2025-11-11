@@ -25,9 +25,9 @@ flatpak_package_install:
   - name: org.telegram.desktop
 
 workstation_settings:
-  install_fusion_repos: true
-  apps:
-    # Allows to work with Appls HEIC images
-    - {state: present, name: 'libheif-tools'}
-    - {state: present, name: 'libheif-freeworld'}
-    - {state: present, name: 'libheif'}
+  install_fusion_repos: false
+  apps: []
+  # Allows to work with Appls HEIC images
+#    - {state: present, name: 'libheif-tools'}
+#    - {state: present, name: 'libheif-freeworld'}
+#    - {state: present, name: 'libheif'}
