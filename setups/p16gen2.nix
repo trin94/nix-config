@@ -25,6 +25,7 @@ in
     programs = {
 
       bat.enable = true;
+      bun.enable = true;
       devenv.enable = true;
       dtrx.enable = true;
       duckdb.enable = true;
@@ -65,7 +66,7 @@ in
       # ssh.enable = true;
       slides.enable = true;
       tokei.enable = true;
-      # uv.enable = true;
+      uv.enable = true;
       vim.enable = true;
       yazi.enable = true;
       yq.enable = true;
