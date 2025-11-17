@@ -72,6 +72,7 @@
           pkgs = nixpkgs.legacyPackages."x86_64-linux";
 
           modules = [
+            stylix.homeModules.stylix
             ./setups/fedora.nix
           ];
         };

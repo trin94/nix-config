@@ -18,6 +18,12 @@ in
       default = cfg.enable;
     };
 
+    enableCsd = mkOption {
+      type = types.bool;
+      default = true;
+      description = "Enable client-side decorations";
+    };
+
   };
 
   config = lib.mkIf cfg.configure {
@@ -35,10 +41,9 @@ in
       italic_font CaskaydiaCove NF Italic
       bold_italic_font CaskaydiaCove NF Bold Italic
       font_size 14
-      font_size 14
       sync_to_monitor yes
-      wayland_titlebar_color system
       linux_display_server wayland
+      ${if cfg.enableCsd then "wayland_titlebar_color system" else "hide_window_decorations yes"}
     '';
 
   };

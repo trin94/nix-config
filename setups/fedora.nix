@@ -45,6 +45,12 @@ in
     hugo.enable = true;
     jq.enable = true;
     just.enable = true;
+
+    kitty = {
+      enable = true;
+      enableCsd = false;
+    };
+
     libwebp.enable = true;
 
     mpv = {
@@ -75,6 +81,20 @@ in
     zed = {
       enable = false;
       configure = true;
+    };
+  };
+
+  stylix = {
+    enable = true;
+    autoEnable = false;
+    base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-mocha.yaml";
+
+    targets = {
+      fish.enable = true;
+      k9s.enable = true;
+      kitty.enable = true;
+      nixvim.enable = true;
+      starship.enable = true;
     };
   };
 
