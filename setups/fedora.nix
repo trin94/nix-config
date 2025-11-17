@@ -72,6 +72,12 @@ in
     sd.enable = true;
     ssh.enable = true;
     slides.enable = true;
+
+    tofi = {
+      enable = true;
+      font = "${homeDirectory}/.local/share/fonts/Ubuntu Sans/UbuntuSans[wdth,wght].ttf";
+    };
+
     tokei.enable = true;
     vim.enable = true;
     yq.enable = true;
@@ -95,6 +101,7 @@ in
       kitty.enable = true;
       nixvim.enable = true;
       starship.enable = true;
+      tofi.enable = true;
     };
   };
 
