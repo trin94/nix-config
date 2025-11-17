@@ -63,6 +63,7 @@ in
 
     procs.enable = true;
     ripgrep.enable = true;
+    sd.enable = true;
     ssh.enable = true;
     slides.enable = true;
     tokei.enable = true;
