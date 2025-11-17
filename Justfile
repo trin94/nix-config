@@ -8,6 +8,8 @@ USER := env_var("USER")
 HOSTNAME := `cat /etc/hostname`
 ADDITIONAL_ARGS := if HOSTNAME == "p16gen2" { "--impure" } else { "" }
 
+alias fmt := format
+
 @_default:
     just --list
 
