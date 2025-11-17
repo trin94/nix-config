@@ -29,8 +29,6 @@ in
       viAlias = true;
       vimAlias = true;
 
-      colorschemes.dracula-nvim.enable = true;
-
       extraPlugins = with pkgs.vimPlugins; [
         vim-just
         dracula-vim # Dracula theme plugin

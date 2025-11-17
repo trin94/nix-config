@@ -82,6 +82,20 @@ in
 
   };
 
+  stylix = {
+    enable = true;
+    autoEnable = false;
+    base16Scheme = "${pkgs.base16-schemes}/share/themes/dracula.yaml";
+
+    targets = {
+      fish.enable = true;
+      k9s.enable = true;
+      kitty.enable = true;
+      nixvim.enable = true;
+      starship.enable = true;
+    };
+  };
+
   home = {
     username = username;
     homeDirectory = homeDirectory;

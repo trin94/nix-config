@@ -22,6 +22,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    stylix = {
+      url = "github:nix-community/stylix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
   };
 
   outputs =
@@ -29,6 +34,7 @@
       self,
       nixpkgs,
       home-manager,
+      stylix,
       ...
     }:
 
@@ -108,6 +114,7 @@
           pkgs = nixpkgs.legacyPackages."x86_64-linux";
 
           modules = [
+            stylix.homeModules.stylix
             ./setups/p16gen2.nix
           ];
         };
