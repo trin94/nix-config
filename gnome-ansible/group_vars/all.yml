@@ -127,11 +127,11 @@ global_dconf_settings:
   - {key: '/org/gnome/desktop/wm/keybindings/move-to-workspace-10', value: "['']"}
   - {key: '/org/gnome/desktop/wm/keybindings/move-to-workspace-11', value: "['']"}
   - {key: '/org/gnome/desktop/wm/keybindings/move-to-workspace-12', value: "['']"}
-  - {key: '/org/gnome/desktop/wm/keybindings/move-to-workspace-down', value: "['']"}
+  - {key: '/org/gnome/desktop/wm/keybindings/move-to-workspace-down', value: "['<Shift><Super>j']"}
   - {key: '/org/gnome/desktop/wm/keybindings/move-to-workspace-last', value: "['']"}
-  - {key: '/org/gnome/desktop/wm/keybindings/move-to-workspace-left', value: "['<Control><Shift><Alt>Left']"}
-  - {key: '/org/gnome/desktop/wm/keybindings/move-to-workspace-right', value: "['<Control><Shift><Alt>Right']"}
-  - {key: '/org/gnome/desktop/wm/keybindings/move-to-workspace-up', value: "['']"}
+  - {key: '/org/gnome/desktop/wm/keybindings/move-to-workspace-left', value: "['<Shift><Super>h']"}
+  - {key: '/org/gnome/desktop/wm/keybindings/move-to-workspace-right', value: "['<Shift><Super>l']"}
+  - {key: '/org/gnome/desktop/wm/keybindings/move-to-workspace-up', value: "['<Shift><Super>k']"}
   - {key: '/org/gnome/desktop/wm/keybindings/panel-main-menu', value: "['']"}
   - {key: '/org/gnome/desktop/wm/keybindings/panel-run-dialog', value: "['<Alt>F2']"}
   - {key: '/org/gnome/desktop/wm/keybindings/raise', value: "['']"}
@@ -158,11 +158,11 @@ global_dconf_settings:
   - {key: '/org/gnome/desktop/wm/keybindings/switch-to-workspace-10', value: "['']"}
   - {key: '/org/gnome/desktop/wm/keybindings/switch-to-workspace-11', value: "['']"}
   - {key: '/org/gnome/desktop/wm/keybindings/switch-to-workspace-12', value: "['']"}
-  - {key: '/org/gnome/desktop/wm/keybindings/switch-to-workspace-down', value: "['']"}
+  - {key: '/org/gnome/desktop/wm/keybindings/switch-to-workspace-down', value: "['<Super>j']"}
   - {key: '/org/gnome/desktop/wm/keybindings/switch-to-workspace-last', value: "['']"}
-  - {key: '/org/gnome/desktop/wm/keybindings/switch-to-workspace-left', value: "['<Control><Alt>Left']"}
-  - {key: '/org/gnome/desktop/wm/keybindings/switch-to-workspace-right', value: "['<Control><Alt>Right']"}
-  - {key: '/org/gnome/desktop/wm/keybindings/switch-to-workspace-up', value: "['']"}
+  - {key: '/org/gnome/desktop/wm/keybindings/switch-to-workspace-left', value: "['<Super>h']"}
+  - {key: '/org/gnome/desktop/wm/keybindings/switch-to-workspace-right', value: "['<Super>l']"}
+  - {key: '/org/gnome/desktop/wm/keybindings/switch-to-workspace-up', value: "['<Super>k']"}
   - {key: '/org/gnome/desktop/wm/keybindings/switch-windows', value: "['']"}
   - {key: '/org/gnome/desktop/wm/keybindings/switch-windows-backward', value: "['']"}
   - {key: '/org/gnome/desktop/wm/keybindings/toggle-above', value: "['']"}
