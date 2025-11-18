@@ -74,13 +74,8 @@ in
     ssh.enable = true;
     slides.enable = true;
 
-    tofi = {
-      enable = true;
-      font = "${homeDirectory}/.local/share/fonts/Ubuntu Sans/UbuntuSans[wdth,wght].ttf";
-    };
-
     tokei.enable = true;
-    vim.enable = true;
+    vim.enable = false;
     yq.enable = true;
     yazi.enable = true;
     ytdlp.enable = true;
