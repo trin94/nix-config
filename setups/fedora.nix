@@ -42,6 +42,7 @@ in
       email = "elias.mr1@gmail.com";
     };
 
+    helix.enable = true;
     hugo.enable = true;
     jq.enable = true;
     just.enable = true;
@@ -97,6 +98,7 @@ in
 
     targets = {
       fish.enable = true;
+      helix.enable = true;
       k9s.enable = true;
       kitty.enable = true;
       nixvim.enable = true;

@@ -46,7 +46,7 @@ in
         email = builtins.getEnv "EMAIL";
       };
 
-      # hugo.enable = true;
+      helix.enable = true;
       jq.enable = true;
       just.enable = true;
       kitty.enable = true;
@@ -93,6 +93,7 @@ in
       kitty.enable = true;
       nixvim.enable = true;
       starship.enable = true;
+      helix.enable = true;
     };
   };
 
