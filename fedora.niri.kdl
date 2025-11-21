@@ -501,3 +501,8 @@ overview {
         color "#00000050"
     }
 }
+
+cursor {
+    xcursor-theme "Bibata-Modern-Classic"
+    xcursor-size 24
+}

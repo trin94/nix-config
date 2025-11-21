@@ -118,6 +118,8 @@ in
 
     sessionVariables = {
       # SKIP = "sqlfluff-fix";
+      XCURSOR_THEME = "Bibata-Modern-Classic";
+      XCURSOR_SIZE = 24;
     };
 
     # This value determines the Home Manager release that your
