@@ -99,6 +99,7 @@ in
       nixvim.enable = true;
       starship.enable = true;
       tofi.enable = true;
+      yazi.enable = true;
     };
   };
 

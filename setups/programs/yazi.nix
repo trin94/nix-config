@@ -6,13 +6,6 @@
 }:
 let
   cfg = config.myOS.programs.yazi;
-
-  yaziFlavors = pkgs.fetchFromGitHub {
-    owner = "yazi-rs";
-    repo = "flavors";
-    rev = "main";
-    sha256 = "sha256-bavHcmeGZ49nNeM+0DSdKvxZDPVm3e6eaNmfmwfCid0=";
-  };
 in
 {
 
@@ -54,7 +47,6 @@ in
       };
 
       keymap = {
-        # F1 or ~ in yazi
         mgr.prepend_keymap = [
           {
             on = "l";
@@ -72,16 +64,6 @@ in
 
       plugins = {
         smart-enter = "${pkgs.yaziPlugins.smart-enter}";
-      };
-
-      theme = {
-        flavor = {
-          use = "dracula";
-        };
-      };
-
-      flavors = {
-        dracula = "${yaziFlavors}/dracula.yazi";
       };
 
     };
