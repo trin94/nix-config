@@ -23,6 +23,11 @@ in
       type = types.str;
     };
 
+    shellInit = mkOption {
+      type = types.lines;
+      default = "";
+    };
+
   };
 
   config = lib.mkIf cfg.enable {
@@ -51,6 +56,8 @@ in
       interactiveShellInit = ''
         set fish_greeting
       '';
+
+      shellInit = cfg.shellInit;
 
       shellAliases =
         let
