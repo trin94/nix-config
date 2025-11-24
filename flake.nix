@@ -130,6 +130,7 @@
           pkgs = nixpkgs.legacyPackages."aarch64-darwin";
 
           modules = [
+            stylix.homeModules.stylix
             ./setups/mac.nix
           ];
         };
