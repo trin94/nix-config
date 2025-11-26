@@ -23,6 +23,12 @@ in
   myOS.programs = {
 
     bat.enable = true;
+
+    chromium = {
+      enable = false;
+      configure = true;
+    };
+
     devenv.enable = true;
     dtrx.enable = true;
     eza.enable = true;
@@ -117,9 +123,10 @@ in
     ];
 
     sessionVariables = {
-      # SKIP = "sqlfluff-fix";
       XCURSOR_THEME = "Bibata-Modern-Classic";
       XCURSOR_SIZE = 24;
+
+      ELECTRON_OZONE_PLATFORM_HINT = "auto";
     };
 
     # This value determines the Home Manager release that your
