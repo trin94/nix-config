@@ -36,6 +36,7 @@ global_flatpak_package_install:
   - name: org.gnome.TextEditor
   - name: org.gnome.Weather
   - name: org.mozilla.firefox
+  - name: org.chromium.Chromium
 
 # The 'fonts' role #
 ####################
