@@ -35,11 +35,13 @@ in
         with pkgs;
         [
           git
+          lazygit
           difftastic
         ]
       else if cfg.configure then
         with pkgs;
         [
+          lazygit
           difftastic
         ]
       else
