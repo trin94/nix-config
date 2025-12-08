@@ -197,7 +197,7 @@ layout {
     // You can enable drop shadows for windows.
     shadow {
         // Uncomment the next line to enable shadows.
-        // on
+        on
 
         // By default, the shadow draws only around its window, and not behind it.
         // Uncomment this setting to make the shadow draw behind its window.
@@ -311,14 +311,9 @@ window-rule {
     open-floating true
 }
 
-// Open the Firefox picture-in-picture player as floating by default.
 window-rule {
     match app-id="io.github.mpvqc.python3"
     open-floating true
-
-    shadow {
-        on
-    }
 }
 
 window-rule {
