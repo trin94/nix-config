@@ -19,6 +19,7 @@ in
 
     home.packages = with pkgs; [
       helix
+      wl-clipboard
       yaml-language-server
       pyright
       ruff
@@ -39,7 +40,7 @@ in
       defaultEditor = true;
 
       settings = {
-        theme = "stylix";
+        theme = "catppuccin_mocha";
 
         editor = {
           line-number = "absolute";
@@ -79,6 +80,17 @@ in
           "down" = "no_op";
           "left" = "no_op";
           "right" = "no_op";
+          "C-S-A-l" = ":format";
+          "C-/" = [
+            "toggle_comments"
+            "move_line_down"
+          ];
+          "C-S-/" = "toggle_block_comments";
+          "A-j" = [
+            "search_selection"
+            "extend_search_next"
+          ];
+          "A-J" = "remove_primary_selection";
         };
 
         keys.insert = {

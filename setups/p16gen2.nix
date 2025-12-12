@@ -1,9 +1,5 @@
 {
-  config,
   pkgs,
-  lib,
-  pkgsStable,
-  inputs,
   dirImport,
   ...
 }:
@@ -68,7 +64,7 @@ in
       slides.enable = true;
       tokei.enable = true;
       uv.enable = true;
-      vim.enable = true;
+      vim.enable = false;
       yazi.enable = true;
       yq.enable = true;
       # ytdlp.enable = true;
@@ -93,7 +89,7 @@ in
       kitty.enable = true;
       nixvim.enable = true;
       starship.enable = true;
-      helix.enable = true;
+      helix.enable = false;
     };
   };
 
