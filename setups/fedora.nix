@@ -99,9 +99,9 @@ in
 
     targets = {
       fish.enable = true;
-      helix.enable = true;
       k9s.enable = true;
       kitty.enable = true;
+      lazygit.enable = true;
       nixvim.enable = true;
       starship.enable = true;
       tofi.enable = true;

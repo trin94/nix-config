@@ -49,6 +49,29 @@ in
 
     programs.git.enable = lib.mkIf cfg.enable true;
 
+    programs.lazygit = lib.mkIf cfg.configure {
+      enable = true;
+      settings = {
+        git.pagers = [
+          {
+            externalDiffCommand = "difft --color=always";
+          }
+        ];
+        keybinding.universal = {
+          undo = "u";
+          redo = "U";
+          nextBlock = "<c-n>";
+          prevBlock = "<c-p>";
+          prevBlock-alt = "<disabled>";
+          nextBlock-alt = "<disabled>";
+          scrollLeft = "<disabled>";
+          scrollRight = "<disabled>";
+          goInto = "l";
+          return-alt1 = "h";
+        };
+      };
+    };
+
     home.file = lib.mkIf cfg.configure {
       ".config/git/config".text = ''
         [core]
