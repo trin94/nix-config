@@ -91,6 +91,21 @@ in
             "extend_search_next"
           ];
           "A-J" = "remove_primary_selection";
+          "C-S-j" = "join_selections";
+          "J" = "no_op";
+          "A-S-up" = [
+            "extend_to_line_bounds"
+            "delete_selection"
+            "move_line_up"
+            "paste_before"
+            "extend_to_line_bounds"
+          ];
+          "A-S-down" = [
+            "extend_to_line_bounds"
+            "delete_selection"
+            "paste_after"
+            "extend_to_line_bounds"
+          ];
         };
 
         keys.insert = {
