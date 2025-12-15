@@ -1,7 +1,6 @@
 {
   config,
   lib,
-  pkgs,
   ...
 }:
 let
@@ -44,8 +43,12 @@ in
       sync_to_monitor yes
       linux_display_server wayland
       ${if cfg.enableCsd then "wayland_titlebar_color system" else "hide_window_decorations yes"}
+      map ctrl+f no_op
+      map ctrl+r no_op
+      map ctrl+shift+f no_op
+      map ctrl+shift+r no_op
+      map ctrl+shift+n no_op
     '';
-
   };
 
 }

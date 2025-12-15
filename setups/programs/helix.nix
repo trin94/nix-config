@@ -45,16 +45,10 @@ in
         editor = {
           line-number = "absolute";
           cursorline = true;
-          mouse = true;
+          mouse = false;
           scrolloff = 5;
           bufferline = "multiple";
           color-modes = true;
-
-          cursor-shape = {
-            insert = "bar";
-            normal = "block";
-            select = "underline";
-          };
 
           indent-guides = {
             render = true;
@@ -72,27 +66,67 @@ in
           soft-wrap = {
             enable = true;
           };
+
+          inline-diagnostics = {
+            cursor-line = "warning";
+          };
+
+          end-of-line-diagnostics = "hint";
         };
 
         keys.normal = {
-          "C-c" = "normal_mode";
+          # Disabled keys
           "up" = "no_op";
           "down" = "no_op";
           "left" = "no_op";
           "right" = "no_op";
+          "J" = "no_op";
+
+          # Mode control
+          "C-c" = [
+            "keep_primary_selection"
+            "normal_mode"
+          ];
+
+          # Navigation / Pickers
+          "C-f" = "search";
+          "C-S-f" = "global_search";
+          "C-e" = "buffer_picker";
+          "C-S-n" = "file_picker";
+          "A-0" = "changed_file_picker";
+          "A-1" = "file_explorer";
+
+          # Diagnostics
+          "F2" = "goto_next_diag";
+          "S-F2" = "goto_prev_diag";
+
+          # Git / Diff
+          "C-S-A-j" = "goto_next_change";
+          "C-S-A-k" = "goto_prev_change";
+          "C-A-z" = ":reset-diff-change";
+
+          # Editing
           "C-S-A-l" = ":format";
           "C-/" = [
             "toggle_comments"
             "move_line_down"
           ];
           "C-S-/" = "toggle_block_comments";
+          "C-d" = [
+            "extend_to_line_bounds"
+            "yank"
+            "paste_after"
+          ];
+          "C-S-j" = "join_selections";
+
+          # Multi-cursor
           "A-j" = [
             "search_selection"
             "extend_search_next"
           ];
-          "A-J" = "remove_primary_selection";
-          "C-S-j" = "join_selections";
-          "J" = "no_op";
+          "A-S-j" = "remove_primary_selection";
+
+          # Line movement
           "A-S-up" = [
             "extend_to_line_bounds"
             "delete_selection"
@@ -109,7 +143,11 @@ in
         };
 
         keys.insert = {
-          "C-c" = "normal_mode";
+          "C-c" = [
+            "keep_primary_selection"
+            "normal_mode"
+          ];
+          "C-space" = "completion";
           "up" = "no_op";
           "down" = "no_op";
           "left" = "no_op";
@@ -117,7 +155,10 @@ in
         };
 
         keys.select = {
-          "C-c" = "normal_mode";
+          "C-c" = [
+            "keep_primary_selection"
+            "normal_mode"
+          ];
         };
       };
 
