@@ -43,12 +43,15 @@ in
         theme = "catppuccin_mocha";
 
         editor = {
-          line-number = "absolute";
-          cursorline = true;
-          mouse = false;
-          scrolloff = 5;
           bufferline = "multiple";
+          clipboard-provider = "wayland";
           color-modes = true;
+          cursorline = true;
+          line-number = "absolute";
+          mouse = false;
+          scrolloff = 15;
+          text-width = 120;
+          true-color = true;
 
           indent-guides = {
             render = true;
@@ -72,6 +75,31 @@ in
           };
 
           end-of-line-diagnostics = "hint";
+
+          statusline = {
+            left = [
+              "mode"
+              "spinner"
+              "version-control"
+            ];
+            center = [
+              "file-name"
+              "file-modification-indicator"
+              "read-only-indicator"
+            ];
+            right = [
+              "diagnostics"
+              "workspace-diagnostics"
+              "selections"
+              "position"
+              "total-line-numbers"
+              "file-type"
+            ];
+            separator = "│";
+            mode.normal = "NORMAL";
+            mode.insert = "INSERT";
+            mode.select = "SELECT";
+          };
         };
 
         keys.normal = {
@@ -95,6 +123,9 @@ in
           "C-S-n" = "file_picker";
           "A-0" = "changed_file_picker";
           "A-1" = "file_explorer";
+
+          # Documentation
+          "C-q" = "hover";
 
           # Diagnostics
           "F2" = "goto_next_diag";
