@@ -9,8 +9,9 @@
 input {
     keyboard {
         xkb {
-            layout "us"
-            // variant "altgr-intl"
+            layout "de"
+            variant "us"
+            options "lv3:rwin_switch"
         }
     }
 
