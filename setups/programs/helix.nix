@@ -17,23 +17,27 @@ in
 
   config = lib.mkIf cfg.enable {
 
-    home.packages = with pkgs; [
-      helix
-      wl-clipboard
-      yaml-language-server
-      pyright
-      ruff
-      gopls
-      bash-language-server
-      typescript-language-server
-      typescript
-      lua-language-server
-      nil
-      marksman
-      taplo
-      just-lsp
-      kdePackages.qtdeclarative
-    ];
+    home.packages =
+      with pkgs;
+      [
+        helix
+        yaml-language-server
+        pyright
+        ruff
+        gopls
+        bash-language-server
+        typescript-language-server
+        typescript
+        lua-language-server
+        nil
+        marksman
+        taplo
+        just-lsp
+        kdePackages.qtdeclarative
+      ]
+      ++ lib.optionals pkgs.stdenv.isLinux [
+        wl-clipboard
+      ];
 
     programs.helix = {
       enable = true;
@@ -44,7 +48,7 @@ in
 
         editor = {
           bufferline = "multiple";
-          clipboard-provider = "wayland";
+          clipboard-provider = lib.mkIf pkgs.stdenv.isLinux "wayland";
           color-modes = true;
           cursorline = true;
           line-number = "absolute";
