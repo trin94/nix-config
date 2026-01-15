@@ -56,7 +56,7 @@ in
           {
             on = "!";
             for = "unix";
-            run = ''shell fish --block'';
+            run = "shell fish --block";
             desc = "Open fish here";
           }
         ];
