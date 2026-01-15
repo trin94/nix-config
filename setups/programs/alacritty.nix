@@ -39,7 +39,6 @@ in
       padding.y = 5
       dimensions.columns = 120
       dimensions.lines = 30
-      decorations = "Transparent"
 
       [font]
       size = ${toString cfg.fontSize}
