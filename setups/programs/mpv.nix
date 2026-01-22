@@ -12,6 +12,7 @@ let
     keep-open="yes"
     autofit="65%"
     cursor-autohide="500"
+    autocreate-playlist="same"
 
     # Audio
     volume="100"
