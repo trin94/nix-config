@@ -70,17 +70,21 @@ output "eDP-1" {
 output "LG Electronics LG ULTRAFINE 303MAEGCJR72" {
     mode "3840x2160@60"
 
-    // scale: 1.25
     // scale 1.25
     // position x=1920 y=-528
 
-    // scale: 1.33
     // scale 1.33
     // position x=1920 y=-424
 
-    // scale: 1.5
     scale 1.5
     position x=1920 y=-240
+}
+
+output "GIGA-BYTE TECHNOLOGY CO., LTD. AORUS FO32U2P 24430B006029" {
+    mode "3840x2160@240"
+
+    scale 1.25
+    position x=1920 y=-528
 }
 
 // You can configure outputs by their name, which you can find
