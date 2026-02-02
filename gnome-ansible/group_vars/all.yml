@@ -230,7 +230,7 @@ global_dconf_settings:
   - key: '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/binding'
     value: "'<Super>Return'"
   - key: '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/command'
-    value: "'ptyxis -s'"
+    value: "'kitty'"
   - key: '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/name'
     value: "'Terminal'"
 
