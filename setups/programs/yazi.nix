@@ -26,6 +26,7 @@ in
 
       enableFishIntegration = true;
       enableNushellIntegration = true;
+      shellWrapperName = "y";
 
       settings = {
         mgr = {
