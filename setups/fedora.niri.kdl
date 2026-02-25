@@ -318,7 +318,7 @@ window-rule {
     match app-id="org.mozilla.firefox"
     match app-id="org.chromium.Chromium"
     match app-id=r#"^jetbrains-"#
-    default-column-width { proportion 0.95; }
+    default-column-width { proportion 1.0; }
 }
 
 window-rule {
