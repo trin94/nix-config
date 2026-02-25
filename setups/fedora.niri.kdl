@@ -322,6 +322,11 @@ window-rule {
 }
 
 window-rule {
+    match app-id=r#"^[Ss]team$"#
+    open-focused false
+}
+
+window-rule {
     match app-id="1password"
     block-out-from "screen-capture"
 }
