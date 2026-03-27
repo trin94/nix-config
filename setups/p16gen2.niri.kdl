@@ -149,7 +149,7 @@ layout {
         proportion 0.3334
         proportion 0.5
         proportion 0.6667
-        proportion 0.95
+        proportion 1.0
 
         // Fixed sets the width in logical pixels exactly.
         // fixed 1920
@@ -363,7 +363,7 @@ window-rule {
     match app-id="org.mozilla.firefox"
     match app-id="org.chromium.Chromium"
     match app-id=r#"^jetbrains-"#
-    default-column-width { proportion 0.95; }
+    default-column-width { proportion 1.0; }
 }
 
 window-rule {
