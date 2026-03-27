@@ -401,7 +401,6 @@ binds {
     // You can also move the mouse into the top-left hot corner,
     // or do a four-finger swipe up on a touchpad.
     Mod+Tab repeat=false { toggle-overview; }
-    Alt+Tab repeat=false { toggle-overview; }
 
     Mod+Shift+Q repeat=false { close-window; }
 
@@ -529,6 +528,36 @@ binds {
     // Powers off the monitors. To turn them back on, do any input like
     // moving the mouse or pressing any other key.
     Mod+Shift+P { power-off-monitors; }
+}
+
+recent-windows {
+    debounce-ms 750
+
+    open-delay-ms 150
+
+    highlight {
+        active-color "#89b4fa50"
+        urgent-color "#f38ba880"
+        padding 30
+        corner-radius 0
+    }
+
+    previews {
+        max-height 480
+        max-scale 0.5
+    }
+
+    binds {
+        Alt+Tab         { next-window; }
+        Alt+Shift+Tab   { previous-window; }
+        Alt+grave       { next-window     filter="app-id"; }
+        Alt+Shift+grave { previous-window filter="app-id"; }
+
+        Mod+Tab         { next-window; }
+        Mod+Shift+Tab   { previous-window; }
+        Mod+grave       { next-window     filter="app-id"; }
+        Mod+Shift+grave { previous-window filter="app-id"; }
+    }
 }
 
 
