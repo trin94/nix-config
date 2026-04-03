@@ -25,6 +25,7 @@ verify: format
 # Apply home configuration
 [group('run')]
 apply: format
+    # home-manager switch --flake ".#{{ USER }}@{{ HOSTNAME }}" {{ ADDITIONAL_ARGS }}
     nh home switch --configuration "{{ USER }}@{{ HOSTNAME }}" . -- {{ ADDITIONAL_ARGS }}
 
 # Update then apply home configuration
