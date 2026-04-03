@@ -35,7 +35,7 @@ in
       enable = false;
       configure = true;
       name = "Elias Mueller";
-      email = "elias.mr1@gmail.com";
+      email = "mail@eliasmueller.online";
     };
 
     hugo.enable = true;
