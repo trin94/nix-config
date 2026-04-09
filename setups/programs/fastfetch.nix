@@ -28,86 +28,64 @@ in
         "$schema" = "https://github.com/fastfetch-cli/fastfetch/raw/dev/doc/json_schema.json";
 
         display = {
-          separator = "➜   ";
+          separator = " → ";
+        };
+
+        logo = {
+          type = "none";
         };
 
         modules = [
           "break"
-
           {
             type = "title";
             format = "{6}{7}{8}";
           }
-
           "break"
-
           {
             type = "os";
-            key = " OS         ";
-            keyColor = "green";
-          }
-          {
-            type = "kernel";
-            key = " Kernel     ";
-            keyColor = "cyan";
-          }
-          {
-            type = "uptime";
-            key = "󰅐 Uptime     ";
+            key = "● OS";
             keyColor = "blue";
           }
           {
-            type = "packages";
-            key = " Packages   ";
-            keyColor = "green";
+            type = "kernel";
+            key = "● Kernel";
+            keyColor = "blue";
           }
           {
-            type = "de";
-            key = " Desktop    ";
+            type = "uptime";
+            key = "● Uptime";
             keyColor = "cyan";
           }
           {
             type = "shell";
-            key = " Shell      ";
-            keyColor = "blue";
+            key = "● Shell";
+            keyColor = "cyan";
           }
           {
             type = "terminal";
-            key = " Terminal   ";
+            key = "● Term";
             keyColor = "green";
           }
           {
-            key = " Font       ";
-            keyColor = "cyan";
-            type = "terminalfont";
-          }
-          {
-            key = "󰻠 CPU        ";
-            keyColor = "blue";
             type = "cpu";
-          }
-          {
-            key = "󰍛 GPU        ";
+            key = "● CPU";
             keyColor = "green";
+          }
+          {
             type = "gpu";
+            key = "● GPU";
+            keyColor = "green";
           }
           {
-            key = "󰑭 Memory     ";
-            keyColor = "cyan";
             type = "memory";
+            key = "● Mem";
+            keyColor = "yellow";
           }
-          {
-            key = "󰩟 Local IP   ";
-            keyColor = "blue";
-            type = "localip";
-            compact = true;
-          }
-
           "break"
-
           {
             type = "colors";
-            symbol = "square";
+            symbol = "circle";
           }
         ];
       };
