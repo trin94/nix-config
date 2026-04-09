@@ -22,7 +22,3 @@
     - role: gnome_settings
     - role: jetbrains_toolbox
     - role: workstation
-
-- hosts: toolbx
-  roles:
-    - role: workstation
