@@ -4,10 +4,6 @@ Prerequisites
 Install Prerequisites
 ---------------------
 
-On Silverblue:
-  rpm-ostree install ansible python3-psutil
-  reboot
-
 On Fedora:
   sudo dnf install ansible git python3-pip
 
@@ -26,4 +22,3 @@ Original Work by
 ----------------
 
 Jim Campbell (jwcampbell@gmail.com)
-https://github.com/j1mc/ansible-silverblue

@@ -6,14 +6,6 @@
     - role: jetbrains_toolbox
     - role: workstation
 
-- hosts: silverblue
-  roles:
-    - role: flatpaks
-    - role: fonts
-    - role: gnome_settings
-    - role: jetbrains_toolbox
-    - role: layered_packages
-      # - role: os_updates
 
 - hosts: p16gen2 # fedora workstation
   roles:

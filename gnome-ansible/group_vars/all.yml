@@ -1,16 +1,3 @@
-## The 'layered_packages' role #
-################################
-layered_package_install: []
-base_package_remove:
-  - firefox-langpacks
-  - firefox
-
-## The 'os_updates' role #
-##########################
-#
-#update_policy: stage
-#idle_timeout: '600'
-
 # The 'flatpak' role #
 ######################
 global_flatpak_remote_install:
