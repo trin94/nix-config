@@ -33,7 +33,6 @@ in
         marksman
         taplo
         just-lsp
-        kdePackages.qtdeclarative
       ]
       ++ lib.optionals pkgs.stdenv.isLinux [
         wl-clipboard
@@ -238,9 +237,6 @@ in
           just-lsp = {
             command = "just-lsp";
           };
-          qmlls = {
-            command = "qmlls";
-          };
         };
 
         language = [
@@ -299,11 +295,6 @@ in
             name = "just";
             auto-format = true;
             language-servers = [ "just-lsp" ];
-          }
-          {
-            name = "qml";
-            auto-format = true;
-            language-servers = [ "qmlls" ];
           }
         ];
       };
