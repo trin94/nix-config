@@ -52,6 +52,7 @@ in
     kitty = {
       enable = true;
       enableCsd = false;
+      useMonoLisaFont = true;
     };
 
     libwebp.enable = true;

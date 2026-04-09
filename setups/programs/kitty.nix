@@ -5,6 +5,20 @@
 }:
 let
   cfg = config.myOS.programs.kitty;
+  fontConfig =
+    if cfg.useMonoLisaFont then ''
+      font_family      MonoLisa Variable
+      bold_font        auto
+      italic_font      auto
+      bold_italic_font auto
+      font_size 14
+    '' else ''
+      font_family CaskaydiaCove NF
+      bold_font CaskaydiaCove NF Bold
+      italic_font CaskaydiaCove NF Italic
+      bold_italic_font CaskaydiaCove NF Bold Italic
+      font_size 14
+    '';
 in
 {
 
@@ -23,6 +37,12 @@ in
       description = "Enable client-side decorations";
     };
 
+    useMonoLisaFont = mkOption {
+      type = types.bool;
+      default = false;
+      description = "Use MonoLisa Variable font";
+    };
+
   };
 
   config = lib.mkIf cfg.configure {
@@ -35,11 +55,7 @@ in
       window_padding_width 5
       initial_window_width 120c
       initial_window_height 30c
-      font_family CaskaydiaCove NF
-      bold_font CaskaydiaCove NF Bold
-      italic_font CaskaydiaCove NF Italic
-      bold_italic_font CaskaydiaCove NF Bold Italic
-      font_size 14
+      ${fontConfig}
       sync_to_monitor yes
       linux_display_server wayland
       ${if cfg.enableCsd then "wayland_titlebar_color system" else "hide_window_decorations yes"}
