@@ -1,0 +1,10 @@
+# SPDX-FileCopyrightText: mpvQC developers
+#
+# SPDX-License-Identifier: MIT
+
+python-version = "3.13"
+project-includes = ["../**/*.py*"]
+search-path = [".."]
+
+[errors]
+missing-override-decorator = "error"

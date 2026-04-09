@@ -15,7 +15,7 @@ alias fmt := format
 
 # Format source
 @format:
-    uvx prek run --all-files
+    uv run prek --config .config/prek.toml run --all-files
 
 # Build home to 'result' directory
 [group('run')]

@@ -1,0 +1,6 @@
+# SPDX-FileCopyrightText: mpvQC developers
+#
+# SPDX-License-Identifier: MIT
+
+line-length = 120
+target-version = "py313"

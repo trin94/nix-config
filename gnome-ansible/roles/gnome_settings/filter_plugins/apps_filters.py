@@ -61,11 +61,7 @@ def merge_dict_lists_by_key(
 
     def get_item_map(settings):
         items = get_nested(settings, identifier)
-        return {
-            item[merge_key]: item
-            for item in items
-            if isinstance(item, dict) and merge_key in item
-        }
+        return {item[merge_key]: item for item in items if isinstance(item, dict) and merge_key in item}
 
     global_items = get_item_map(global_settings)
     host_items = get_item_map(host_settings)
