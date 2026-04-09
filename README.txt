@@ -18,7 +18,7 @@ Steps
 
 5. Apply Host Configuration
    - git clone https://github.com/trin94/nix-config.git ~/.dotfiles
-   - cd ~/.dotfiles/gnome-ansible/
+   - cd ~/.dotfiles/ansible/
    - ./run-host-playbook.sh
 
 6. Install nix package manager

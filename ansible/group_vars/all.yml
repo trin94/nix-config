@@ -1,5 +1,10 @@
-# The 'flatpak' role #
-######################
+# Workstation defaults #
+########################
+workstation_settings: {}
+dnf_config: /etc/dnf/dnf.conf
+
+# Flatpaks #
+############
 global_flatpak_remote_install:
   - name: flathub
     method: user
@@ -25,8 +30,8 @@ global_flatpak_package_install:
   - name: org.mozilla.firefox
   - name: org.chromium.Chromium
 
-# The 'fonts' role #
-####################
+# Fonts #
+#########
 # https://github.com/ryanoasis/nerd-fonts
 global_nerd_fonts_version: 'v3.4.0'
 global_nerd_fonts:
@@ -49,8 +54,8 @@ global_fonts:
       - "https://github.com/google/fonts/blob/main/ofl/inter/Inter-Italic[opsz,wght].ttf"
       - "https://github.com/google/fonts/blob/main/ofl/inter/Inter[opsz,wght].ttf"
 
-# The 'gnome_settings' role #
-#############################
+# GNOME Settings #
+##################
 global_dconf_settings:
   - {key: '/org/gnome/desktop/datetime/automatic-timezone', value: 'true'}
 
@@ -221,8 +226,8 @@ global_dconf_settings:
   - key: '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/name'
     value: "'Terminal'"
 
-# The 'workstation' role #
-##########################
+# Workstation #
+################
 global_workstation_settings:
   install_docker: true
   install_fusion_repos: false
@@ -254,6 +259,6 @@ global_workstation_settings:
     - {state: present, name: 'gnome-backgrounds-extras'}
     - {state: present, name: '1password',}
 
-# The 'jetbrains_toolbox' role #
-################################
+# JetBrains Toolbox #
+#####################
 install_jetbrains_toolbox: true

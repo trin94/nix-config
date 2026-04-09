@@ -1,0 +1,7 @@
+- hosts: desktops
+  tasks:
+    - import_tasks: tasks/flatpaks.yml
+    - import_tasks: tasks/fonts.yml
+    - import_tasks: tasks/gnome_settings.yml
+    - import_tasks: tasks/jetbrains_toolbox.yml
+    - import_tasks: tasks/workstation.yml
