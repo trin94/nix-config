@@ -21,6 +21,7 @@ in
     programs = {
 
       bat.enable = true;
+      bottom.enable = true;
       bun.enable = true;
       devenv.enable = true;
       dtrx.enable = true;

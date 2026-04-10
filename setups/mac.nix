@@ -27,6 +27,7 @@ in
       };
 
       bat.enable = true;
+      bottom.enable = true;
       devenv.enable = false;
       dtrx.enable = true;
       eza.enable = true;

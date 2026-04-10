@@ -19,6 +19,7 @@ in
   myOS.programs = {
 
     bat.enable = true;
+    bottom.enable = true;
 
     chromium = {
       enable = false;
@@ -95,6 +96,7 @@ in
     base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-mocha.yaml";
 
     targets = {
+      bat.enable = true;
       fish.enable = true;
       k9s.enable = true;
       kitty.enable = true;
