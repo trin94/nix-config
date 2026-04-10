@@ -36,5 +36,5 @@ update:
 # Add a new program, needs to be enabled manually
 [group('configure')]
 add-program NAME:
-    cat setups/programs/_template | sed 's/@@NAME@@/{{NAME}}/g' > setups/programs/{{NAME}}.nix
+    cat setups/programs/_template | sed 's/@@NAME@@/{{ NAME }}/g' > setups/programs/{{ NAME }}.nix
     just format
