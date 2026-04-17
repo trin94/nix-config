@@ -79,3 +79,15 @@ hooks = [
         args = ["--config", ".config/ruff.toml"],
     },
 ]
+
+[[repos]]
+repo = "local"
+hooks = [
+    {
+        id = "nixfmt",
+        name = "format nix",
+        entry = "nixfmt",
+        language = "system",
+        files = '\.nix$',
+    },
+]

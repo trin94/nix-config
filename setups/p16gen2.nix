@@ -16,65 +16,61 @@ in
     ];
   };
 
-  myOS = {
+  myOS.programs = {
 
-    programs = {
+    bat.enable = true;
+    bottom.enable = true;
+    bun.enable = true;
+    devenv.enable = true;
+    dtrx.enable = true;
+    duckdb.enable = true;
+    eza.enable = true;
+    fastfetch.enable = true;
+    fd.enable = true;
+    # ffmpeg.enable = true;
 
-      bat.enable = true;
-      bottom.enable = true;
-      bun.enable = true;
-      devenv.enable = true;
-      dtrx.enable = true;
-      duckdb.enable = true;
-      eza.enable = true;
-      fastfetch.enable = true;
-      fd.enable = true;
-      # ffmpeg.enable = true;
+    fish = {
+      enable = true;
+      configLocation = configLocation;
+    };
 
-      fish = {
-        enable = true;
-        configLocation = configLocation;
-      };
+    git = {
+      enable = false;
+      configure = true;
+      name = "Elias Mueller";
+      email = builtins.getEnv "EMAIL";
+    };
 
-      git = {
-        enable = false;
-        configure = true;
-        name = "Elias Mueller";
-        email = builtins.getEnv "EMAIL";
-      };
+    helix.enable = true;
+    jq.enable = true;
+    just.enable = true;
+    kitty.enable = true;
+    kubernetes.enable = true;
+    # libwebp.enable = true;
+    nh.enable = true;
+    nixfmt.enable = true;
+    nushell.enable = true;
 
-      helix.enable = true;
-      jq.enable = true;
-      just.enable = true;
-      kitty.enable = true;
-      kubernetes.enable = true;
-      # libwebp.enable = true;
-      nh.enable = true;
-      nixfmt.enable = true;
-      nushell.enable = true;
+    poetry = {
+      enable = false;
+      configure = true;
+    };
 
-      poetry = {
-        enable = false;
-        configure = true;
-      };
+    procs.enable = true;
+    ripgrep.enable = true;
+    sd.enable = true;
+    # ssh.enable = true;
+    slides.enable = true;
+    tokei.enable = true;
+    uv.enable = false;
+    vim.enable = false;
+    yazi.enable = true;
+    yq.enable = true;
+    # ytdlp.enable = true;
 
-      procs.enable = true;
-      ripgrep.enable = true;
-      sd.enable = true;
-      # ssh.enable = true;
-      slides.enable = true;
-      tokei.enable = true;
-      uv.enable = true;
-      vim.enable = false;
-      yazi.enable = true;
-      yq.enable = true;
-      # ytdlp.enable = true;
-
-      zed = {
-        enable = false;
-        configure = true;
-      };
-
+    zed = {
+      enable = false;
+      configure = true;
     };
 
   };

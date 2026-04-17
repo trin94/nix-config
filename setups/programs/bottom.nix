@@ -32,7 +32,13 @@ in
           default_widget_count = 1;
         };
         processes = {
-          columns = [ "PID" "Name" "CPU%" "Mem%" "User" ];
+          columns = [
+            "PID"
+            "Name"
+            "CPU%"
+            "Mem%"
+            "User"
+          ];
         };
         row = [
           {
