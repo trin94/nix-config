@@ -44,7 +44,13 @@ in
     helix.enable = true;
     jq.enable = true;
     just.enable = true;
-    kitty.enable = true;
+
+    kitty = {
+      enable = true;
+      enableCsd = false;
+      useMonoLisaFont = true;
+    };
+
     kubernetes.enable = true;
     # libwebp.enable = true;
     nh.enable = true;
