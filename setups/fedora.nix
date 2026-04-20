@@ -45,7 +45,7 @@ in
       email = "mail@eliasmueller.online";
     };
 
-    helix.enable = true;
+    helix.enable = false;
     hugo.enable = true;
     jq.enable = true;
     just.enable = true;
@@ -79,7 +79,7 @@ in
     slides.enable = true;
 
     tokei.enable = true;
-    vim.enable = false;
+    vim.enable = true;
     yq.enable = true;
     yazi.enable = true;
     ytdlp.enable = true;

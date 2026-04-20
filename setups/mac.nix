@@ -51,7 +51,7 @@ in
         '';
       };
 
-      helix.enable = true;
+      helix.enable = false;
       jq.enable = true;
       just.enable = true;
 
@@ -64,7 +64,7 @@ in
       ripgrep.enable = true;
       sd.enable = true;
       tokei.enable = true;
-
+      vim.enable = true;
       yazi.enable = true;
       yq.enable = true;
 
@@ -83,6 +83,7 @@ in
     targets = {
       fish.enable = true;
       k9s.enable = true;
+      nixvim.enable = true;
       starship.enable = true;
     };
   };
