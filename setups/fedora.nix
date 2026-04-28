@@ -20,6 +20,7 @@ in
 
     bat.enable = true;
     bottom.enable = true;
+    claude.enable = true;
 
     chromium = {
       enable = false;
