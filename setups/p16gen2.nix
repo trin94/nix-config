@@ -55,6 +55,7 @@ in
     kubernetes.enable = true;
     # libwebp.enable = true;
     nh.enable = true;
+    niri.enable = true;
     nixfmt.enable = true;
     nushell.enable = true;
 
