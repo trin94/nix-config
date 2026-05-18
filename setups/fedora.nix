@@ -55,6 +55,7 @@ in
       enable = true;
       enableCsd = false;
       useMonoLisaFont = true;
+      followSystemTheme = true;
     };
 
     libwebp.enable = true;
@@ -99,9 +100,7 @@ in
 
     targets = {
       bat.enable = true;
-      fish.enable = true;
       k9s.enable = true;
-      kitty.enable = true;
       lazygit.enable = true;
       nixvim.enable = true;
       starship.enable = true;

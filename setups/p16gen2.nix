@@ -50,6 +50,7 @@ in
       enable = true;
       enableCsd = false;
       useMonoLisaFont = true;
+      followSystemTheme = true;
     };
 
     kubernetes.enable = true;
@@ -91,7 +92,6 @@ in
     targets = {
       fish.enable = true;
       k9s.enable = true;
-      kitty.enable = true;
       nixvim.enable = true;
       starship.enable = true;
       helix.enable = false;
