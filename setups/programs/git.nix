@@ -37,12 +37,14 @@ in
           git
           lazygit
           difftastic
+          diff-so-fancy
         ]
       else if cfg.configure then
         with pkgs;
         [
           lazygit
           difftastic
+          diff-so-fancy
         ]
       else
         [ ];
