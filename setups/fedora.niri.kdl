@@ -327,6 +327,14 @@ window-rule {
 }
 
 window-rule {
+    match app-id="^kitty$"
+    draw-border-with-background false
+    background-effect {
+        blur true
+    }
+}
+
+window-rule {
     match app-id="1password"
     block-out-from "screen-capture"
 }

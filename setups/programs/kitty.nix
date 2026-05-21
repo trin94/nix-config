@@ -59,6 +59,15 @@ in
       '';
     };
 
+    backgroundOpacity = mkOption {
+      type = types.float;
+      default = 1.0;
+      description = ''
+        Kitty window background opacity. Values below 1.0 make the window
+        semi-transparent, which is what lets compositor blur show through.
+      '';
+    };
+
   };
 
   config = lib.mkIf cfg.configure {
@@ -72,6 +81,7 @@ in
         window_padding_width 5
         initial_window_width 120c
         initial_window_height 30c
+        background_opacity ${toString cfg.backgroundOpacity}
         ${fontConfig}
         sync_to_monitor yes
         linux_display_server wayland

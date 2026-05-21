@@ -56,6 +56,7 @@ in
       enableCsd = false;
       useMonoLisaFont = true;
       followSystemTheme = true;
+      backgroundOpacity = 0.8;
     };
 
     libwebp.enable = true;
