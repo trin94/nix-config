@@ -315,9 +315,10 @@ window-rule {
 }
 
 window-rule {
-    match app-id="org.mozilla.firefox"
     match app-id="org.chromium.Chromium"
+    match app-id="org.mozilla.firefox"
     match app-id=r#"^jetbrains-"#
+    match app-id=r#"^spotify"#
     default-column-width { proportion 1.0; }
 }
 
