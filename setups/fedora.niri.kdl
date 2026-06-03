@@ -142,7 +142,7 @@ layout {
         // off
 
         // How many logical pixels the ring extends out from the windows.
-        width 6
+        width 5
 
         // Colors can be set in a variety of ways:
         // - CSS named colors: "red"
@@ -312,6 +312,17 @@ window-rule {
 window-rule {
     match app-id="io.github.mpvqc.python3"
     open-floating true
+}
+
+window-rule {
+    match app-id="org.telegram.desktop"
+    match app-id="TeamSpeak 3"
+    default-column-width { proportion 0.25; }
+}
+
+window-rule {
+    match app-id="kitty"
+    default-column-width { proportion 0.6667; }
 }
 
 window-rule {
