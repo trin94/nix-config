@@ -24,10 +24,11 @@ in
 
       ## Commit conventions
 
+      * Use a sub agent to generate commit messages based on the diff alone.
       * Follow the 50/72 rule if possible.
       * Do not tell what was changed, but why it was changed. The code diff will show what was changed.
       * Do not add an enumeration with individual changes listed.
-      * Just a well-structured commit message with a clear description of the change and its motivation.
+      * Prefer clear, easy-to-understand language over long rambling descriptions.
       * When we are working on a plan, don't mention it. Commit messages should be readable without needing to know the plan.
       * Do not add yourself as a co-author to commits. I'm taking responsibility for the changes.
 
