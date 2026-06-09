@@ -5,7 +5,6 @@
 }:
 
 let
-  configLocation = "${homeDirectory}/.dotfiles";
   homeDirectory = "/Users/${username}";
   username = builtins.getEnv "USER";
 in
@@ -44,7 +43,6 @@ in
 
       fish = {
         enable = true;
-        configLocation = configLocation;
         shellInit = ''
           fish_add_path ~/.nix-profile/bin
           fish_add_path /nix/var/nix/profiles/default/bin

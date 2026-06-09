@@ -11,19 +11,12 @@ let
   isYtDlpInstalled = hasHomeManagerPackage "yt-dlp";
   isEzaInstalled = hasHomeManagerPackage "eza";
   isBatmanInstalled = hasHomeManagerPackage "batman";
-  isRipgrepInstalled = hasHomeManagerPackage "ripgrep";
-  isDeltaInstalled = hasHomeManagerPackage "delta";
-  isDiffSoFancyInstalled = hasHomeManagerPackage "diff-so-fancy";
 in
 {
 
   options.myOS.programs.fish = with lib; {
 
     enable = mkEnableOption "fish";
-
-    configLocation = mkOption {
-      type = types.str;
-    };
 
     shellInit = mkOption {
       type = types.lines;
@@ -35,8 +28,6 @@ in
   config = lib.mkIf cfg.enable {
 
     home.packages = with pkgs; [
-      fish # Smart and user-friendly command line shell
-      starship # A minimal, blazing fast, and extremely customizable prompt for any shell
       fzf
     ];
 
@@ -77,10 +68,6 @@ in
       + lib.optionalString isEzaInstalled ''
 
         set fzf_preview_dir_cmd eza --all --color=always --group-directories-first --icons=never
-      ''
-      + lib.optionalString isDiffSoFancyInstalled ''
-
-        set fzf_diff_highlighter diff-so-fancy
       '';
 
       shellInit = cfg.shellInit;
@@ -93,33 +80,19 @@ in
           "ls" = lib.mkIf isEzaInstalled "eza ${ezaArgs} --long";
           "ll" = lib.mkIf isEzaInstalled "eza ${ezaArgs} --long --all";
           "lt" = lib.mkIf isEzaInstalled "eza ${ezaArgs} --long --tree";
-          "la" = "ll";
+          "la" = lib.mkIf isEzaInstalled "ll";
 
           "man" = lib.mkIf isBatmanInstalled "batman";
-
-          "k" = "kubectl";
-          "kctx" = "kubectx";
-          "kns" = "kubens";
-          "qmltestrunner" = "qmltestrunner-qt6";
-          "pre-commit" = "prek";
         };
+
+      shellAbbrs = {
+        "k" = "kubectl";
+        "kctx" = "kubectx";
+        "kns" = "kubens";
+        "pre-commit" = "prek";
+      };
 
       functions = {
-
-        as-branchname = {
-          description = "Transform a string into a branch name";
-          body = ''
-            set s (string join " " -- $argv)
-            set s (string replace -ra '[^[:alnum:]]+' '-' -- $s)
-            set s (string trim -c '-' -- $s)   # removes leading/trailing dashes
-            string lower -- $s
-          '';
-        };
-
-        nup = {
-          description = "Update user packages";
-          body = "just -f ${cfg.configLocation}/Justfile update";
-        };
 
         envpp = {
           description = "Pretty print environment variables";

@@ -4,7 +4,6 @@
   ...
 }:
 let
-  configLocation = "${homeDirectory}/.dotfiles";
   homeDirectory = "/home/${username}";
   username = "elias";
 in
@@ -28,10 +27,7 @@ in
     fd.enable = true;
     ffmpeg.enable = true;
 
-    fish = {
-      enable = true;
-      configLocation = configLocation;
-    };
+    fish.enable = true;
 
     git = {
       enable = false;
