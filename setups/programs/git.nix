@@ -37,14 +37,12 @@ in
           git
           lazygit
           difftastic
-          diff-so-fancy
         ]
       else if cfg.configure then
         with pkgs;
         [
           lazygit
           difftastic
-          diff-so-fancy
         ]
       else
         [ ];
@@ -94,18 +92,28 @@ in
         [init]
             defaultBranch = main
 
+        [commit]
+            verbose = true
+
+        [rerere]
+            enabled = true
+
         [diff]
             external = difft
+            algorithm = histogram
 
         [merge]
             conflictstyle = zdiff3
 
         [rebase]
             autoStash = true
+            autoSquash = true
             missingCommitsCheck = warn
 
+        [fetch]
+            prune = true
+
         [pull]
-            default = current
             rebase = true
             ff = only
 
