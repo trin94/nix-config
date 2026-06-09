@@ -12,13 +12,3 @@ Install plugins:
 
 Run the playbook:
   ./run-host-playbook.sh
-
-License
--------
-
-Unless otherwise noted in individual roles, this project is licensed under the BSD License.
-
-Original Work by
-----------------
-
-Jim Campbell (jwcampbell@gmail.com)

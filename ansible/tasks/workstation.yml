@@ -36,19 +36,6 @@
     regexp: 'max_parallel_downloads='
     line: max_parallel_downloads=20
 
-- name: "Configure deltarpm"
-  become: yes
-  ansible.builtin.lineinfile:
-    path: '{{ dnf_config }}'
-    regexp: 'deltarpm='
-    line: deltarpm=False
-
-- name: Install 1Password
-  block:
-    - name: "Install 1Password"
-      include_tasks: 1password_setup.yml
-  become: true
-
 - name: "Configure Native Apps"
   become: true
   dnf:

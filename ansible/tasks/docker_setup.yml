@@ -1,17 +1,3 @@
-- name: Remove Distribution Docker Packages
-  dnf:
-    state: absent
-    name:
-      - docker
-      - docker-client
-      - docker-client-latest
-      - docker-common
-      - docker-latest
-      - docker-latest-logrotate
-      - docker-logrotate
-      - docker-engine-selinux
-      - docker-engine
-
 - name: Configure Docker DNF Repository
   ansible.builtin.yum_repository:
     name: docker-ce-stable
@@ -37,10 +23,8 @@
     state: started
     name: docker
 
-- name: Fix 'docker.sock' File Permissions
-  ansible.builtin.file:
-    path: /var/run/docker.sock
-    mode: '0666'
-
-- name: Run 'docker ps -a'
-  shell: docker ps -a
+- name: Add user to 'docker' group
+  ansible.builtin.user:
+    name: "{{ ansible_user_id }}"
+    groups: docker
+    append: yes

@@ -1,5 +1,3 @@
-# tasks file for gnome_settings
-
 - name: Apply desired gnome_settings via dconf. This step will be skipped if 'python3-psutil' is not fully present.
   community.general.dconf:
     key: "{{ item.key }}"
