@@ -5,7 +5,6 @@
 }:
 let
   cfg = config.myOS.programs.ssh;
-  onePassPath = "~/.1password/agent.sock";
 in
 {
 
@@ -32,7 +31,6 @@ in
         };
 
         "*" = {
-          IdentityAgent = onePassPath;
           ForwardAgent = false;
           AddKeysToAgent = "no";
           Compression = false;
