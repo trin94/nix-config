@@ -15,10 +15,6 @@ in
 
   config = lib.mkIf cfg.enable {
 
-    home.packages = with pkgs; [
-      yazi
-    ];
-
     programs.yazi = {
       enable = true;
 
@@ -28,13 +24,39 @@ in
       enableNushellIntegration = true;
       shellWrapperName = "y";
 
+      initLua = ''
+        require("git"):setup()
+      '';
+
       settings = {
         mgr = {
+          ratio = [
+            0
+            4
+            3
+          ];
+
+          show_hidden = true;
+          linemode = "size";
+
           sort_by = "natural";
           sort_sensitive = false;
           sort_dir_first = true;
           sort_translit = true;
         };
+
+        plugin.prepend_fetchers = [
+          {
+            url = "*";
+            run = "git";
+            group = "git";
+          }
+          {
+            url = "*/";
+            run = "git";
+            group = "git";
+          }
+        ];
 
         opener = {
           play = [
@@ -60,11 +82,17 @@ in
             run = "shell fish --block";
             desc = "Open fish here";
           }
+          {
+            on = "<C-h>";
+            run = "hidden toggle";
+            desc = "Toggle hidden files";
+          }
         ];
       };
 
       plugins = {
         smart-enter = "${pkgs.yaziPlugins.smart-enter}";
+        git = "${pkgs.yaziPlugins.git}";
       };
 
     };
