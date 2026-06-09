@@ -17,9 +17,10 @@ in
 
   config = lib.mkIf cfg.enable {
 
-    home.packages = with pkgs; [
-      fd
-    ];
+    programs.fd = {
+      enable = true;
+      ignores = [ ".git/" ];
+    };
 
   };
 
