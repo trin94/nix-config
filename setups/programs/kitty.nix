@@ -74,6 +74,7 @@ in
 
     xdg.configFile = {
       "kitty/kitty.conf".text = ''
+        auto_reload_config -1
         cursor_blink_interval 0.5
         cursor_shape beam
         copy_on_select clipboard
