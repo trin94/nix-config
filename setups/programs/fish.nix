@@ -87,7 +87,7 @@ in
 
       shellAliases =
         let
-          ezaArgs = "--group-directories-first --color=always --icons=never";
+          ezaArgs = "--group-directories-first --color=always --icons=never --hyperlink";
         in
         {
           "ls" = lib.mkIf isEzaInstalled "eza ${ezaArgs} --long";
