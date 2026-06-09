@@ -17,9 +17,20 @@ in
 
   config = lib.mkIf cfg.enable {
 
-    home.packages = with pkgs; [
-      bat # A cat(1) clone with syntax highlighting and Git integration
-    ];
+    # A cat(1) clone with syntax highlighting and Git integration
+    programs.bat = {
+      enable = true;
+
+      config = {
+        italic-text = "always";
+        tabs = "4";
+        map-syntax = [ "Justfile:Makefile" ];
+      };
+
+      extraPackages = with pkgs.bat-extras; [
+        batman # Read man pages with bat as the formatter
+      ];
+    };
 
   };
 

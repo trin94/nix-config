@@ -10,6 +10,7 @@ let
   hasHomeManagerPackage = pname: lib.any (p: p ? pname && p.pname == pname) config.home.packages;
   isYtDlpInstalled = hasHomeManagerPackage "yt-dlp";
   isEzaInstalled = hasHomeManagerPackage "eza";
+  isBatmanInstalled = hasHomeManagerPackage "batman";
   isRipgrepInstalled = hasHomeManagerPackage "ripgrep";
   isDeltaInstalled = hasHomeManagerPackage "delta";
   isDiffSoFancyInstalled = hasHomeManagerPackage "diff-so-fancy";
@@ -93,6 +94,8 @@ in
           "ll" = lib.mkIf isEzaInstalled "eza ${ezaArgs} --long --all";
           "lt" = lib.mkIf isEzaInstalled "eza ${ezaArgs} --long --tree";
           "la" = "ll";
+
+          "man" = lib.mkIf isBatmanInstalled "batman";
 
           "k" = "kubectl";
           "kctx" = "kubectx";
