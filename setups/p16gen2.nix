@@ -24,7 +24,6 @@ in
     claude.enable = true;
     devenv.enable = true;
     dtrx.enable = true;
-    duckdb.enable = true;
     eza.enable = true;
     fastfetch.enable = true;
     fd.enable = true;
