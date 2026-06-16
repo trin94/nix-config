@@ -17,9 +17,17 @@ in
   config = lib.mkIf cfg.enable {
 
     home.file.".claude/CLAUDE.md".text = ''
+      ## Bug Reports / Communication
+
+      * For bug reports and upstream issues, keep them minimal and observation-only. Do not speculate about or explore implementation source unless explicitly asked, and let the user drive the report text.
+
       ## Shell and tools
 
       * Prefer `ripgrep`, `fd`, and `sd` over `grep`/`find`/`sed`.
+
+      ## Code Quality section
+
+      * Fix lint/type warnings properly by refactoring; do not suppress rules or add casts unless the user explicitly approves suppression.
 
       ## Commit conventions
 
