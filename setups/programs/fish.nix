@@ -47,23 +47,10 @@ in
     programs.fish = {
       enable = true;
 
-      plugins = [
-        {
-          name = "fzf-fish"; # Augment your fish command line with fzf key bindings
-          src = pkgs.fishPlugins.fzf-fish.src;
-        }
-      ];
+      plugins = [ ];
 
       interactiveShellInit = ''
         set fish_greeting
-
-        fzf_configure_bindings --variables=
-
-        printf '\e[36mfzf:\e[0m  \e[2mC-r\e[0m history   \e[2mC-A-f\e[0m dir   \e[2mC-A-l\e[0m log   \e[2mC-A-s\e[0m status   \e[2mC-A-p\e[0m ps\n'
-
-        set fzf_fd_opts --hidden
-        set fzf_git_log_format '%C(bold blue)%h%C(reset) %C(cyan)%ad%C(reset) %C(yellow)%d%C(reset) %s  %C(dim normal)[%an]%C(reset)'
-        set fzf_history_time_format "%Y-%m-%d %H:%M"
       ''
       + lib.optionalString isEzaInstalled ''
 
