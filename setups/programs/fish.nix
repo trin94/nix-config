@@ -70,6 +70,8 @@ in
           "la" = lib.mkIf isEzaInstalled "ll";
 
           "man" = lib.mkIf isBatmanInstalled "batman";
+
+          "cfg" = "cd ~/.dotfiles";
         };
 
       shellAbbrs = {
