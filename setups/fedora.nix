@@ -34,6 +34,7 @@ in
     ffmpeg.enable = true;
 
     fish.enable = true;
+    fuzzel.enable = true;
 
     git = {
       enable = false;
@@ -77,6 +78,11 @@ in
     sd.enable = true;
     ssh.enable = true;
     slides.enable = true;
+
+    steam = {
+      enable = false;
+      configure = true;
+    };
 
     tokei.enable = true;
     vim.enable = true;
