@@ -9,7 +9,7 @@ let
   fontConfig =
     if cfg.useMonoLisaFont then
       ''
-        font_family      MonoLisa Variable
+        font_family      MonoLisaCode Variable
         bold_font        auto
         italic_font      auto
         bold_italic_font auto
@@ -46,7 +46,7 @@ in
     useMonoLisaFont = mkOption {
       type = types.bool;
       default = false;
-      description = "Use MonoLisa Variable font";
+      description = "Use MonoLisaCode Variable font";
     };
 
     followSystemTheme = mkOption {

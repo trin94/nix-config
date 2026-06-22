@@ -26,7 +26,7 @@ in
 
       settings = {
         main = {
-          font = "MonoLisa Variable:size=14";
+          font = "MonoLisaCode Variable:size=14";
           # A bit more breathing room around the whole launcher.
           "vertical-pad" = 18;
           "inner-pad" = 12;

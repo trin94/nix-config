@@ -466,7 +466,7 @@ in
         };
 
         base_keymap = "JetBrains";
-        buffer_font_family = "MonoLisa Variable";
+        buffer_font_family = "MonoLisaCode Variable";
         buffer_font_size = 20;
 
         git = {
