@@ -126,7 +126,7 @@ in
     ];
 
     sessionVariables = {
-      XCURSOR_THEME = "Bibata-Modern-Classic";
+      XCURSOR_THEME = "breeze_cursors";
       XCURSOR_SIZE = 24;
 
       ELECTRON_OZONE_PLATFORM_HINT = "auto";
@@ -146,7 +146,6 @@ in
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 
-  # Make Home Manager work better on GNU/Linux distributions other than NixOS.
   targets.genericLinux.enable = true;
   # xdg.mime.enable = true;
 
@@ -160,6 +159,5 @@ in
 
   home.enableNixpkgsReleaseCheck = false;
 
-  # Allow fontconfig to discover fonts and configurations installed through home.packages and nix-env.
   fonts.fontconfig.enable = true;
 }

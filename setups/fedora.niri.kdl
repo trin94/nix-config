@@ -111,7 +111,7 @@ layout {
         proportion 0.3334
         proportion 0.5
         proportion 0.6667
-        proportion 0.95
+        proportion 1.0
 
         // Fixed sets the width in logical pixels exactly.
         // fixed 1920
@@ -347,11 +347,6 @@ window-rule {
     block-out-from "screen-capture"
 }
 
-/-window-rule {
-    geometry-corner-radius 12
-    clip-to-geometry true
-}
-
 binds {
     // Keys consist of modifiers separated by + signs, followed by an XKB key name
     // in the end. To find an XKB name for a particular key, you may use a program
@@ -504,7 +499,6 @@ binds {
     // moving the mouse or pressing any other key.
     Mod+Shift+P { power-off-monitors; }
 }
-
 
 gestures {
     hot-corners {
