@@ -29,6 +29,7 @@ in
     # ffmpeg.enable = true;
 
     fish.enable = true;
+    fuzzel.enable = true;
 
     git = {
       enable = false;
@@ -37,7 +38,7 @@ in
       email = builtins.getEnv "EMAIL";
     };
 
-    helix.enable = true;
+    helix.enable = false;
     jq.enable = true;
     just.enable = true;
 
@@ -46,6 +47,7 @@ in
       enableCsd = false;
       useMonoLisaFont = true;
       followSystemTheme = true;
+      backgroundOpacity = 0.8;
     };
 
     kubernetes.enable = true;
@@ -67,16 +69,15 @@ in
     slides.enable = true;
     tokei.enable = true;
     uv.enable = false;
-    vim.enable = false;
+    vim.enable = true;
     yazi.enable = true;
     yq.enable = true;
     # ytdlp.enable = true;
 
     zed = {
       enable = false;
-      configure = true;
+      configure = false;
     };
-
   };
 
   stylix = {
@@ -85,11 +86,12 @@ in
     base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-mocha.yaml";
 
     targets = {
-      fish.enable = true;
+      bat.enable = true;
       k9s.enable = true;
+      lazygit.enable = true;
       nixvim.enable = true;
       starship.enable = true;
-      helix.enable = false;
+      yazi.enable = true;
     };
   };
 
@@ -110,7 +112,10 @@ in
     ];
 
     sessionVariables = {
-      SKIP = "reuse-lint-file";
+      XCURSOR_THEME = "breeze_cursors";
+      XCURSOR_SIZE = 22;
+
+      ELECTRON_OZONE_PLATFORM_HINT = "auto";
     };
 
     # This value determines the Home Manager release that your
@@ -138,5 +143,8 @@ in
     ];
   };
 
+  home.enableNixpkgsReleaseCheck = false;
+
+  # Allow fontconfig to discover fonts and configurations installed through home.packages and nix-env.
   fonts.fontconfig.enable = true;
 }
