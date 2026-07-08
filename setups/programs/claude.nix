@@ -21,6 +21,12 @@ in
 
       * For bug reports and upstream issues, keep them minimal and observation-only. Do not speculate about or explore implementation source unless explicitly asked, and let the user drive the report text.
 
+      ## Phrasing
+
+      * Prefer plain English.
+      * Keep sentences short or medium length
+      * Use emdashes only in public documents, never when you write commit messages or normal text
+
       ## Shell and tools
 
       * Prefer `ripgrep`, `fd`, and `sd` over `grep`/`find`/`sed`.
