@@ -96,6 +96,8 @@ in
     base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-mocha.yaml";
 
     targets = {
+      fontconfig.enable = true;
+
       bat.enable = true;
       k9s.enable = true;
       lazygit.enable = true;
@@ -103,6 +105,13 @@ in
       starship.enable = true;
       yazi.enable = true;
     };
+
+    fonts = {
+      monospace.name = "MonoLisaCode Variable";
+      sansSerif.name = "MonoLisaText Variable";
+      serif.name = "MonoLisaText Variable";
+    };
+
   };
 
   home = {
