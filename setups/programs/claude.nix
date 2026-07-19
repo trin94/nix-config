@@ -24,7 +24,7 @@ in
       ## Phrasing
 
       * Prefer plain English.
-      * Keep sentences short or medium length
+      * When reporting information to me be extremely concise and sacrifice grammar for the sake of concision.
       * Use emdashes only in public documents, never when you write commit messages or normal text
 
       ## Shell and tools
@@ -51,7 +51,7 @@ in
       * Keep summaries of changes small.
       * Before changes touching more than ~3 files or any destructive operation, ask if I want to proceed.
       * When executing a plan, ask for confirmation before executing each step.
-      * While iterating, run only the relevant tests using the runner's filter; run the full suite before reporting done.
+      * While iterating, run only the relevant tests using the runner's filter. Run the full suite before reporting done.
     '';
 
   };
