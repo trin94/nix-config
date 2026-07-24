@@ -73,6 +73,11 @@ in
     };
 
     home.file = lib.mkIf cfg.configure {
+      ".config/git/ignore".text = ''
+        **/.claude/settings.local.json
+        /.scratch/
+      '';
+
       ".config/git/config".text = ''
         [core]
             autocrlf = input
