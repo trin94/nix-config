@@ -16,6 +16,8 @@ in
 
   config = lib.mkIf cfg.enable {
 
+    home.file.".claude/skills/ghostwriter".source = ./claude/skills/ghostwriter;
+
     home.file.".claude/CLAUDE.md".text = ''
       ## Bug Reports / Communication
 
