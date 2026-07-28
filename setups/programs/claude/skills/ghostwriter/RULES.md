@@ -83,52 +83,84 @@ Adapted from b1rdmania's plain-english skill, MIT. See [`CREDITS.md`](CREDITS.md
 
 ## Closers to cut
 
-"I hope this helps", "Let me know if you have any questions", "Feel free to ask", "In conclusion", "To summarise", "All in all".
+"I hope this helps", "Let me know if you have any questions", "Feel free to ask", "In conclusion", "To summarise", "All
+in all".
 
 ## Pivots to ration
 
-Fine once, never as reflex: "However, it's worth considering", "That said", "At the same time", "On the other hand" (only with a real other hand), "It's not just X, it's Y".
+Fine once, never as reflex: "However, it's worth considering", "That said", "At the same time", "On the other hand"
+(only with a real other hand), "It's not just X, it's Y".
 
 ## Before and after
 
-**LLM bloat**
+### LLM bloat
 
-> This approach offers a multifaceted solution that leverages cutting-edge methodologies to navigate the complex landscape of modern challenges.
+Before:
+
+> This approach offers a multifaceted solution that leverages cutting-edge methodologies to navigate the complex
+> landscape of modern challenges.
+
+After:
 
 > This approach uses new methods to handle modern problems.
 
-______________________________________________________________________
+Before:
 
-> It's important to note that, in the realm of software engineering, robust testing methodologies are paramount to fostering a culture of comprehensive quality assurance.
+> It's important to note that, in the realm of software engineering, robust testing methodologies are paramount to
+> fostering a culture of comprehensive quality assurance.
+
+After:
 
 > In software, good tests build a culture of quality.
 
-**Officialese**
+### Officialese
+
+Before:
 
 > Was this the realisation of an anticipated liability?
 
+After:
+
 > Did you expect to have to do this?
 
-**Passive**
+### Passive
+
+Before:
 
 > Mistakes were made and lessons have been learned.
 
+After:
+
 > We made mistakes. We learned from them.
 
-**Em-dashes**
+### Em-dashes
+
+Before:
 
 > The skill, which has been carefully designed, strips AI tics, including em-dash overuse, from prose.
 
+After:
+
 > The skill strips AI tics from prose. Em-dash overuse is one of them.
 
-**Stacked hedges**
+### Stacked hedges
 
-> I genuinely think it's worth noting that this approach may, in some sense, arguably represent a potentially significant improvement.
+Before:
+
+> I genuinely think it's worth noting that this approach may, in some sense, arguably represent a potentially
+> significant improvement.
+
+After:
 
 > This approach is better.
 
-**Preamble and closer**
+### Preamble and closer
 
-> That's a great question! There are many ways to think about this complex topic. In essence, the answer is that you should use TypeScript. I hope this helps, let me know if you have any further questions!
+Before:
+
+> That's a great question! There are many ways to think about this complex topic. In essence, the answer is that you
+> should use TypeScript. I hope this helps, let me know if you have any further questions!
+
+After:
 
 > Use TypeScript.

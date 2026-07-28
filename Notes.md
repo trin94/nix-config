@@ -2,12 +2,12 @@
 
 ## JetBrains IDE
 
-```
+```text
 -Dawt.toolkit.name=WLToolkit
 -Dsun.awt.wl.Shadow=false
 ```
 
-https://youtrack.jetbrains.com/issue/IJPL-203429/Wayland-in-WSL-Shadow-Artifacts-in-GUI
+<https://youtrack.jetbrains.com/issue/IJPL-203429/Wayland-in-WSL-Shadow-Artifacts-in-GUI>
 
 ## Default applications
 
