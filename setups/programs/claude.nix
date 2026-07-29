@@ -18,6 +18,11 @@ in
 
     home.file.".claude/skills/ghostwriter".source = ./claude/skills/ghostwriter;
 
+    home.file.".claude/statusline-git-diff.sh" = {
+      source = ./claude/statusline-git-diff.sh;
+      executable = true;
+    };
+
     home.file.".claude/CLAUDE.md".text = ''
       ## Bug Reports / Communication
 
