@@ -50,7 +50,6 @@ in
       * Do not add an enumeration with individual changes listed.
       * Write in plain, everyday English: clear and short, no fancy or uncommon words. Match the casual tone typical of open source commit logs.
       * When we are working on a plan, don't mention it. Commit messages should be readable without needing to know the plan.
-      * Do not add yourself as a co-author to commits. I'm taking responsibility for the changes.
 
       ## Working style
 
