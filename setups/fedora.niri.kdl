@@ -343,7 +343,7 @@ window-rule {
 }
 
 window-rule {
-    match app-id="1password"
+    match app-id="Proton Pass"
     block-out-from "screen-capture"
 }
 
