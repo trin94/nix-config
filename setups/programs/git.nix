@@ -90,6 +90,12 @@ in
         [credential "https://dev.azure.com"]
             credentialStore = secretservice
 
+        [credential "https://github.com"]
+            helper = !gh auth git-credential
+
+        [credential "https://gist.github.com"]
+            helper = !gh auth git-credential
+
         [user]
             email = ${cfg.email}
             name = ${cfg.name}
