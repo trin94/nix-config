@@ -108,7 +108,7 @@ in
         }
       ];
 
-      extraConfigLua = '''';
+      extraConfigLua = "";
 
     };
   };

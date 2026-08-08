@@ -77,7 +77,6 @@
           ];
         };
 
-
         "elias@t470p" = home-manager.lib.homeManagerConfiguration {
           extraSpecialArgs = extraSpecialArgs // {
             pkgs = import nixpkgs {
