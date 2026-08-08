@@ -17,6 +17,8 @@ in
 
   myOS.programs = {
 
+    alacritty.enable = true;
+
     bat.enable = true;
     bottom.enable = true;
     claude.enable = true;
