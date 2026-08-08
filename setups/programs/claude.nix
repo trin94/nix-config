@@ -17,6 +17,7 @@ in
   config = lib.mkIf cfg.enable {
 
     home.file.".claude/skills/ghostwriter".source = ./claude/skills/ghostwriter;
+    home.file.".claude/skills/reporting".source = ./claude/skills/reporting;
 
     home.file.".claude/statusline-git-diff.sh" = {
       source = ./claude/statusline-git-diff.sh;
@@ -30,8 +31,8 @@ in
 
       ## Phrasing
 
+      * When you talk to me directly, read `~/.claude/skills/reporting/SKILL.md` at the start of the session and follow it for every message. As a subagent you are talking to a parent agent instead, so return the format that parent asked for.
       * Prefer plain English.
-      * When reporting information to me be extremely concise and sacrifice grammar for the sake of concision.
       * Use emdashes only in public documents, never when you write commit messages or normal text
 
       ## Shell and tools
