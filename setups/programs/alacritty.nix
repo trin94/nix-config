@@ -20,7 +20,12 @@ in
 
     shell = mkOption {
       type = types.str;
-      default = "fish";
+      default = "${config.home.profileDirectory}/bin/fish";
+      description = ''
+        Shell to start. Use an absolute path: desktop environments launch
+        apps with the systemd user manager's PATH, which does not contain
+        the nix profile, so a bare name like "fish" is not found there.
+      '';
     };
 
     fontSize = mkOption {

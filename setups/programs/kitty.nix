@@ -78,7 +78,7 @@ in
         cursor_blink_interval 0.5
         cursor_shape beam
         copy_on_select clipboard
-        shell fish
+        shell ${config.home.profileDirectory}/bin/fish
         window_padding_width 5
         initial_window_width 120c
         initial_window_height 30c
