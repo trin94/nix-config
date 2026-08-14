@@ -67,11 +67,9 @@ in
     # ssh.enable = true;
     slides.enable = true;
     tokei.enable = true;
-    uv.enable = false;
     vim.enable = true;
-    yazi.enable = true;
     yq.enable = true;
-    # ytdlp.enable = true;
+    yazi.enable = true;
 
     zed = {
       enable = false;
@@ -85,6 +83,8 @@ in
     base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-mocha.yaml";
 
     targets = {
+      fontconfig.enable = true;
+
       bat.enable = true;
       k9s.enable = true;
       lazygit.enable = true;
@@ -92,6 +92,13 @@ in
       starship.enable = true;
       yazi.enable = true;
     };
+
+    fonts = {
+      monospace.name = "MonoLisaCode Variable";
+      sansSerif.name = "MonoLisaText Variable";
+      serif.name = "MonoLisaText Variable";
+    };
+
   };
 
   home = {
@@ -144,6 +151,5 @@ in
 
   home.enableNixpkgsReleaseCheck = false;
 
-  # Allow fontconfig to discover fonts and configurations installed through home.packages and nix-env.
   fonts.fontconfig.enable = true;
 }
