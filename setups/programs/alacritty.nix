@@ -49,19 +49,19 @@ in
       size = ${toString cfg.fontSize}
 
       [font.normal]
-      family = "CaskaydiaCove NF"
+      family = "MonoLisaCode Variable"
       style = "Regular"
 
       [font.bold]
-      family = "CaskaydiaCove NF"
+      family = "MonoLisaCode Variable"
       style = "Bold"
 
       [font.italic]
-      family = "CaskaydiaCove NF"
+      family = "MonoLisaCode Variable"
       style = "Italic"
 
       [font.bold_italic]
-      family = "CaskaydiaCove NF"
+      family = "MonoLisaCode Variable"
       style = "Bold Italic"
 
       [cursor]
