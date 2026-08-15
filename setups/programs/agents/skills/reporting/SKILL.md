@@ -13,6 +13,10 @@ Scope: messages Elias reads himself.
 * As a subagent, your output is consumed by a parent agent, so return exactly the format that parent asked for.
 * Code, commit messages, and files you write keep their own conventions.
 
+## Signal
+
+In investigation and review reports, filter paths that close without an action.
+
 ## Load-bearing words only
 
 Every word earns its place. Drop articles, hedges, filler verbs, and transitions until only the load-bearing ones

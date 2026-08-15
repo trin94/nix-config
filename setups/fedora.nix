@@ -21,7 +21,7 @@ in
 
     bat.enable = true;
     bottom.enable = true;
-    claude.enable = true;
+    ai.claude.enable = true;
 
     chromium = {
       enable = false;
@@ -68,6 +68,7 @@ in
     niri.enable = true;
     nixfmt.enable = true;
     nushell.enable = true;
+    ai.opencode.enable = true;
 
     poetry = {
       enable = false;
