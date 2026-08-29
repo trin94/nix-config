@@ -17,8 +17,11 @@ in
 
   myOS.programs = {
 
+    alacritty.enable = true;
+
     bat.enable = true;
     bottom.enable = true;
+    bun.enable = true;
     ai.claude.enable = true;
     devenv.enable = true;
     dtrx.enable = true;
@@ -30,15 +33,23 @@ in
     fish.enable = true;
 
     git = {
-      enable = false;
+      enable = true;
       configure = true;
       name = "Elias Mueller";
       email = "mail@eliasmueller.online";
     };
 
     hugo.enable = false;
+    jetbrains-toolbox.enable = true;
     jq.enable = true;
     just.enable = true;
+
+    kitty = {
+      enable = true;
+      enableCsd = false;
+      backgroundOpacity = 0.9;
+      followNoctaliaTheme = true;
+    };
     libwebp.enable = true;
 
     mpv = {
@@ -57,9 +68,11 @@ in
 
     procs.enable = true;
     ripgrep.enable = true;
+    sd.enable = true;
     ssh.enable = true;
     slides.enable = true;
     tokei.enable = true;
+    uv.enable = true;
     vim.enable = true;
     yq.enable = true;
     yazi.enable = true;
@@ -67,7 +80,7 @@ in
 
     zed = {
       enable = false;
-      configure = true;
+      configure = false;
     };
   };
 
@@ -76,6 +89,10 @@ in
     homeDirectory = homeDirectory;
 
     packages = with pkgs; [
+      # myOS.programs.kitty only writes the config. On fedora and p16gen2 the
+      # binary comes from dnf; on NixOS it has to come from nix.
+      kitty
+      nerd-fonts.caskaydia-cove
     ];
 
     sessionPath = [
@@ -83,6 +100,10 @@ in
       "$HOME/.cargo/bin" # rust binaries
       "$HOME/go" # GOPATH
     ];
+
+    sessionVariables = {
+      MPVQC_LIBMPV = "${pkgs.mpv-unwrapped}/lib/libmpv.so";
+    };
 
     # This value determines the Home Manager release that your
     # configuration is compatible with. This helps avoid breakage
@@ -98,7 +119,8 @@ in
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 
-  targets.genericLinux.enable = true;
+  programs.bash.enable = true;
+
   xdg.mime.enable = true;
 
   # The session (niri, noctalia, portals) is owned by t470p.os.nix, so the
@@ -106,16 +128,7 @@ in
   # config itself lives here.
   xdg.configFile."niri/config.kdl".source = ./t470p.niri.kdl;
 
-  nix = {
-    package = pkgs.nix;
-    settings.experimental-features = [
-      "nix-command"
-      "flakes"
-    ];
-  };
-
   home.enableNixpkgsReleaseCheck = false;
 
-  # Allow fontconfig to discover fonts and configurations installed through home.packages and nix-env.
   fonts.fontconfig.enable = true;
 }
