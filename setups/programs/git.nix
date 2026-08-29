@@ -47,8 +47,6 @@ in
       else
         [ ];
 
-    programs.git.enable = lib.mkIf cfg.enable true;
-
     programs.lazygit = lib.mkIf cfg.configure {
       enable = true;
       settings = {
