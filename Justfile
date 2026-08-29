@@ -16,11 +16,11 @@ alias fmt := format
 # Format source
 @format:
     # nix run github:nushell/nufmt .
-    uv run prek --config .config/prek.toml run --all-files
+    uvx prek --config .config/prek.toml run --all-files
 
 [group('dev')]
 update-git-hook-dependencies:
-    uv run prek --config .config/prek.toml auto-update
+    uvx prek --config .config/prek.toml auto-update
 
 # Build home to 'result' directory
 [group('run')]
