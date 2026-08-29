@@ -43,3 +43,18 @@ update:
 add-program NAME:
     cat setups/programs/_template | sed 's/@@NAME@@/{{ NAME }}/g' > setups/programs/{{ NAME }}.nix
     just format
+
+# Build system to 'result' directory
+[group('run')]
+os-verify: format
+    nh os build --out-link result --hostname "{{ HOSTNAME }}" .
+
+# Apply system configuration
+[group('run')]
+os-apply: format
+    nh os switch --hostname "{{ HOSTNAME }}" .
+
+# Update then apply system configuration
+[group('run')]
+os-update:
+    nh os switch --update --hostname "{{ HOSTNAME }}" .
