@@ -5,6 +5,7 @@
 }:
 let
   cfg = config.myOS.programs.ai;
+  claudeHudConfPath = "${config.home.homeDirectory}/.claude/plugins/claude-hud/config.json";
 in
 {
 
@@ -37,6 +38,13 @@ in
         source = ./agents/claude/statusline-git-diff.sh;
         executable = true;
       };
+
+      # claude-hud does not open symlinks
+      home.activation.copyClaudeHudConf = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+        mkdir -p $(dirname "${claudeHudConfPath}")
+        cp -f ${./agents/claude/hud-config.json} "${claudeHudConfPath}"
+        chmod 444 "${claudeHudConfPath}"
+      '';
 
     })
 
