@@ -101,6 +101,11 @@ in
   targets.genericLinux.enable = true;
   xdg.mime.enable = true;
 
+  # The session (niri, noctalia, portals) is owned by t470p.os.nix, so the
+  # myOS.programs.niri portal module stays off on this host. Only the compositor
+  # config itself lives here.
+  xdg.configFile."niri/config.kdl".source = ./t470p.niri.kdl;
+
   nix = {
     package = pkgs.nix;
     settings.experimental-features = [
