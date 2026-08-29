@@ -1,5 +1,5 @@
 {
-    "lineLayout": "compact",
+    "lineLayout": "expanded",
     "showSeparators": false,
     "language": "en",
     "gitStatus": {
@@ -11,9 +11,29 @@
     "jjStatus": {
         "enabled": false
     },
+    "colors": {
+        "model": "green"
+    },
+    "elementOrder": [
+        "project",
+        "context",
+        "usage",
+        "environment",
+        "tools",
+        "addedDirs",
+        "promptCache",
+        "memory",
+        "skills",
+        "mcp",
+        "agents",
+        "todos",
+        "sessionTime"
+    ],
     "display": {
         "showContextBar": false,
         "contextValue": "tokens",
+        "modelFormat": "short",
+        "mergeGroups": [["project", "context", "usage"], ["environment", "tools"]],
         "showTools": true,
         "showSkills": true,
         "showMcp": true,
@@ -29,7 +49,7 @@
         "showCost": false,
         "showRoutedCost": false,
         "showDuration": false,
-        "showSessionName": false,
+        "showSessionName": true,
         "showEffortLevel": false,
         "showOutputStyle": false,
         "showMemoryUsage": false,
