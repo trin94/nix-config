@@ -62,6 +62,7 @@ in
         instructions = [
           "${config.home.homeDirectory}/.agents/AGENTS.md"
         ];
+        share = "disabled";
         permission = {
           "*" = "ask";
           bash = "allow";
