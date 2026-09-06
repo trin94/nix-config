@@ -15,8 +15,8 @@ rev = "v2.5.1"
 hooks = [
     {
         id = "biome-check",
-        name = "format json",
-        files = '\.(jsonc?)$',
+        name = "format json and ts",
+        files = '\.(jsonc?|tsx?)$',
         exclude = '\.config/biome\.jsonc',
         args = ["--config-path=.config"],
     },

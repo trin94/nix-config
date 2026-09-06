@@ -94,9 +94,21 @@ in
         };
       };
 
+      # One directory, so the entrypoint can import its sibling. Per-file entries land in
+      # separate store paths and the relative import breaks.
+      xdg.configFile."opencode/tui-plugin/vcs-status".source = builtins.path {
+        name = "opencode-vcs-status";
+        path = ./agents/opencode/vcs-status;
+        filter = path: _: !(lib.hasSuffix ".test.ts" path);
+      };
+
       xdg.configFile."opencode/tui.json".text = builtins.toJSON {
         "$schema" = "https://opencode.ai/tui.json";
         keybinds.tool_details = "<leader>d";
+        # TUI plugins only load from an absolute file:// entrypoint, npm specs are broken upstream.
+        plugin = [
+          "file://${config.xdg.configHome}/opencode/tui-plugin/vcs-status/index.tsx"
+        ];
       };
 
     })
