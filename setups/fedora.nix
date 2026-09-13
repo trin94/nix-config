@@ -19,9 +19,13 @@ in
 
     alacritty.enable = true;
 
+    ai = {
+      claude.enable = true;
+      opencode.enable = true;
+    };
+
     bat.enable = true;
     bottom.enable = true;
-    ai.claude.enable = true;
 
     chromium = {
       enable = false;
@@ -68,7 +72,6 @@ in
     niri.enable = true;
     nixfmt.enable = true;
     nushell.enable = true;
-    ai.opencode.enable = true;
 
     poetry = {
       enable = false;
@@ -123,6 +126,8 @@ in
 
     packages = with pkgs; [
       gh
+      nodejs
+      bun
     ];
 
     sessionPath = [
