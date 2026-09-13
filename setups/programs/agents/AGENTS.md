@@ -27,5 +27,4 @@
 
 * Suggest better alternatives if you think I'm doing something wrong or inefficient.
 * Keep summaries of changes small.
-* Before changes touching more than ~3 files or any destructive operation, ask if I want to proceed.
 * While iterating, run only the relevant tests using the runner's filter. Run the full suite before reporting done.
