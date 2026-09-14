@@ -32,6 +32,7 @@ in
       configure = true;
     };
 
+    cosign.enable = true;
     devenv.enable = true;
     dtrx.enable = true;
     eza.enable = true;
