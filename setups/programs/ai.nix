@@ -57,41 +57,104 @@ in
       # OpenCode discovers the shared skills from ~/.agents.
       home.sessionVariables.OPENCODE_DISABLE_CLAUDE_CODE_SKILLS = "1";
 
+      xdg.configFile."opencode/AGENTS.md".source = ./agents/AGENTS.md;
+
       xdg.configFile."opencode/opencode.json".text = builtins.toJSON {
         "$schema" = "https://opencode.ai/config.json";
-        instructions = [
-          "${config.home.homeDirectory}/.agents/AGENTS.md"
-        ];
         share = "disabled";
-        permission = {
-          "*" = "ask";
-          bash = "allow";
-          edit = "allow";
-          write = "allow";
-          read = {
-            "*" = "allow";
-            "*.env" = "deny";
-            "*.env.*" = "deny";
-            "*.env.example" = "allow";
-          };
-          grep = "allow";
-          glob = "allow";
-          lsp = "deny";
-          apply_patch = "allow";
-          skill = "allow";
-          todowrite = "allow";
-          webfetch = "allow";
-          websearch = "allow";
-          question = "deny";
-          directory = "allow";
-          external_directory = {
-            "~/.agents/**" = "allow";
-            "~/.claude/**" = "allow";
-            "~/.dotfiles/**" = "allow";
-            "~/PycharmProjects/**" = "allow";
-            "/tmp/opencode/**" = "allow";
-          };
-        };
+        # Last matching rule wins; keep exceptions after their broad rules.
+        permissions = [
+          {
+            action = "*";
+            resource = "*";
+            effect = "ask";
+          }
+          {
+            action = "shell";
+            resource = "*";
+            effect = "allow";
+          }
+          {
+            action = "edit";
+            resource = "*";
+            effect = "allow";
+          }
+          {
+            action = "read";
+            resource = "*";
+            effect = "allow";
+          }
+          {
+            action = "read";
+            resource = "*.env";
+            effect = "deny";
+          }
+          {
+            action = "read";
+            resource = "*.env.*";
+            effect = "deny";
+          }
+          {
+            action = "read";
+            resource = "*.env.example";
+            effect = "allow";
+          }
+          {
+            action = "grep";
+            resource = "*";
+            effect = "allow";
+          }
+          {
+            action = "glob";
+            resource = "*";
+            effect = "allow";
+          }
+          {
+            action = "skill";
+            resource = "*";
+            effect = "allow";
+          }
+          {
+            action = "webfetch";
+            resource = "*";
+            effect = "allow";
+          }
+          {
+            action = "websearch";
+            resource = "*";
+            effect = "allow";
+          }
+          {
+            action = "question";
+            resource = "*";
+            effect = "deny";
+          }
+          {
+            action = "external_directory";
+            resource = "~/.agents/**";
+            effect = "allow";
+          }
+          {
+            action = "external_directory";
+            resource = "~/.claude/**";
+            effect = "allow";
+          }
+          {
+            action = "external_directory";
+            resource = "~/.dotfiles/**";
+            effect = "allow";
+          }
+          {
+            action = "external_directory";
+            resource = "~/PycharmProjects/**";
+            effect = "allow";
+          }
+          {
+            action = "external_directory";
+            resource = "/tmp/opencode/**";
+            effect = "allow";
+          }
+        ];
       };
 
       # One directory, so the entrypoint can import its sibling. Per-file entries land in
