@@ -172,7 +172,7 @@ in
           scrollbar = false;
           thinking = "hide";
         };
-        animations = false;
+        animations = true;
         # V2 appends sidebar contributions in plugin order. Keep Git next to the footer.
         plugins = [
           "file://${config.xdg.configHome}/opencode/tui-plugin/loaded-skills"
