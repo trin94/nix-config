@@ -6,7 +6,6 @@ export NIX_CONFIG := 'experimental-features = nix-command flakes'
 
 USER := env_var("USER")
 HOSTNAME := `cat /etc/hostname`
-ADDITIONAL_ARGS := if HOSTNAME == "p16gen2" { "--impure" } else { "" }
 
 alias fmt := format
 
@@ -25,18 +24,18 @@ update-git-hook-dependencies:
 # Build home to 'result' directory
 [group('run')]
 verify: format
-    nh home build --out-link result --configuration "{{ USER }}@{{ HOSTNAME }}" . -- {{ ADDITIONAL_ARGS }}
+    nh home build --out-link result --configuration "{{ USER }}@{{ HOSTNAME }}" .
 
 # Apply home configuration
 [group('run')]
 apply: format
-    # home-manager switch --flake ".#{{ USER }}@{{ HOSTNAME }}" {{ ADDITIONAL_ARGS }}
-    nh home switch --configuration "{{ USER }}@{{ HOSTNAME }}" . -- {{ ADDITIONAL_ARGS }}
+    # home-manager switch --flake ".#{{ USER }}@{{ HOSTNAME }}"
+    nh home switch --configuration "{{ USER }}@{{ HOSTNAME }}" .
 
 # Update then apply home configuration
 [group('run')]
 update:
-    nh home switch --update --configuration "{{ USER }}@{{ HOSTNAME }}" . -- {{ ADDITIONAL_ARGS }}
+    nh home switch --update --configuration "{{ USER }}@{{ HOSTNAME }}" .
 
 # Add a new program, needs to be enabled manually
 [group('configure')]

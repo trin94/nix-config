@@ -34,7 +34,6 @@ in
       enable = false;
       configure = true;
       name = "Elias Mueller";
-      email = builtins.getEnv "EMAIL";
     };
 
     helix.enable = false;

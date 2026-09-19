@@ -23,7 +23,8 @@ in
     };
 
     email = mkOption {
-      type = types.str;
+      type = types.nullOr types.str;
+      default = null;
     };
 
   };
@@ -95,8 +96,9 @@ in
             helper = !gh auth git-credential
 
         [user]
-            email = ${cfg.email}
+            ${lib.optionalString (cfg.email != null) "email = ${cfg.email}"}
             name = ${cfg.name}
+            useConfigOnly = true
 
         [init]
             defaultBranch = main
@@ -165,6 +167,9 @@ in
             remote   = yellow
             upstream = green
             plain    = blue
+
+        [include]
+            path = "~/.config/git/private.conf"
 
       '';
     };
