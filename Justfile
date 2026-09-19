@@ -37,6 +37,11 @@ apply: format
 update:
     nh home switch --update --configuration "{{ USER }}@{{ HOSTNAME }}" .
 
+# Clean all profiles, keeping the latest 3 generations, and garbage-collect the store
+[group('housekeeping')]
+clean:
+    nh clean all --keep 3
+
 # Add a new program, needs to be enabled manually
 [group('configure')]
 add-program NAME:
