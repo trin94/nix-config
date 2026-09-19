@@ -25,13 +25,14 @@ in
       enable = true;
       settings = {
         flags = {
+          basic = true;
           disable_gpu = true;
-          process_memory_as_value = true;
           disable_click = true;
           default_widget_type = "proc";
           default_widget_count = 1;
         };
         processes = {
+          default_memory_value = true;
           columns = [
             "PID"
             "Name"
@@ -40,16 +41,6 @@ in
             "User"
           ];
         };
-        row = [
-          {
-            child = [
-              {
-                type = "proc";
-                default = true;
-              }
-            ];
-          }
-        ];
       };
     };
 
