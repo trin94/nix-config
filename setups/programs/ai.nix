@@ -102,12 +102,15 @@ in
         filter = path: _: !(lib.hasSuffix ".test.ts" path);
       };
 
+      xdg.configFile."opencode/tui-plugin/loaded-skills".source = ./agents/opencode/loaded-skills;
+
       xdg.configFile."opencode/tui.json".text = builtins.toJSON {
         "$schema" = "https://opencode.ai/tui.json";
         keybinds.tool_details = "<leader>d";
         # TUI plugins only load from an absolute file:// entrypoint, npm specs are broken upstream.
         plugin = [
           "file://${config.xdg.configHome}/opencode/tui-plugin/vcs-status/index.tsx"
+          "file://${config.xdg.configHome}/opencode/tui-plugin/loaded-skills/index.tsx"
         ];
       };
 
