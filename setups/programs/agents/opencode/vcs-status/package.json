@@ -1,0 +1,7 @@
+{
+    "name": "vcs-status",
+    "type": "module",
+    "exports": {
+        "./tui": "./tui.tsx"
+    }
+}

@@ -1,0 +1,7 @@
+{
+    "name": "loaded-skills",
+    "type": "module",
+    "exports": {
+        "./tui": "./tui.tsx"
+    }
+}

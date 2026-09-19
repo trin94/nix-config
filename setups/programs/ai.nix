@@ -96,21 +96,24 @@ in
 
       # One directory, so the entrypoint can import its sibling. Per-file entries land in
       # separate store paths and the relative import breaks.
-      xdg.configFile."opencode/tui-plugin/vcs-status".source = builtins.path {
-        name = "opencode-vcs-status";
-        path = ./agents/opencode/vcs-status;
-        filter = path: _: !(lib.hasSuffix ".test.ts" path);
-      };
-
+      xdg.configFile."opencode/tui-plugin/vcs-status".source = ./agents/opencode/vcs-status;
       xdg.configFile."opencode/tui-plugin/loaded-skills".source = ./agents/opencode/loaded-skills;
 
-      xdg.configFile."opencode/tui.json".text = builtins.toJSON {
-        "$schema" = "https://opencode.ai/tui.json";
-        keybinds.tool_details = "<leader>d";
-        # TUI plugins only load from an absolute file:// entrypoint, npm specs are broken upstream.
-        plugin = [
-          "file://${config.xdg.configHome}/opencode/tui-plugin/vcs-status/index.tsx"
-          "file://${config.xdg.configHome}/opencode/tui-plugin/loaded-skills/index.tsx"
+      xdg.configFile."opencode/cli.json".text = builtins.toJSON {
+        "$schema" = "https://opencode.ai/v2/cli.json";
+        theme.name = "catppuccin";
+        diffs.wrap = "word";
+        prompt.paste = "full";
+        session = {
+          sidebar = "auto";
+          scrollbar = false;
+          thinking = "hide";
+        };
+        animations = false;
+        # V2 appends sidebar contributions in plugin order. Keep Git next to the footer.
+        plugins = [
+          "file://${config.xdg.configHome}/opencode/tui-plugin/loaded-skills"
+          "file://${config.xdg.configHome}/opencode/tui-plugin/vcs-status"
         ];
       };
 
