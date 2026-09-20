@@ -1,0 +1,77 @@
+{
+    "preset": "git-heavy",
+    "iconMode": "text",
+    "separator": "space",
+    "terminal": { "widthMode": "full", "colorLevel": "truecolor" },
+    "lines": [
+        [
+            { "type": "model-provider", "options": { "raw": true, "fg": "pi:accent" } },
+            { "type": "thinking-level", "options": { "raw": true, "hideWhenEmpty": true, "fg": "pi:dim" } },
+            {
+                "type": "context-length",
+                "options": {
+                    "raw": true,
+                    "hideWhenZero": false,
+                    "tokenFormatStyle": "compact",
+                    "fg": "pi:dim",
+                    "contextConditionalColors": true,
+                    "warningFg": "pi:warning",
+                    "dangerFg": "pi:error"
+                }
+            },
+            { "type": "separator", "options": { "separator": "custom", "text": "/", "fg": "pi:dim" } },
+            { "type": "context-window", "options": { "raw": true, "tokenFormatStyle": "compact", "fg": "pi:dim" } },
+            { "type": "cwd", "options": { "raw": true, "cwdDisplayStyle": "full-home", "fg": "pi:dim" } },
+            {
+                "type": "git-branch",
+                "options": {
+                    "raw": true,
+                    "gitBranchDisplayStyle": "round-brackets",
+                    "text": "(no git)",
+                    "fg": "pi:accent"
+                }
+            }
+        ],
+        [
+            {
+                "type": "external-status",
+                "options": {
+                    "raw": true,
+                    "externalStatusKey": "dotfiles-git-branch-diff",
+                    "fg": "default",
+                    "hideWhenEmpty": false,
+                    "text": "Git: loading…"
+                }
+            },
+            {
+                "type": "external-status",
+                "options": {
+                    "raw": true,
+                    "externalStatusKey": "dotfiles-git-dirty",
+                    "fg": "default",
+                    "hideWhenEmpty": false,
+                    "text": "Uncommitted: loading…"
+                }
+            }
+        ],
+        [
+            {
+                "type": "session-name",
+                "options": { "icon": "Session: ", "hideWhenEmpty": true, "fg": "pi:accent" }
+            },
+            {
+                "type": "external-status",
+                "options": {
+                    "raw": true,
+                    "externalStatusKey": "dotfiles-loaded-skills",
+                    "hideWhenEmpty": false,
+                    "text": "Skills (0): none loaded",
+                    "fg": "pi:dim"
+                }
+            }
+        ]
+    ],
+    "extensionStatusRow": {
+        "hiddenKeys": ["dotfiles-git-branch-diff", "dotfiles-git-dirty", "dotfiles-loaded-skills"]
+    }
+}

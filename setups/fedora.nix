@@ -22,6 +22,7 @@ in
     ai = {
       claude.enable = true;
       opencode.enable = true;
+      pi.enable = true;
     };
 
     bat.enable = true;
@@ -133,6 +134,7 @@ in
 
     sessionPath = [
       "$HOME/.local/bin"
+      "$HOME/.bun/bin"
       "$HOME/.cargo/bin" # rust binaries
       "$HOME/go" # GOPATH
     ];

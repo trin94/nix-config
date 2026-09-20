@@ -1,0 +1,17 @@
+{
+    "name": "dotfiles-pi-session-status",
+    "private": true,
+    "type": "module",
+    "scripts": {
+        "test": "bun test",
+        "typecheck": "tsc --noEmit"
+    },
+    "devDependencies": {
+        "@earendil-works/pi-coding-agent": "0.86.1",
+        "@earendil-works/pi-tui": "0.86.1",
+        "@modelcontextprotocol/sdk": "1.30.0",
+        "@types/node": "24.13.6",
+        "pi-footer": "0.5.1",
+        "typescript": "5.9.3"
+    }
+}

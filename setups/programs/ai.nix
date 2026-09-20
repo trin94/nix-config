@@ -6,6 +6,15 @@
 let
   cfg = config.myOS.programs.ai;
   claudeHudConfPath = "${config.home.homeDirectory}/.claude/plugins/claude-hud/config.json";
+  # Preserve relative imports in the store while sharing OpenCode's Git calculation.
+  piStatusSource = lib.fileset.toSource {
+    root = ./agents;
+    fileset = lib.fileset.unions [
+      ./agents/pi/session-status/index.ts
+      ./agents/pi/session-status/skills.ts
+      ./agents/opencode/vcs-status/vcs.ts
+    ];
+  };
 in
 {
 
@@ -13,12 +22,13 @@ in
 
     claude.enable = mkEnableOption "Claude configuration";
     opencode.enable = mkEnableOption "OpenCode configuration";
+    pi.enable = mkEnableOption "Pi configuration";
 
   };
 
   config = lib.mkMerge [
 
-    (lib.mkIf (cfg.claude.enable || cfg.opencode.enable) {
+    (lib.mkIf (cfg.claude.enable || cfg.opencode.enable || cfg.pi.enable) {
 
       home.file.".agents/AGENTS.md".source = ./agents/AGENTS.md;
       home.file.".agents/skills/ghostwriter".source = ./agents/skills/ghostwriter;
@@ -45,6 +55,52 @@ in
         cp -f ${./agents/claude/hud-config.json} "${claudeHudConfPath}"
         chmod 444 "${claudeHudConfPath}"
       '';
+
+    })
+
+    (lib.mkIf cfg.pi.enable {
+
+      home.file.".pi/agent/AGENTS.md".source = ./agents/AGENTS.md;
+
+      home.file.".pi/agent/settings.json".text = builtins.toJSON {
+        defaultProvider = "openai-codex";
+        defaultModel = "gpt-6-astra";
+        defaultThinkingLevel = "medium";
+        hideThinkingBlock = true;
+        theme = "catppuccin-mocha";
+        enableInstallTelemetry = false;
+        extensions = [ "${piStatusSource}/pi/session-status/index.ts" ];
+        packages = [
+          "npm:pi-subagents@0.70.0"
+          "npm:pi-web-access@0.30.0"
+          "npm:pi-catppuccin@0.1.0"
+          "npm:pi-footer@0.5.1"
+          "npm:@juicesharp/rpiv-todo@2.10.1"
+        ];
+        subagents.agentOverrides =
+          lib.genAttrs
+            [
+              "scout"
+              "researcher"
+              "evidence-auditor"
+              "worker"
+              "reviewer"
+              "oracle"
+              "delegate"
+            ]
+            (_: {
+              inheritProjectContext = true;
+              inheritGlobalContext = true;
+              inheritSkills = true;
+              defaultContext = "fresh";
+            });
+      };
+
+      home.file.".pi/agent/extensions/subagent/config.json".text = builtins.toJSON {
+        defaultSubagentContext = "fresh";
+      };
+
+      home.file.".pi/agent/extensions/pi-footer.json".source = ./agents/pi/footer.json;
 
     })
 
