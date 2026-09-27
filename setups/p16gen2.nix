@@ -37,6 +37,7 @@ in
     };
 
     helix.enable = false;
+    herdr.enable = true;
     jq.enable = true;
     just.enable = true;
 
@@ -45,7 +46,6 @@ in
       enableCsd = false;
       useMonoLisaFont = true;
       followSystemTheme = true;
-      backgroundOpacity = 0.8;
     };
 
     kubernetes.enable = true;

@@ -27,7 +27,7 @@ in
 
       bat.enable = true;
       bottom.enable = true;
-      ai.claude.enable = true;
+      ai.claude.enable = false;
       devenv.enable = false;
       dtrx.enable = true;
       eza.enable = true;
@@ -51,6 +51,7 @@ in
       };
 
       helix.enable = false;
+      herdr.enable = true;
       jq.enable = true;
       just.enable = true;
 

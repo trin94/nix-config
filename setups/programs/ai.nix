@@ -253,7 +253,8 @@ in
           plugins = [
             "file://${config.xdg.configHome}/opencode/tui-plugin/loaded-skills"
             "file://${config.xdg.configHome}/opencode/tui-plugin/vcs-status"
-          ];
+          ]
+          ++ lib.optionals config.myOS.programs.herdr.enable [ "./herdr-opencode" ];
         };
       };
 
