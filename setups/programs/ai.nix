@@ -228,22 +228,33 @@ in
       xdg.configFile."opencode/tui-plugin/vcs-status".source = ./agents/opencode/vcs-status;
       xdg.configFile."opencode/tui-plugin/loaded-skills".source = ./agents/opencode/loaded-skills;
 
-      xdg.configFile."opencode/cli.json".text = builtins.toJSON {
-        "$schema" = "https://opencode.ai/v2/cli.json";
-        theme.name = "catppuccin";
-        diffs.wrap = "word";
-        prompt.paste = "full";
-        session = {
-          sidebar = "auto";
-          scrollbar = false;
-          thinking = "hide";
+      xdg.configFile."opencode/cli.json" = {
+        force = true;
+        text = builtins.toJSON {
+          "$schema" = "https://opencode.ai/v2/cli.json";
+          theme.name = "catppuccin";
+          diffs.wrap = "word";
+          prompt.paste = "full";
+          session = {
+            sidebar = "auto";
+            scrollbar = false;
+            thinking = "hide";
+            grouping = "auto";
+            verbosity = "low";
+            permissions = "prompt";
+          };
+          tabs = {
+            layout = "horizontal";
+            indicators = "status";
+          };
+          attention.sound = false;
+          animations = true;
+          # V2 appends sidebar contributions in plugin order. Keep Git next to the footer.
+          plugins = [
+            "file://${config.xdg.configHome}/opencode/tui-plugin/loaded-skills"
+            "file://${config.xdg.configHome}/opencode/tui-plugin/vcs-status"
+          ];
         };
-        animations = true;
-        # V2 appends sidebar contributions in plugin order. Keep Git next to the footer.
-        plugins = [
-          "file://${config.xdg.configHome}/opencode/tui-plugin/loaded-skills"
-          "file://${config.xdg.configHome}/opencode/tui-plugin/vcs-status"
-        ];
       };
 
     })
