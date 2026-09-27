@@ -210,6 +210,16 @@ in
             resource = "/tmp/opencode/**";
             effect = "allow";
           }
+          {
+            action = "external_directory";
+            resource = "/nix/store/**";
+            effect = "allow";
+          }
+          {
+            action = "read";
+            resource = "/nix/store/**";
+            effect = "allow";
+          }
         ];
       };
 
