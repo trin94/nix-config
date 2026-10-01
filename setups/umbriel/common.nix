@@ -146,7 +146,6 @@
     {
       match.app_id = "^kitty$";
       default_scrolling_extent = 0.6667;
-      blur = true;
     }
     {
       match = {

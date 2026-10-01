@@ -38,6 +38,7 @@ let
     initial_window_width 120c
     initial_window_height 30c
     background_opacity ${toString cfg.backgroundOpacity}
+    background_blur 0
     ${fontConfig}
     sync_to_monitor yes
     linux_display_server wayland
@@ -93,7 +94,7 @@ in
       default = 1.0;
       description = ''
         Kitty window background opacity. Values below 1.0 make the window
-        semi-transparent, which is what lets compositor blur show through.
+        semi-transparent.
       '';
     };
 
