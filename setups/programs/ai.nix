@@ -220,6 +220,16 @@ in
             resource = "/nix/store/**";
             effect = "allow";
           }
+          {
+            action = "read";
+            resource = "SKILL.md";
+            effect = "deny";
+          }
+          {
+            action = "read";
+            resource = "*/SKILL.md";
+            effect = "deny";
+          }
         ];
       };
 
