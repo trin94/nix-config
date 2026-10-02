@@ -118,6 +118,15 @@ in
       xdg.configFile."opencode/opencode.json".text = builtins.toJSON {
         "$schema" = "https://opencode.ai/config.json";
         share = "disabled";
+        plugins = [ "opencode-with-claude" ];
+        providers = {
+          anthropic = {
+            settings = {
+              baseURL = "http://127.0.0.1:3456/v1";
+              apiKey = "dummy";
+            };
+          };
+        };
         # Last matching rule wins; keep exceptions after their broad rules.
         permissions = [
           {
