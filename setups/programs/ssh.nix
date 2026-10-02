@@ -30,6 +30,14 @@ in
           AddKeysToAgent = "yes";
         };
 
+        "codereview.qt-project.org" = lib.hm.dag.entryAfter [ "*" ] {
+          HostName = "codereview.qt-project.org";
+          User = "trin94";
+          Port = 29418;
+          PreferredAuthentications = "publickey";
+          IdentityFile = "~/.ssh/id_ed25519";
+        };
+
         "*" = {
           ForwardAgent = false;
           AddKeysToAgent = "no";
