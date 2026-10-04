@@ -69,6 +69,11 @@ in
     };
   };
 
+  # Removable drives. udisks2 mounts them for unprivileged users, gvfs shows
+  # them in Nautilus. Without a desktop environment neither is on by default.
+  services.udisks2.enable = true;
+  services.gvfs.enable = true;
+
   hardware.graphics.enable = true;
 
   services.pipewire = {
