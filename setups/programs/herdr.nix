@@ -15,9 +15,9 @@ let
     };
   opencodePlugin = pkgs.runCommand "herdr-opencode-integration" { } ''
     mkdir -p "$out/plugins" "$out/herdr-opencode"
-    cp ${asset "herdr-agent-state.js" "sha256-Gmrr9mMjJP7GPR3iJnN7n6azXz3bUc5odDnma2x8tHU="} "$out/plugins/herdr-agent-state.js"
-    cp ${asset "herdr-tui-session.js" "sha256-+bXC2xabDww4p4vCyDQReGc7wNAOX3BXdlrqc93Ff5U="} "$out/herdr-tui-session.js"
-    cp ${asset "tui.js" "sha256-lLjRB+GrW/+iMg47fxVNGEiiFniHhaKbhtc1urNa+eg="} "$out/herdr-opencode/tui.js"
+    cp ${asset "herdr-agent-state.js" "sha256-9wp9IZP0qUCYOLB4rO5aNfcvCSWvCPY8FC7Jy/C6X80="} "$out/plugins/herdr-agent-state.js"
+    cp ${asset "herdr-tui-session.js" "sha256-UGWdR9s89OfeMCjlbyZmplbvqt3CRxG3L1trqp+ZxdM="} "$out/herdr-tui-session.js"
+    cp ${asset "tui.js" "sha256-pwqdneaNJOkuaM62WOU1tZrFXt2+9xGIjgLCdzwPnM4="} "$out/herdr-opencode/tui.js"
   '';
 in
 {
