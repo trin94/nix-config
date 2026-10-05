@@ -75,6 +75,7 @@ in
       ".config/git/ignore".text = ''
         **/.claude/settings.local.json
         /.scratch/
+        *.local.md
       '';
 
       ".config/git/config".text = ''
