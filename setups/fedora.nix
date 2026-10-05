@@ -6,6 +6,13 @@
 let
   homeDirectory = "/home/${username}";
   username = "elias";
+
+  # kdePackages.breeze drags in a 1.8 GiB Qt closure; the source tarball ships the cursors prebuilt.
+  breezeCursors = pkgs.runCommand "breeze-cursors-${pkgs.kdePackages.breeze.version}" { } ''
+    tar xf ${pkgs.kdePackages.breeze.src} --wildcards '*/cursors/Breeze/Breeze'
+    mkdir -p $out/share/icons
+    cp -r */cursors/Breeze/Breeze $out/share/icons/breeze_cursors
+  '';
 in
 {
 
@@ -149,10 +156,15 @@ in
       "$HOME/go" # GOPATH
     ];
 
-    sessionVariables = {
-      XCURSOR_THEME = "breeze_cursors";
-      XCURSOR_SIZE = 24;
+    pointerCursor = {
+      enable = true;
+      package = breezeCursors;
+      name = "breeze_cursors";
+      size = 22;
+      gtk.enable = true;
+    };
 
+    sessionVariables = {
       ELECTRON_OZONE_PLATFORM_HINT = "auto";
     };
 
@@ -184,4 +196,6 @@ in
   home.enableNixpkgsReleaseCheck = false;
 
   fonts.fontconfig.enable = true;
+
+  gtk.enable = true;
 }
