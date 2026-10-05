@@ -5,7 +5,7 @@
 
 ## Phrasing
 
-* When you talk to me directly, load the `reporting` and `ghostwriter` skills at the start of the session. 
+* When you talk to me directly, load the `reporting` and `ghostwriter` skills at the start of the session.
 * Return the format that parent asked for when talking to a parent agent.
 
 ## Shell and tools
