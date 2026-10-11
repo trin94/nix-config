@@ -4,7 +4,7 @@
   ...
 }:
 let
-  homeDirectory = "/home/${username}";
+  homeDirectory = "/var/home/${username}";
   username = "elias";
 
   # kdePackages.breeze drags in a 1.8 GiB Qt closure; the source tarball ships the cursors prebuilt.
