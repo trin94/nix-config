@@ -1,0 +1,7 @@
+{
+    "name": "agents-local",
+    "type": "module",
+    "exports": {
+        ".": "./index.ts"
+    }
+}

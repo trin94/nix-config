@@ -118,7 +118,10 @@ in
       xdg.configFile."opencode/opencode.json".text = builtins.toJSON {
         "$schema" = "https://opencode.ai/config.json";
         share = "disabled";
-        plugins = [ "opencode-with-claude" ];
+        plugins = [
+          "opencode-with-claude"
+          "file://${config.xdg.configHome}/opencode/server-plugin/agents-local"
+        ];
         providers = {
           anthropic = {
             settings = {
@@ -246,6 +249,7 @@ in
       # separate store paths and the relative import breaks.
       xdg.configFile."opencode/tui-plugin/vcs-status".source = ./agents/opencode/vcs-status;
       xdg.configFile."opencode/tui-plugin/loaded-skills".source = ./agents/opencode/loaded-skills;
+      xdg.configFile."opencode/server-plugin/agents-local".source = ./agents/opencode/agents-local;
 
       xdg.configFile."opencode/cli.json" = {
         force = true;
