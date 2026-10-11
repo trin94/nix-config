@@ -41,7 +41,17 @@ in
           style = "bold blue";
           format = "[$symbol \\[$name\\]]($style) ";
         };
+
+        nix_shell = {
+          format = "via [$symbol]($style) ";
+        };
       };
+    };
+
+    programs.nix-your-shell = {
+      enable = true;
+      enableFishIntegration = true;
+      enableNushellIntegration = false;
     };
 
     programs.fish = {
