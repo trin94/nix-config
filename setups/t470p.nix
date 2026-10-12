@@ -70,11 +70,6 @@ in
       };
     };
 
-    poetry = {
-      enable = false;
-      configure = true;
-    };
-
     procs.enable = true;
     ripgrep.enable = true;
     sd.enable = true;
