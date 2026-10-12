@@ -53,14 +53,15 @@ in
     niri.enable = true;
     nixfmt.enable = true;
     nushell.enable = true;
+
     opencode = {
       enable = true;
       plugins = {
-        with-claude.enable = true;
+        herdr.enable = true;
         my-agents-local.enable = true;
         my-loaded-skills.enable = true;
         my-vcs-status.enable = true;
-        herdr.enable = true;
+        with-claude.enable = true;
       };
     };
 

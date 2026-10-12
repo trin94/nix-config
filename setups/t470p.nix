@@ -48,6 +48,7 @@ in
       enableCsd = false;
       followNoctaliaTheme = true;
     };
+
     libwebp.enable = true;
 
     mpv = {
@@ -58,13 +59,14 @@ in
     nh.enable = true;
     nixfmt.enable = true;
     nushell.enable = true;
+
     opencode = {
       enable = true;
       plugins = {
-        with-claude.enable = true;
         my-agents-local.enable = true;
         my-loaded-skills.enable = true;
         my-vcs-status.enable = true;
+        with-claude.enable = true;
       };
     };
 
