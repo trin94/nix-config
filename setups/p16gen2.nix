@@ -35,7 +35,6 @@ in
       name = "Elias Mueller";
     };
 
-    helix.enable = false;
     herdr.enable = true;
     jq.enable = true;
     just.enable = true;

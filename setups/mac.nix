@@ -49,7 +49,6 @@ in
         '';
       };
 
-      helix.enable = false;
       herdr.enable = true;
       jq.enable = true;
       just.enable = true;

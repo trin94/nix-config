@@ -51,7 +51,6 @@ in
       email = "mail@eliasmueller.online";
     };
 
-    helix.enable = false;
     herdr.enable = true;
     hugo.enable = true;
     jq.enable = true;
