@@ -78,6 +78,7 @@ in
     opencode = {
       enable = true;
       plugins = {
+        with-claude.enable = true;
         my-agents-local.enable = true;
         my-loaded-skills.enable = true;
         my-vcs-status.enable = true;
