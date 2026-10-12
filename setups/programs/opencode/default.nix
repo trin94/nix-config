@@ -4,22 +4,22 @@
   ...
 }:
 let
-  cfg = config.myOS.programs.ai;
+  cfg = config.myOS.programs.opencode;
 in
 {
 
-  options.myOS.programs.ai = with lib; {
+  options.myOS.programs.opencode = with lib; {
 
-    opencode.enable = mkEnableOption "OpenCode configuration";
+    enable = mkEnableOption "OpenCode configuration";
 
   };
 
-  config = lib.mkIf cfg.opencode.enable {
+  config = lib.mkIf cfg.enable {
 
-    home.file.".agents/AGENTS.md".source = ./agents/AGENTS.md;
-    home.file.".agents/skills/ghostwriter".source = ./agents/skills/ghostwriter;
-    home.file.".agents/skills/reporting".source = ./agents/skills/reporting;
-    home.file.".agents/skills/commit-conventions".source = ./agents/skills/commit-conventions;
+    home.file.".agents/AGENTS.md".source = ./AGENTS.md;
+    home.file.".agents/skills/ghostwriter".source = ./skills/ghostwriter;
+    home.file.".agents/skills/reporting".source = ./skills/reporting;
+    home.file.".agents/skills/commit-conventions".source = ./skills/commit-conventions;
 
     home.sessionPath = [
       "$HOME/.opencode/bin"
@@ -28,7 +28,7 @@ in
     # OpenCode discovers the shared skills from ~/.agents.
     home.sessionVariables.OPENCODE_DISABLE_CLAUDE_CODE_SKILLS = "1";
 
-    xdg.configFile."opencode/AGENTS.md".source = ./agents/AGENTS.md;
+    xdg.configFile."opencode/AGENTS.md".source = ./AGENTS.md;
 
     xdg.configFile."opencode/opencode.json".text = builtins.toJSON {
       "$schema" = "https://opencode.ai/config.json";
@@ -157,9 +157,9 @@ in
 
     # One directory, so the entrypoint can import its sibling. Per-file entries land in
     # separate store paths and the relative import breaks.
-    xdg.configFile."opencode/tui-plugin/vcs-status".source = ./agents/opencode/vcs-status;
-    xdg.configFile."opencode/tui-plugin/loaded-skills".source = ./agents/opencode/loaded-skills;
-    xdg.configFile."opencode/server-plugin/agents-local".source = ./agents/opencode/agents-local;
+    xdg.configFile."opencode/tui-plugin/vcs-status".source = ./plugins/vcs-status;
+    xdg.configFile."opencode/tui-plugin/loaded-skills".source = ./plugins/loaded-skills;
+    xdg.configFile."opencode/server-plugin/agents-local".source = ./plugins/agents-local;
 
     xdg.configFile."opencode/cli.json" = {
       force = true;

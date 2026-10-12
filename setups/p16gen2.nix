@@ -53,7 +53,7 @@ in
     niri.enable = true;
     nixfmt.enable = true;
     nushell.enable = true;
-    ai.opencode.enable = true;
+    opencode.enable = true;
 
     poetry = {
       enable = false;

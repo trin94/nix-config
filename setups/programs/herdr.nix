@@ -6,7 +6,7 @@
 }:
 let
   cfg = config.myOS.programs.herdr;
-  opencode = config.myOS.programs.ai.opencode.enable;
+  opencode = config.myOS.programs.opencode.enable;
   asset =
     name: hash:
     pkgs.fetchurl {

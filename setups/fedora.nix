@@ -26,8 +26,6 @@ in
 
     alacritty.enable = true;
 
-    ai.opencode.enable = true;
-
     bat.enable = true;
     bottom.enable = true;
 
@@ -77,6 +75,7 @@ in
     niri.enable = true;
     nixfmt.enable = true;
     nushell.enable = true;
+    opencode.enable = true;
 
     poetry = {
       enable = false;
