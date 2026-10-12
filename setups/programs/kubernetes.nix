@@ -81,5 +81,11 @@ in
 
     };
 
+    programs.fish.shellAbbrs = {
+      "k" = "kubectl";
+      "kctx" = "kubectx";
+      "kns" = "kubens";
+    };
+
   };
 }

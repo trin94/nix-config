@@ -32,6 +32,10 @@ in
       ];
     };
 
+    programs.fish.shellAliases = {
+      "man" = "batman";
+    };
+
   };
 
 }

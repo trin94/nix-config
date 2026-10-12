@@ -6,11 +6,6 @@
 }:
 let
   cfg = config.myOS.programs.fish;
-
-  hasHomeManagerPackage = pname: lib.any (p: p ? pname && p.pname == pname) config.home.packages;
-  isYtDlpInstalled = hasHomeManagerPackage "yt-dlp";
-  isEzaInstalled = hasHomeManagerPackage "eza";
-  isBatmanInstalled = hasHomeManagerPackage "batman";
 in
 {
 
@@ -61,33 +56,15 @@ in
 
       interactiveShellInit = ''
         set fish_greeting
-      ''
-      + lib.optionalString isEzaInstalled ''
-
-        set fzf_preview_dir_cmd eza --all --color=always --group-directories-first --icons=never
       '';
 
       shellInit = cfg.shellInit;
 
-      shellAliases =
-        let
-          ezaArgs = "--group-directories-first --color=always --icons=never --hyperlink";
-        in
-        {
-          "ls" = lib.mkIf isEzaInstalled "eza ${ezaArgs} --long";
-          "ll" = lib.mkIf isEzaInstalled "eza ${ezaArgs} --long --all";
-          "lt" = lib.mkIf isEzaInstalled "eza ${ezaArgs} --long --tree";
-          "la" = lib.mkIf isEzaInstalled "ll";
-
-          "man" = lib.mkIf isBatmanInstalled "batman";
-
-          "cfg" = "cd ~/.dotfiles";
-        };
+      shellAliases = {
+        "cfg" = "cd ~/.dotfiles";
+      };
 
       shellAbbrs = {
-        "k" = "kubectl";
-        "kctx" = "kubectx";
-        "kns" = "kubens";
         "pre-commit" = "prek";
       };
 
@@ -103,22 +80,6 @@ in
                 --table-noheadings \
                 --table-columns C1,C2 \
                 --table-wrap C2'';
-        };
-
-        ytd = lib.mkIf isYtDlpInstalled {
-          description = "Download YT videos";
-          body = ''
-            yt-dlp \
-                --format bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best \
-                --output '%(upload_date)s - %(channel)s - %(id)s - %(title)s.%(ext)s' \
-                --sponsorblock-remove "all" \
-                --geo-bypass \
-                --sub-langs 'all' \
-                --embed-subs \
-                --embed-metadata \
-                --convert-subs 'srt' \
-                -- $argv
-          '';
         };
 
       };

@@ -21,6 +21,17 @@ in
       eza # Modern, maintained replacement for ls
     ];
 
+    programs.fish.shellAliases =
+      let
+        ezaArgs = "--group-directories-first --color=always --icons=never --hyperlink";
+      in
+      {
+        "ls" = "eza ${ezaArgs} --long";
+        "ll" = "eza ${ezaArgs} --long --all";
+        "lt" = "eza ${ezaArgs} --long --tree";
+        "la" = "ll";
+      };
+
   };
 
 }
