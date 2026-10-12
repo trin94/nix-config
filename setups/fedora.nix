@@ -94,15 +94,6 @@ in
 
     tokei.enable = true;
 
-    umbriel = {
-      enable = false;
-      configure = true;
-      settings = (import ./umbriel/outputs.nix) // {
-        # The session service starts Noctalia; avoid launching a second instance.
-        general.autostart = [ ];
-      };
-    };
-
     vim.enable = true;
     yq.enable = true;
     yazi.enable = true;
