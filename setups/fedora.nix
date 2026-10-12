@@ -75,7 +75,14 @@ in
     niri.enable = true;
     nixfmt.enable = true;
     nushell.enable = true;
-    opencode.enable = true;
+    opencode = {
+      enable = true;
+      plugins = {
+        my-agents-local.enable = true;
+        my-loaded-skills.enable = true;
+        my-vcs-status.enable = true;
+      };
+    };
 
     poetry = {
       enable = false;

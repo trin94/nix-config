@@ -1,5 +1,5 @@
 {
-    "name": "vcs-status",
+    "name": "my-loaded-skills",
     "type": "module",
     "exports": {
         "./tui": "./tui.tsx"

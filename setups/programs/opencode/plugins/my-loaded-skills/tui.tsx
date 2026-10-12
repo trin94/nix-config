@@ -43,7 +43,7 @@ function Skills(props: { sessionID: string }) {
 }
 
 export default Plugin.define({
-    id: "loaded-skills",
+    id: "my-loaded-skills",
     setup(api) {
         return api.ui.slot({
             append: "sidebar.content",

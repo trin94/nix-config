@@ -4,7 +4,7 @@ import { Plugin } from "@opencode/plugin";
 
 /** Adds an untracked AGENTS.local.md from the workspace root to every agent request. */
 export default Plugin.define({
-    id: "agents-local",
+    id: "my-agents-local",
     async setup(ctx) {
         const path = join(ctx.location.directory, "AGENTS.local.md");
         await ctx.session.hook("context", async (event) => {

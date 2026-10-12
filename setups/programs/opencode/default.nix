@@ -5,6 +5,19 @@
 }:
 let
   cfg = config.myOS.programs.opencode;
+  pluginPath = kind: name: "file://${config.xdg.configHome}/opencode/${kind}-plugin/${name}";
+
+  # Both plugin lists are built here in a fixed order. Plugin modules don't add themselves.
+  serverPlugins = [
+    "opencode-with-claude"
+  ]
+  ++ lib.optional cfg.plugins.my-agents-local.enable (pluginPath "server" "my-agents-local");
+
+  # V2 appends sidebar contributions in plugin order. Keep Git next to the footer.
+  tuiPlugins =
+    lib.optional cfg.plugins.my-loaded-skills.enable (pluginPath "tui" "my-loaded-skills")
+    ++ lib.optional cfg.plugins.my-vcs-status.enable (pluginPath "tui" "my-vcs-status")
+    ++ lib.optionals config.myOS.programs.herdr.enable [ "./herdr-opencode" ];
 in
 {
 
@@ -33,10 +46,7 @@ in
     xdg.configFile."opencode/opencode.json".text = builtins.toJSON {
       "$schema" = "https://opencode.ai/config.json";
       share = "disabled";
-      plugins = [
-        "opencode-with-claude"
-        "file://${config.xdg.configHome}/opencode/server-plugin/agents-local"
-      ];
+      plugins = serverPlugins;
       providers = {
         anthropic = {
           settings = {
@@ -155,12 +165,6 @@ in
       ];
     };
 
-    # One directory, so the entrypoint can import its sibling. Per-file entries land in
-    # separate store paths and the relative import breaks.
-    xdg.configFile."opencode/tui-plugin/vcs-status".source = ./plugins/vcs-status;
-    xdg.configFile."opencode/tui-plugin/loaded-skills".source = ./plugins/loaded-skills;
-    xdg.configFile."opencode/server-plugin/agents-local".source = ./plugins/agents-local;
-
     xdg.configFile."opencode/cli.json" = {
       force = true;
       text = builtins.toJSON {
@@ -182,12 +186,7 @@ in
         };
         attention.sound = false;
         animations = true;
-        # V2 appends sidebar contributions in plugin order. Keep Git next to the footer.
-        plugins = [
-          "file://${config.xdg.configHome}/opencode/tui-plugin/loaded-skills"
-          "file://${config.xdg.configHome}/opencode/tui-plugin/vcs-status"
-        ]
-        ++ lib.optionals config.myOS.programs.herdr.enable [ "./herdr-opencode" ];
+        plugins = tuiPlugins;
       };
     };
 

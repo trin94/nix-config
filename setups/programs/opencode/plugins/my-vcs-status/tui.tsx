@@ -82,7 +82,7 @@ function Status(props: { sessionID: string }) {
 }
 
 export default Plugin.define({
-    id: "vcs-status",
+    id: "my-vcs-status",
     setup(api) {
         return api.ui.slot({
             append: "sidebar.content",
