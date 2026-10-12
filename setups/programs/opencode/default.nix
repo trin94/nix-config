@@ -1,10 +1,12 @@
 {
   config,
   lib,
+  pkgs,
   ...
 }:
 let
   cfg = config.myOS.programs.opencode;
+  jsonFormat = pkgs.formats.json { };
   pluginPath = kind: name: "file://${config.xdg.configHome}/opencode/${kind}-plugin/${name}";
 
   # Both plugin lists are built here in a fixed order. Plugin modules don't add themselves.
@@ -14,7 +16,7 @@ let
 
   # opencode-with-claude starts the proxy and rewrites the base URL at runtime. The block
   # still has to exist, so the URL is only a placeholder.
-  providers = lib.optionalAttrs cfg.plugins.with-claude.enable {
+  pluginProviders = lib.optionalAttrs cfg.plugins.with-claude.enable {
     anthropic = {
       settings = {
         baseURL = "http://127.0.0.1:3456/v1";
@@ -22,6 +24,10 @@ let
       };
     };
   };
+
+  providers = lib.recursiveUpdate pluginProviders cfg.overrideProviders;
+
+  mcp = lib.recursiveUpdate { } cfg.overrideMcp;
 
   # V2 appends sidebar contributions in plugin order. Keep Git next to the footer.
   tuiPlugins =
@@ -34,6 +40,18 @@ in
   options.myOS.programs.opencode = with lib; {
 
     enable = mkEnableOption "OpenCode configuration";
+
+    overrideProviders = mkOption {
+      type = types.attrsOf jsonFormat.type;
+      default = { };
+      description = "Host-specific providers deep-merged over the providers the plugins bring.";
+    };
+
+    overrideMcp = mkOption {
+      type = types.attrsOf jsonFormat.type;
+      default = { };
+      description = "Host-specific `mcp` config (servers under `servers`, timeouts), deep-merged like `overrideProviders`.";
+    };
 
   };
 
@@ -60,6 +78,7 @@ in
         plugins = serverPlugins;
       }
       // lib.optionalAttrs (providers != { }) { inherit providers; }
+      // lib.optionalAttrs (mcp != { }) { inherit mcp; }
       // {
         # Last matching rule wins; keep exceptions after their broad rules.
         permissions = [
