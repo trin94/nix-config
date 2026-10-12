@@ -5,284 +5,192 @@
 }:
 let
   cfg = config.myOS.programs.ai;
-  claudeHudConfPath = "${config.home.homeDirectory}/.claude/plugins/claude-hud/config.json";
-  # Preserve relative imports in the store while sharing OpenCode's Git calculation.
-  piStatusSource = lib.fileset.toSource {
-    root = ./agents;
-    fileset = lib.fileset.unions [
-      ./agents/pi/session-status/index.ts
-      ./agents/pi/session-status/skills.ts
-      ./agents/opencode/vcs-status/vcs.ts
-    ];
-  };
 in
 {
 
   options.myOS.programs.ai = with lib; {
 
-    claude.enable = mkEnableOption "Claude configuration";
     opencode.enable = mkEnableOption "OpenCode configuration";
-    pi.enable = mkEnableOption "Pi configuration";
 
   };
 
-  config = lib.mkMerge [
+  config = lib.mkIf cfg.opencode.enable {
 
-    (lib.mkIf (cfg.claude.enable || cfg.opencode.enable || cfg.pi.enable) {
+    home.file.".agents/AGENTS.md".source = ./agents/AGENTS.md;
+    home.file.".agents/skills/ghostwriter".source = ./agents/skills/ghostwriter;
+    home.file.".agents/skills/reporting".source = ./agents/skills/reporting;
+    home.file.".agents/skills/commit-conventions".source = ./agents/skills/commit-conventions;
 
-      home.file.".agents/AGENTS.md".source = ./agents/AGENTS.md;
-      home.file.".agents/skills/ghostwriter".source = ./agents/skills/ghostwriter;
-      home.file.".agents/skills/reporting".source = ./agents/skills/reporting;
-      home.file.".agents/skills/commit-conventions".source = ./agents/skills/commit-conventions;
+    home.sessionPath = [
+      "$HOME/.opencode/bin"
+    ];
 
-    })
+    # OpenCode discovers the shared skills from ~/.agents.
+    home.sessionVariables.OPENCODE_DISABLE_CLAUDE_CODE_SKILLS = "1";
 
-    (lib.mkIf cfg.claude.enable {
+    xdg.configFile."opencode/AGENTS.md".source = ./agents/AGENTS.md;
 
-      home.file.".claude/CLAUDE.md".source = ./agents/AGENTS.md;
-      home.file.".claude/skills/ghostwriter".source = ./agents/skills/ghostwriter;
-      home.file.".claude/skills/reporting".source = ./agents/skills/reporting;
-      home.file.".claude/skills/commit-conventions".source = ./agents/skills/commit-conventions;
-
-      home.file.".claude/statusline-git-diff.sh" = {
-        source = ./agents/claude/statusline-git-diff.sh;
-        executable = true;
-      };
-
-      # claude-hud does not open symlinks
-      home.activation.copyClaudeHudConf = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-        mkdir -p $(dirname "${claudeHudConfPath}")
-        cp -f ${./agents/claude/hud-config.json} "${claudeHudConfPath}"
-        chmod 444 "${claudeHudConfPath}"
-      '';
-
-    })
-
-    (lib.mkIf cfg.pi.enable {
-
-      home.file.".pi/agent/AGENTS.md".source = ./agents/AGENTS.md;
-
-      home.file.".pi/agent/settings.json".text = builtins.toJSON {
-        defaultProvider = "openai-codex";
-        defaultModel = "gpt-6-astra";
-        defaultThinkingLevel = "medium";
-        hideThinkingBlock = true;
-        theme = "catppuccin-mocha";
-        enableInstallTelemetry = false;
-        extensions = [ "${piStatusSource}/pi/session-status/index.ts" ];
-        packages = [
-          "npm:pi-subagents@0.70.0"
-          "npm:pi-web-access@0.30.0"
-          "npm:pi-catppuccin@0.1.0"
-          "npm:pi-footer@0.5.1"
-          "npm:@juicesharp/rpiv-todo@2.10.1"
-        ];
-        subagents.agentOverrides =
-          lib.genAttrs
-            [
-              "scout"
-              "researcher"
-              "evidence-auditor"
-              "worker"
-              "reviewer"
-              "oracle"
-              "delegate"
-            ]
-            (_: {
-              inheritProjectContext = true;
-              inheritGlobalContext = true;
-              inheritSkills = true;
-              defaultContext = "fresh";
-            });
-      };
-
-      home.file.".pi/agent/extensions/subagent/config.json".text = builtins.toJSON {
-        defaultSubagentContext = "fresh";
-      };
-
-      home.file.".pi/agent/extensions/pi-footer.json".source = ./agents/pi/footer.json;
-
-    })
-
-    (lib.mkIf cfg.opencode.enable {
-
-      home.sessionPath = [
-        "$HOME/.opencode/bin"
+    xdg.configFile."opencode/opencode.json".text = builtins.toJSON {
+      "$schema" = "https://opencode.ai/config.json";
+      share = "disabled";
+      plugins = [
+        "opencode-with-claude"
+        "file://${config.xdg.configHome}/opencode/server-plugin/agents-local"
       ];
+      providers = {
+        anthropic = {
+          settings = {
+            baseURL = "http://127.0.0.1:3456/v1";
+            apiKey = "dummy";
+          };
+        };
+      };
+      # Last matching rule wins; keep exceptions after their broad rules.
+      permissions = [
+        {
+          action = "*";
+          resource = "*";
+          effect = "ask";
+        }
+        {
+          action = "shell";
+          resource = "*";
+          effect = "allow";
+        }
+        {
+          action = "edit";
+          resource = "*";
+          effect = "allow";
+        }
+        {
+          action = "read";
+          resource = "*";
+          effect = "allow";
+        }
+        {
+          action = "read";
+          resource = "*.env";
+          effect = "deny";
+        }
+        {
+          action = "read";
+          resource = "*.env.*";
+          effect = "deny";
+        }
+        {
+          action = "read";
+          resource = "*.env.example";
+          effect = "allow";
+        }
+        {
+          action = "grep";
+          resource = "*";
+          effect = "allow";
+        }
+        {
+          action = "glob";
+          resource = "*";
+          effect = "allow";
+        }
+        {
+          action = "skill";
+          resource = "*";
+          effect = "allow";
+        }
+        {
+          action = "webfetch";
+          resource = "*";
+          effect = "allow";
+        }
+        {
+          action = "websearch";
+          resource = "*";
+          effect = "allow";
+        }
+        {
+          action = "question";
+          resource = "*";
+          effect = "deny";
+        }
+        {
+          action = "external_directory";
+          resource = "~/.agents/**";
+          effect = "allow";
+        }
+        {
+          action = "external_directory";
+          resource = "~/.dotfiles/**";
+          effect = "allow";
+        }
+        {
+          action = "external_directory";
+          resource = "~/PycharmProjects/**";
+          effect = "allow";
+        }
+        {
+          action = "external_directory";
+          resource = "/tmp/opencode/**";
+          effect = "allow";
+        }
+        {
+          action = "external_directory";
+          resource = "/nix/store/**";
+          effect = "allow";
+        }
+        {
+          action = "read";
+          resource = "/nix/store/**";
+          effect = "allow";
+        }
+        {
+          action = "read";
+          resource = "SKILL.md";
+          effect = "deny";
+        }
+        {
+          action = "read";
+          resource = "*/SKILL.md";
+          effect = "deny";
+        }
+      ];
+    };
 
-      # OpenCode discovers the shared skills from ~/.agents.
-      home.sessionVariables.OPENCODE_DISABLE_CLAUDE_CODE_SKILLS = "1";
+    # One directory, so the entrypoint can import its sibling. Per-file entries land in
+    # separate store paths and the relative import breaks.
+    xdg.configFile."opencode/tui-plugin/vcs-status".source = ./agents/opencode/vcs-status;
+    xdg.configFile."opencode/tui-plugin/loaded-skills".source = ./agents/opencode/loaded-skills;
+    xdg.configFile."opencode/server-plugin/agents-local".source = ./agents/opencode/agents-local;
 
-      xdg.configFile."opencode/AGENTS.md".source = ./agents/AGENTS.md;
-
-      xdg.configFile."opencode/opencode.json".text = builtins.toJSON {
-        "$schema" = "https://opencode.ai/config.json";
-        share = "disabled";
+    xdg.configFile."opencode/cli.json" = {
+      force = true;
+      text = builtins.toJSON {
+        "$schema" = "https://opencode.ai/v2/cli.json";
+        theme.name = "catppuccin";
+        diffs.wrap = "word";
+        prompt.paste = "full";
+        session = {
+          sidebar = "auto";
+          scrollbar = false;
+          thinking = "hide";
+          grouping = "auto";
+          verbosity = "low";
+          permissions = "prompt";
+        };
+        tabs = {
+          layout = "horizontal";
+          indicators = "status";
+        };
+        attention.sound = false;
+        animations = true;
+        # V2 appends sidebar contributions in plugin order. Keep Git next to the footer.
         plugins = [
-          "opencode-with-claude"
-          "file://${config.xdg.configHome}/opencode/server-plugin/agents-local"
-        ];
-        providers = {
-          anthropic = {
-            settings = {
-              baseURL = "http://127.0.0.1:3456/v1";
-              apiKey = "dummy";
-            };
-          };
-        };
-        # Last matching rule wins; keep exceptions after their broad rules.
-        permissions = [
-          {
-            action = "*";
-            resource = "*";
-            effect = "ask";
-          }
-          {
-            action = "shell";
-            resource = "*";
-            effect = "allow";
-          }
-          {
-            action = "edit";
-            resource = "*";
-            effect = "allow";
-          }
-          {
-            action = "read";
-            resource = "*";
-            effect = "allow";
-          }
-          {
-            action = "read";
-            resource = "*.env";
-            effect = "deny";
-          }
-          {
-            action = "read";
-            resource = "*.env.*";
-            effect = "deny";
-          }
-          {
-            action = "read";
-            resource = "*.env.example";
-            effect = "allow";
-          }
-          {
-            action = "grep";
-            resource = "*";
-            effect = "allow";
-          }
-          {
-            action = "glob";
-            resource = "*";
-            effect = "allow";
-          }
-          {
-            action = "skill";
-            resource = "*";
-            effect = "allow";
-          }
-          {
-            action = "webfetch";
-            resource = "*";
-            effect = "allow";
-          }
-          {
-            action = "websearch";
-            resource = "*";
-            effect = "allow";
-          }
-          {
-            action = "question";
-            resource = "*";
-            effect = "deny";
-          }
-          {
-            action = "external_directory";
-            resource = "~/.agents/**";
-            effect = "allow";
-          }
-          {
-            action = "external_directory";
-            resource = "~/.claude/**";
-            effect = "allow";
-          }
-          {
-            action = "external_directory";
-            resource = "~/.dotfiles/**";
-            effect = "allow";
-          }
-          {
-            action = "external_directory";
-            resource = "~/PycharmProjects/**";
-            effect = "allow";
-          }
-          {
-            action = "external_directory";
-            resource = "/tmp/opencode/**";
-            effect = "allow";
-          }
-          {
-            action = "external_directory";
-            resource = "/nix/store/**";
-            effect = "allow";
-          }
-          {
-            action = "read";
-            resource = "/nix/store/**";
-            effect = "allow";
-          }
-          {
-            action = "read";
-            resource = "SKILL.md";
-            effect = "deny";
-          }
-          {
-            action = "read";
-            resource = "*/SKILL.md";
-            effect = "deny";
-          }
-        ];
+          "file://${config.xdg.configHome}/opencode/tui-plugin/loaded-skills"
+          "file://${config.xdg.configHome}/opencode/tui-plugin/vcs-status"
+        ]
+        ++ lib.optionals config.myOS.programs.herdr.enable [ "./herdr-opencode" ];
       };
+    };
 
-      # One directory, so the entrypoint can import its sibling. Per-file entries land in
-      # separate store paths and the relative import breaks.
-      xdg.configFile."opencode/tui-plugin/vcs-status".source = ./agents/opencode/vcs-status;
-      xdg.configFile."opencode/tui-plugin/loaded-skills".source = ./agents/opencode/loaded-skills;
-      xdg.configFile."opencode/server-plugin/agents-local".source = ./agents/opencode/agents-local;
-
-      xdg.configFile."opencode/cli.json" = {
-        force = true;
-        text = builtins.toJSON {
-          "$schema" = "https://opencode.ai/v2/cli.json";
-          theme.name = "catppuccin";
-          diffs.wrap = "word";
-          prompt.paste = "full";
-          session = {
-            sidebar = "auto";
-            scrollbar = false;
-            thinking = "hide";
-            grouping = "auto";
-            verbosity = "low";
-            permissions = "prompt";
-          };
-          tabs = {
-            layout = "horizontal";
-            indicators = "status";
-          };
-          attention.sound = false;
-          animations = true;
-          # V2 appends sidebar contributions in plugin order. Keep Git next to the footer.
-          plugins = [
-            "file://${config.xdg.configHome}/opencode/tui-plugin/loaded-skills"
-            "file://${config.xdg.configHome}/opencode/tui-plugin/vcs-status"
-          ]
-          ++ lib.optionals config.myOS.programs.herdr.enable [ "./herdr-opencode" ];
-        };
-      };
-
-    })
-
-  ];
+  };
 
 }

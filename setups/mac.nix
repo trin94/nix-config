@@ -27,7 +27,6 @@ in
 
       bat.enable = true;
       bottom.enable = true;
-      ai.claude.enable = false;
       devenv.enable = false;
       dtrx.enable = true;
       eza.enable = true;

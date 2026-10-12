@@ -26,11 +26,7 @@ in
 
     alacritty.enable = true;
 
-    ai = {
-      claude.enable = true;
-      opencode.enable = true;
-      pi.enable = true;
-    };
+    ai.opencode.enable = true;
 
     bat.enable = true;
     bottom.enable = true;

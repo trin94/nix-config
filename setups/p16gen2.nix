@@ -20,7 +20,6 @@ in
     bat.enable = true;
     bottom.enable = true;
     bun.enable = true;
-    ai.claude.enable = true;
     devenv.enable = true;
     dtrx.enable = true;
     eza.enable = true;
