@@ -82,6 +82,7 @@ in
         my-agents-local.enable = true;
         my-loaded-skills.enable = true;
         my-vcs-status.enable = true;
+        herdr.enable = true;
       };
     };
 

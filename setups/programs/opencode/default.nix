@@ -27,7 +27,7 @@ let
   tuiPlugins =
     lib.optional cfg.plugins.my-loaded-skills.enable (pluginPath "tui" "my-loaded-skills")
     ++ lib.optional cfg.plugins.my-vcs-status.enable (pluginPath "tui" "my-vcs-status")
-    ++ lib.optionals config.myOS.programs.herdr.enable [ "./herdr-opencode" ];
+    ++ lib.optional cfg.plugins.herdr.enable "./herdr-opencode";
 in
 {
 
