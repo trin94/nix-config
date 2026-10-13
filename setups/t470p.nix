@@ -4,8 +4,15 @@
   ...
 }:
 let
-  homeDirectory = "/home/${username}";
+  homeDirectory = "/var/home/${username}";
   username = "elias";
+
+  # kdePackages.breeze drags in a 1.8 GiB Qt closure; the source tarball ships the cursors prebuilt.
+  breezeCursors = pkgs.runCommand "breeze-cursors-${pkgs.kdePackages.breeze.version}" { } ''
+    tar xf ${pkgs.kdePackages.breeze.src} --wildcards '*/cursors/Breeze/Breeze'
+    mkdir -p $out/share/icons
+    cp -r */cursors/Breeze/Breeze $out/share/icons/breeze_cursors
+  '';
 in
 {
 
@@ -32,7 +39,7 @@ in
     fish.enable = true;
 
     git = {
-      enable = true;
+      enable = false;
       configure = true;
       name = "Elias Mueller";
       email = "mail@eliasmueller.online";
@@ -57,6 +64,7 @@ in
     };
 
     nh.enable = true;
+    niri.enable = true;
     nixfmt.enable = true;
     nushell.enable = true;
 
@@ -88,14 +96,35 @@ in
     };
   };
 
+  stylix = {
+    enable = true;
+    autoEnable = false;
+    base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-mocha.yaml";
+
+    targets = {
+      fontconfig.enable = true;
+
+      bat.enable = true;
+      k9s.enable = true;
+      lazygit.enable = true;
+      nixvim.enable = true;
+      starship.enable = true;
+      yazi.enable = true;
+    };
+
+    fonts = {
+      monospace.name = "MonoLisaCode Variable";
+      sansSerif.name = "MonoLisaText Variable";
+      serif.name = "MonoLisaText Variable";
+    };
+
+  };
+
   home = {
     username = username;
     homeDirectory = homeDirectory;
 
     packages = with pkgs; [
-      # myOS.programs.kitty only writes the config. On fedora and p16gen2 the
-      # binary comes from dnf; on NixOS it has to come from nix.
-      kitty
       nerd-fonts.caskaydia-cove
     ];
 
@@ -105,8 +134,16 @@ in
       "$HOME/go" # GOPATH
     ];
 
+    pointerCursor = {
+      enable = true;
+      package = breezeCursors;
+      name = "breeze_cursors";
+      size = 22;
+      gtk.enable = true;
+    };
+
     sessionVariables = {
-      MPVQC_LIBMPV = "${pkgs.mpv-unwrapped}/lib/libmpv.so";
+      ELECTRON_OZONE_PLATFORM_HINT = "auto";
     };
 
     # This value determines the Home Manager release that your
@@ -125,9 +162,28 @@ in
 
   programs.bash.enable = true;
 
+  targets.genericLinux.enable = true;
   xdg.mime.enable = true;
+
+  nix = {
+    package = pkgs.nix;
+    nixPath = [ "nixpkgs=flake:nixpkgs" ];
+    settings.experimental-features = [
+      "nix-command"
+      "flakes"
+    ];
+  };
 
   home.enableNixpkgsReleaseCheck = false;
 
   fonts.fontconfig.enable = true;
+
+  gtk.enable = true;
+
+  dconf.settings = {
+    "org/gtk/gtk4/settings/file-chooser" = {
+      show-hidden = true;
+      sort-directories-first = true;
+    };
+  };
 }

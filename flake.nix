@@ -27,10 +27,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    nixos-hardware = {
-      url = "github:NixOS/nixos-hardware";
-    };
-
   };
 
   outputs =
@@ -39,13 +35,11 @@
       nixpkgs,
       home-manager,
       stylix,
-      nixos-hardware,
       ...
     }:
 
     let
       inherit (nixpkgs) lib;
-      inherit (self) outputs;
 
       dirImport = (import ./setups/lib/dirImport.nix { inherit (nixpkgs) lib; }).dirImport;
 
@@ -64,30 +58,6 @@
     in
 
     {
-
-      nixosConfigurations = {
-
-        t470p = nixpkgs.lib.nixosSystem {
-          system = "x86_64-linux";
-
-          specialArgs = {
-            inherit inputs outputs;
-          };
-
-          modules = [
-            # nixos-hardware has no t470p module. Do not substitute the t470s,
-            # it is a different machine.
-            nixos-hardware.nixosModules.common-cpu-intel
-            nixos-hardware.nixosModules.common-pc-laptop
-            nixos-hardware.nixosModules.common-pc-laptop-ssd
-            # The dGPU is present but unwanted, this blacklists and powers it down.
-            nixos-hardware.nixosModules.common-gpu-nvidia-disable
-
-            ./setups/t470p.os.nix
-          ];
-        };
-
-      };
 
       homeConfigurations = {
 
@@ -110,6 +80,7 @@
           inherit extraSpecialArgs pkgs;
 
           modules = [
+            stylix.homeModules.stylix
             ./setups/t470p.nix
           ];
         };
