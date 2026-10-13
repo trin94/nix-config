@@ -77,7 +77,13 @@
         };
 
         "elias@t470p" = home-manager.lib.homeManagerConfiguration {
-          inherit extraSpecialArgs pkgs;
+          extraSpecialArgs = extraSpecialArgs // {
+            pkgs = import nixpkgs {
+              system = "x86_64-linux";
+            };
+          };
+
+          pkgs = nixpkgs.legacyPackages."x86_64-linux";
 
           modules = [
             stylix.homeModules.stylix

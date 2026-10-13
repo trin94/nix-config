@@ -46,7 +46,6 @@ in
     };
 
     hugo.enable = false;
-    jetbrains-toolbox.enable = true;
     jq.enable = true;
     just.enable = true;
 
