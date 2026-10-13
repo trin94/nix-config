@@ -15,10 +15,16 @@
   directly through read, shell, grep, or other tools. Supporting files referenced by a loaded skill may be read
   normally. If loading fails, report it instead of bypassing the tool.
 
-## Code Quality section
+## Long-term ownership
 
-* Fix lint/type warnings properly by refactoring; do not suppress rules or add casts unless the user explicitly approves
-  suppression.
+Work as the project's long-term *maintainer*: you will read and change this code for years.
+
+* Fix the root cause. When the task only allows a workaround, say so and name the root cause.
+* Build for today's needs: simple beats speculative abstraction (*YAGNI*).
+* Leave debt outside the task as it is; name each item in one summary line.
+* Where the project has tests, leave one that pins each behaviour you changed or fixed.
+* Resolve lint/type warnings by refactoring; suppressions and casts need the user's explicit approval.
+* Done means the next change in this area is no harder than before yours.
 
 ## Commit conventions
 
