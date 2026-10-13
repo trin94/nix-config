@@ -26,10 +26,8 @@ let
 
   themesDir = "${pkgs.kitty-themes}/share/kitty-themes/themes";
 
-  kittyConfPath = "${config.home.homeDirectory}/.config/kitty/kitty.conf";
-
   kittyConfText = ''
-    auto_reload_config ${if cfg.followNoctaliaTheme then "0.1" else "-1"}
+    auto_reload_config -1
     cursor_blink_interval 0.5
     cursor_shape beam
     copy_on_select clipboard
@@ -48,7 +46,6 @@ let
     map ctrl+shift+f no_op
     map ctrl+shift+r no_op
     map ctrl+shift+n no_op
-    ${lib.optionalString cfg.followNoctaliaTheme "include themes/noctalia.conf"}
   '';
 in
 {
@@ -84,11 +81,6 @@ in
       '';
     };
 
-    followNoctaliaTheme = mkOption {
-      type = types.bool;
-      default = false;
-    };
-
     backgroundOpacity = mkOption {
       type = types.float;
       default = 1.0;
@@ -102,38 +94,14 @@ in
 
   config = lib.mkIf cfg.configure {
 
-    assertions = [
-      {
-        assertion = !(cfg.followSystemTheme && cfg.followNoctaliaTheme);
-        message = ''
-          myOS.programs.kitty: followSystemTheme and followNoctaliaTheme are
-          both set. Kitty applies the *.auto.conf themes on top of the include,
-          so the noctalia colors would never show.
-        '';
-      }
-    ];
-
-    # noctalia's apply.sh starts with `touch kitty.conf` and dies on a store
-    # symlink, so it never reaches the SIGUSR1 that reloads the colors. Give it
-    # a real writable file to touch.
-    home.activation = lib.optionalAttrs cfg.followNoctaliaTheme {
-      copyKittyConf = lib.hm.dag.entryAfter [ "linkGeneration" ] ''
-        mkdir -p $(dirname "${kittyConfPath}")
-        rm -f "${kittyConfPath}"
-        cp -f ${pkgs.writeText "kitty.conf" kittyConfText} "${kittyConfPath}"
-        chmod 644 "${kittyConfPath}"
-      '';
+    xdg.configFile = {
+      "kitty/kitty.conf".text = kittyConfText;
+    }
+    // lib.optionalAttrs cfg.followSystemTheme {
+      "kitty/dark-theme.auto.conf".source = "${themesDir}/Catppuccin-Mocha.conf";
+      "kitty/light-theme.auto.conf".source = "${themesDir}/adwaita_light.conf";
+      "kitty/no-preference-theme.auto.conf".source = "${themesDir}/adwaita_light.conf";
     };
-
-    xdg.configFile =
-      lib.optionalAttrs (!cfg.followNoctaliaTheme) {
-        "kitty/kitty.conf".text = kittyConfText;
-      }
-      // lib.optionalAttrs cfg.followSystemTheme {
-        "kitty/dark-theme.auto.conf".source = "${themesDir}/Catppuccin-Mocha.conf";
-        "kitty/light-theme.auto.conf".source = "${themesDir}/adwaita_light.conf";
-        "kitty/no-preference-theme.auto.conf".source = "${themesDir}/adwaita_light.conf";
-      };
   };
 
 }

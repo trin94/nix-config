@@ -52,7 +52,7 @@ in
     kitty = {
       enable = true;
       enableCsd = false;
-      followNoctaliaTheme = true;
+      followSystemTheme = true;
     };
 
     libwebp.enable = true;
