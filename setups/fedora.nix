@@ -189,4 +189,11 @@ in
   fonts.fontconfig.enable = true;
 
   gtk.enable = true;
+
+  dconf.settings = {
+    "org/gtk/gtk4/settings/file-chooser" = {
+      show-hidden = true;
+      sort-directories-first = true;
+    };
+  };
 }
