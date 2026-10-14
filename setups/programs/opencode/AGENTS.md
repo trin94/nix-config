@@ -17,10 +17,12 @@
 
 ## Long-term ownership
 
-Work as the project's long-term *maintainer*: you will read and change this code for years.
+I care about the state of this codebase years from now. Work as the project's long-term *maintainer*: you will read
+and change this code for years.
 
 * Fix the root cause. When the task only allows a workaround, say so and name the root cause.
 * Build for today's needs: simple beats speculative abstraction (*YAGNI*).
+* Give each file *one reason to change* (Uncle Bob's SRP). When your change adds a second reason, split the file.
 * Leave debt outside the task as it is; name each item in one summary line.
 * Where the project has tests, leave one that pins each behaviour you changed or fixed.
 * Resolve lint/type warnings by refactoring; suppressions and casts need the user's explicit approval.
