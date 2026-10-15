@@ -29,6 +29,15 @@ let
 
   mcp = lib.recursiveUpdate { } cfg.overrideMcp;
 
+  # Personal rule: always last, so no host list can override it.
+  permissions = cfg.permissions ++ [
+    {
+      action = "question";
+      resource = "*";
+      effect = "deny";
+    }
+  ];
+
   # V2 appends sidebar contributions in plugin order. Keep Git next to the footer.
   tuiPlugins =
     lib.optional cfg.plugins.my-loaded-skills.enable (pluginPath "tui" "my-loaded-skills")
@@ -51,6 +60,26 @@ in
       type = types.attrsOf jsonFormat.type;
       default = { };
       description = "Host-specific `mcp` config (servers under `servers`, timeouts), deep-merged like `overrideProviders`.";
+    };
+
+    permissions = mkOption {
+      type = types.listOf (
+        types.submodule {
+          options = {
+            action = mkOption { type = types.str; };
+            resource = mkOption { type = types.str; };
+            effect = mkOption {
+              type = types.enum [
+                "allow"
+                "ask"
+                "deny"
+              ];
+            };
+          };
+        }
+      );
+      default = importJSON ./permissions.json;
+      description = "Permission rules on top of OpenCode's built-in base policy; the last matching rule wins. Setting this replaces the defaults from `permissions.json` completely.";
     };
 
   };
@@ -80,114 +109,7 @@ in
       // lib.optionalAttrs (providers != { }) { inherit providers; }
       // lib.optionalAttrs (mcp != { }) { inherit mcp; }
       // {
-        # Last matching rule wins; keep exceptions after their broad rules.
-        permissions = [
-          {
-            action = "*";
-            resource = "*";
-            effect = "ask";
-          }
-          {
-            action = "shell";
-            resource = "*";
-            effect = "allow";
-          }
-          {
-            action = "edit";
-            resource = "*";
-            effect = "allow";
-          }
-          {
-            action = "read";
-            resource = "*";
-            effect = "allow";
-          }
-          {
-            action = "read";
-            resource = "*.env";
-            effect = "deny";
-          }
-          {
-            action = "read";
-            resource = "*.env.*";
-            effect = "deny";
-          }
-          {
-            action = "read";
-            resource = "*.env.example";
-            effect = "allow";
-          }
-          {
-            action = "grep";
-            resource = "*";
-            effect = "allow";
-          }
-          {
-            action = "glob";
-            resource = "*";
-            effect = "allow";
-          }
-          {
-            action = "skill";
-            resource = "*";
-            effect = "allow";
-          }
-          {
-            action = "webfetch";
-            resource = "*";
-            effect = "allow";
-          }
-          {
-            action = "websearch";
-            resource = "*";
-            effect = "allow";
-          }
-          {
-            action = "question";
-            resource = "*";
-            effect = "deny";
-          }
-          {
-            action = "external_directory";
-            resource = "~/.agents/**";
-            effect = "allow";
-          }
-          {
-            action = "external_directory";
-            resource = "~/.dotfiles/**";
-            effect = "allow";
-          }
-          {
-            action = "external_directory";
-            resource = "~/PycharmProjects/**";
-            effect = "allow";
-          }
-          {
-            action = "external_directory";
-            resource = "/tmp/opencode/**";
-            effect = "allow";
-          }
-          {
-            action = "external_directory";
-            resource = "/nix/store/**";
-            effect = "allow";
-          }
-          {
-            action = "read";
-            resource = "/nix/store/**";
-            effect = "allow";
-          }
-          {
-            action = "read";
-            resource = "SKILL.md";
-            effect = "deny";
-          }
-          {
-            action = "read";
-            resource = "*/SKILL.md";
-            effect = "deny";
-          }
-        ];
+        inherit permissions;
       }
     );
 

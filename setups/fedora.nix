@@ -84,6 +84,48 @@ in
         my-vcs-status.enable = true;
         with-claude.enable = true;
       };
+      permissions = [
+        {
+          action = "read";
+          resource = "*.env";
+          effect = "deny";
+        }
+        {
+          action = "read";
+          resource = "*.env.*";
+          effect = "deny";
+        }
+        {
+          action = "read";
+          resource = "*.env.example";
+          effect = "allow";
+        }
+        {
+          action = "external_directory";
+          resource = "~/.agents/**";
+          effect = "allow";
+        }
+        {
+          action = "external_directory";
+          resource = "~/git/**";
+          effect = "allow";
+        }
+        {
+          action = "external_directory";
+          resource = "/nix/store/**";
+          effect = "allow";
+        }
+        {
+          action = "read";
+          resource = "SKILL.md";
+          effect = "deny";
+        }
+        {
+          action = "read";
+          resource = "*/SKILL.md";
+          effect = "deny";
+        }
+      ];
     };
 
     procs.enable = true;
