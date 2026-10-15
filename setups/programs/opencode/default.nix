@@ -90,6 +90,7 @@ in
     home.file.".agents/skills/ghostwriter".source = ./skills/ghostwriter;
     home.file.".agents/skills/reporting".source = ./skills/reporting;
     home.file.".agents/skills/commit-conventions".source = ./skills/commit-conventions;
+    home.file.".agents/skills/deliver-spec".source = ./skills/deliver-spec;
 
     home.sessionPath = [
       "$HOME/.opencode/bin"
