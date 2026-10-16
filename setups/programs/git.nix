@@ -27,6 +27,11 @@ in
       default = null;
     };
 
+    credentialHelper = mkOption {
+      type = types.nullOr types.str;
+      default = null;
+    };
+
   };
 
   config = {
@@ -86,14 +91,17 @@ in
 
         [credential]
             credentialStore = secretservice
+            ${lib.optionalString (cfg.credentialHelper != null) "helper = ${cfg.credentialHelper}"}
 
         [credential "https://dev.azure.com"]
             credentialStore = secretservice
 
         [credential "https://github.com"]
+            helper =
             helper = !gh auth git-credential
 
         [credential "https://gist.github.com"]
+            helper =
             helper = !gh auth git-credential
 
         [user]

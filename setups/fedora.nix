@@ -49,6 +49,7 @@ in
       configure = true;
       name = "Elias Mueller";
       email = "mail@eliasmueller.online";
+      credentialHelper = "libsecret";
     };
 
     herdr.enable = true;
