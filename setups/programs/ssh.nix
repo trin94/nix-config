@@ -12,9 +12,15 @@ in
 
     enable = mkEnableOption "ssh";
 
+    # Headless hosts have no keyring agent, so run one as a user service and
+    # cache passphrase-protected keys in it on first use.
+    agent.enable = mkEnableOption "ssh-agent user service";
+
   };
 
   config = lib.mkIf cfg.enable {
+
+    services.ssh-agent.enable = cfg.agent.enable;
 
     programs.ssh = {
       enable = true;
@@ -45,7 +51,7 @@ in
 
         "*" = {
           ForwardAgent = false;
-          AddKeysToAgent = "no";
+          AddKeysToAgent = if cfg.agent.enable then "yes" else "no";
           Compression = false;
           ServerAliveInterval = 0;
           ServerAliveCountMax = 3;
