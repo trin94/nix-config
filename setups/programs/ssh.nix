@@ -30,6 +30,11 @@ in
           AddKeysToAgent = "yes";
         };
 
+        "gitlab.com" = lib.hm.dag.entryAfter [ "*" ] {
+          HostName = "gitlab.com";
+          User = "git";
+        };
+
         "codereview.qt-project.org" = lib.hm.dag.entryAfter [ "*" ] {
           HostName = "codereview.qt-project.org";
           User = "trin94";
