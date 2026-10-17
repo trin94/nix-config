@@ -36,31 +36,11 @@ in
 
   config = {
 
-    home.packages =
-      if cfg.enable then
-        with pkgs;
-        [
-          git
-          lazygit
-          difftastic
-        ]
-      else if cfg.configure then
-        with pkgs;
-        [
-          lazygit
-          difftastic
-        ]
-      else
-        [ ];
+    home.packages = lib.optional cfg.enable pkgs.git ++ lib.optional cfg.configure pkgs.lazygit;
 
     programs.lazygit = lib.mkIf cfg.configure {
       enable = true;
       settings = {
-        git.pagers = [
-          {
-            externalDiffCommand = "difft --color=always";
-          }
-        ];
         keybinding.universal = {
           undo = "u";
           redo = "U";
@@ -119,7 +99,6 @@ in
             enabled = true
 
         [diff]
-            external = difft
             algorithm = histogram
 
         [merge]
