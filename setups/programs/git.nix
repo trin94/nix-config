@@ -32,11 +32,20 @@ in
       default = null;
     };
 
+    githubCli = mkOption {
+      type = types.bool;
+      default = true;
+      description = "Install gh and use it as credential helper for github.com";
+    };
+
   };
 
   config = {
 
-    home.packages = lib.optional cfg.enable pkgs.git ++ lib.optional cfg.configure pkgs.lazygit;
+    home.packages =
+      lib.optional cfg.enable pkgs.git
+      ++ lib.optional cfg.configure pkgs.lazygit
+      ++ lib.optional (cfg.configure && cfg.githubCli) pkgs.gh;
 
     programs.lazygit = lib.mkIf cfg.configure {
       enable = true;
@@ -76,14 +85,15 @@ in
         [credential "https://dev.azure.com"]
             credentialStore = secretservice
 
-        [credential "https://github.com"]
-            helper =
-            helper = !gh auth git-credential
+        ${lib.optionalString cfg.githubCli ''
+          [credential "https://github.com"]
+              helper =
+              helper = !gh auth git-credential
 
-        [credential "https://gist.github.com"]
-            helper =
-            helper = !gh auth git-credential
-
+          [credential "https://gist.github.com"]
+              helper =
+              helper = !gh auth git-credential
+        ''}
         [user]
             ${lib.optionalString (cfg.email != null) "email = ${cfg.email}"}
             name = ${cfg.name}
