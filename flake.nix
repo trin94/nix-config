@@ -59,6 +59,10 @@
 
     {
 
+      homeModules.programs = {
+        imports = dirImport { paths = [ ./setups/programs ]; };
+      };
+
       homeConfigurations = {
 
         "elias@fedora" = home-manager.lib.homeManagerConfiguration {
