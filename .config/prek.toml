@@ -54,7 +54,8 @@ hooks = [
     {
         id = "rumdl",
         name = "format md",
-        exclude = ".github/",
+        # skills/tdd is vendored from mattpocock/skills; keep it byte-identical for diffing
+        exclude = '\.github/|setups/programs/opencode/skills/tdd/',
         args = ["--fix", "--config", ".config/rumdl.toml"],
     },
 ]

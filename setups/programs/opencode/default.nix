@@ -101,6 +101,9 @@ in
 
     xdg.configFile."opencode/AGENTS.md".source = ./AGENTS.md;
 
+    # Shadows the npx-installed copy in ~/.agents/skills/tdd (higher precedence).
+    xdg.configFile."opencode/skills/tdd".source = ./skills/tdd;
+
     xdg.configFile."opencode/opencode.json".text = builtins.toJSON (
       {
         "$schema" = "https://opencode.ai/config.json";
