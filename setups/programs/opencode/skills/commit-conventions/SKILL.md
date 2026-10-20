@@ -37,6 +37,12 @@ around.
 A sentence enters the body only after the test: could the reader rebuild it from the diff alone? Then the diff carries
 it and the sentence stays out. The body wraps at 72.
 
+Commits in a focused PR are subject only: the PR carries the context.
+
+## Authorship
+
+The user is the sole author. The message ends at the body, with no `Co-authored-by` trailer for yourself.
+
 ## Done when
 
 The message would pass unnoticed in the log you read: subject shape and scope match those twenty commits, and every
