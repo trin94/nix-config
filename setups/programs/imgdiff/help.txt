@@ -1,0 +1,8 @@
+imgdiff - package changes of recent Fedora Atomic upgrades
+
+Usage:
+  imgdiff [N]       list the packages of the last N upgrades, newest first (default: 3)
+  imgdiff record    save the upgrades the local deployments still hold
+
+Options:
+  -h, --help        show this help

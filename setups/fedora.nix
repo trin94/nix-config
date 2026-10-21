@@ -54,6 +54,7 @@ in
 
     herdr.enable = true;
     hugo.enable = true;
+    imgdiff.enable = true;
     jq.enable = true;
     just.enable = true;
 
