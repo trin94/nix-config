@@ -29,7 +29,9 @@ Work as the project's long-term *maintainer*.
 
 ## Tests
 
-* Where the project has tests, leave one that pins each behaviour you changed or fixed.
+* Where the project has tests, leave one that pins each *product* behaviour you changed or fixed. Product is the
+  code the project ships to its users. Verify tooling around it (task runners, build scripts, CI, config) by running
+  it once.
 * While iterating, run only the relevant tests using the runner's filter. Run the full suite before reporting done.
 
 ## Working style
