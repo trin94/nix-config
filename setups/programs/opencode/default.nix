@@ -96,8 +96,11 @@ in
       "$HOME/.opencode/bin"
     ];
 
-    # OpenCode discovers the shared skills from ~/.agents.
-    home.sessionVariables.OPENCODE_DISABLE_CLAUDE_CODE_SKILLS = "1";
+    home.sessionVariables = {
+      # OpenCode discovers the shared skills from ~/.agents.
+      OPENCODE_DISABLE_CLAUDE_CODE_SKILLS = "1";
+      OPENCODE_DISABLE_FREE_MODELS = "1";
+    };
 
     xdg.configFile."opencode/AGENTS.md".source = ./AGENTS.md;
 
