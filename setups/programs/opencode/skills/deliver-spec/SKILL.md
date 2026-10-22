@@ -34,12 +34,10 @@ As tech lead you deliver the spec with every loose end accounted for:
 
 ## Subagents
 
-Every subagent is **single-use**: one prompt, one report. Work that follows a report goes to a fresh subagent, pointed
-at the branch and that report.
+Load the `delegating` skill. Its rules on subagents, the **gate**, and verifying reports hold for every subagent below.
 
-Each role has a brief next to this skill. Hand the subagent its brief by absolute path, plus **context pointers** for
-what the brief can't know: the ticket or findings, the worktree and branches, the notes and spec sections to read, and
-what parallel tickets touch. The brief names the report the subagent returns.
+Each role has a brief next to this skill. Hand the subagent its brief by absolute path, plus the ticket or findings
+and the notes and spec sections to read. The brief names the report the subagent returns.
 
 | Subagent | Brief |
 | --- | --- |
@@ -47,10 +45,6 @@ what parallel tickets touch. The brief names the report the subagent returns.
 | fix | [`FIX.md`](FIX.md) |
 | merger | [`MERGE.md`](MERGE.md) |
 | rewrite | [`REWRITE.md`](REWRITE.md) |
-
-The **gate** is the command the repo's AGENTS.md names for "done". Without one, it is the full test suite. Every
-subagent prompt names the gate and says: run each command under a time limit, and run the gate in the foreground until
-it finishes.
 
 ## Prep
 

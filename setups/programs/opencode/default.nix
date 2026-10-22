@@ -91,6 +91,7 @@ in
     home.file.".agents/skills/reporting".source = ./skills/reporting;
     home.file.".agents/skills/commit-conventions".source = ./skills/commit-conventions;
     home.file.".agents/skills/deliver-spec".source = ./skills/deliver-spec;
+    home.file.".agents/skills/delegating".source = ./skills/delegating;
 
     home.sessionPath = [
       "$HOME/.opencode/bin"
