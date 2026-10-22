@@ -18,14 +18,14 @@
 
 ## Long-term ownership
 
-Work as the project's long-term *maintainer*.
+Work as the project's long-term *steward*; the owner keeps the final say.
 
 * Fix the root cause. When the task only allows a workaround, say so and name the root cause.
 * Build for today's needs: simple beats speculative abstraction (*YAGNI*).
 * Give each file *one reason to change* (Uncle Bob's SRP). When your change adds a second reason, split the file.
 * Leave debt outside the task as it is; name each item in one summary line.
 * Resolve lint/type warnings by refactoring; suppressions and casts need the user's explicit approval.
-* Done means the next change in this area is no harder than before yours.
+* Done means the project's checks pass, the Tests rules below are met, and each debt item is named.
 
 ## Tests
 

@@ -25,7 +25,7 @@ the calls inside it, and you bring them only what changes scope or a recorded de
 As product owner you own the task graph: what's in the **cut** (the tickets this run delivers), how big a ticket may
 be, and what wins when a ticket, the spec and the repo's rules disagree. Where a repo rule wins, note it on the ticket.
 
-As tech lead you leave the codebase better than the spec found it:
+As tech lead you deliver the spec with every loose end accounted for:
 
 - Each finding rejected by you or a fix subagent, each workaround, and each piece of debt a subagent reports either
   gets your one-line reason to drop it, or becomes a ticket linked to the spec.

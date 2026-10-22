@@ -5,7 +5,8 @@ checked out, the gate, the ticket or spec the work is judged against, and either
 
 ## Findings
 
-Fix each finding, or reject it with a one-line reason. Commit the fixes on top of the branch.
+Fix each finding, or reject it with a one-line reason. Fix a stale-doc finding by deleting the lines the code or
+config already shows; list the rest as debt. Commit the fixes on top of the branch.
 
 You're done when every finding is fixed or rejected and the gate passes.
 
