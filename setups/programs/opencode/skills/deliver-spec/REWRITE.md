@@ -6,7 +6,7 @@ Load the `commit-conventions` skill, plus the project's `commit` or `committing`
 
 1. Tag the current tip as a backup.
 2. Write 1-2 commits per ticket in task-graph order, each naming its ticket the way the tracker links commits.
-3. Fold each review fix into the commit of the ticket it belongs to. A fix spanning several tickets goes into the latest
+3. Fold each fix into the commit of the ticket it belongs to. A fix spanning several tickets goes into the latest
    of them.
 4. Check that the history is linear, `git diff <backup> HEAD` is empty, and the gate your prompt names passes at every
    ticket's last commit. Skip a commit whose tree (`git rev-parse <commit>^{tree}`) already passed the gate.

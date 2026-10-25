@@ -1,11 +1,19 @@
 # Fix
 
-You fix one batch of review findings, or one failing gate, on one branch. Your prompt names the branch and where it's
-checked out, the gate, the ticket or spec the work is judged against, and either the findings or a merger's report.
+You fix one batch of review findings and in-scope debt or workarounds, or one failing gate, on one branch. Your prompt
+names the branch and where it's checked out, the gate, the tickets or spec the work is judged against, and either the
+batch or a merger's report.
+
+## Batches
+
+A **fix batch** is at most 3 items: `blocking` findings, or debt and workarounds the coordinator ruled in scope.
+Group items that touch the same file or concern; within that, worst first. Each batch goes to a fresh fix subagent, one
+after another: the next launches only once the previous has reported done.
 
 ## Findings
 
-Fix each finding, or reject it with a one-line reason. Fix a stale-doc finding by deleting the lines the code or
+Each item in the batch counts as a finding, debt and workarounds included. Fix each finding, or reject it with a
+one-line reason. Fix a stale-doc finding by deleting the lines the code or
 config already shows; list the rest as debt. Commit the fixes on top of the branch.
 
 You're done when every finding is fixed or rejected and the gate passes.

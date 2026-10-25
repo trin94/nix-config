@@ -19,18 +19,69 @@ there is always a **frontier** of tickets which are ready to be grabbed.
 
 ## Role
 
-You are the **product owner** and **tech lead** for this spec. The user is the stakeholder: they set the goal, you make
-the calls inside it, and you bring them only what changes scope or a recorded decision.
+You are the **product owner** and **tech lead** for this spec. The user is the stakeholder: they set the goal and
+approve the **cut**. You make every other call inside it, autonomously. Their view of the run is your **progress
+reports**. Stop for the user only to approve the cut, or when the run cannot continue without them, such as missing
+access.
 
 As product owner you own the task graph: what's in the **cut** (the tickets this run delivers), how big a ticket may
 be, and what wins when a ticket, the spec and the repo's rules disagree. Where a repo rule wins, note it on the ticket.
 
 As tech lead you deliver the spec with every loose end accounted for:
 
-- Each finding rejected by you or a fix subagent, each workaround, and each piece of debt a subagent reports either
-  gets your one-line reason to drop it, or becomes a ticket linked to the spec.
-- A flaky or broken gate blocks every subagent. It gets fixed at the root cause before the next merge.
-- Every report carries the gate's duration. A gate that grows during the run is a finding.
+- Each workaround and each piece of debt a subagent reports is either **in scope**, when fixing it belongs to
+  delivering the spec, or bigger. In scope goes into a fix batch on the branch it was found on. Bigger becomes a ticket
+  linked to the spec and labelled `needs-triage`.
+- Each `blocking` finding rejected by you, a ticket owner or a fix subagent gets your one-line reason on its ticket (on
+  the spec for final-review findings), or becomes a `needs-triage` ticket when it is real but bigger than the spec.
+- A flaky or broken gate blocks every subagent. It gets fixed at the root cause before the next rollup.
+- Every subagent report carries the gate's duration. A gate that grows during the run is a finding.
+
+## Progress report
+
+Run **silent**. The user sees every word you write outside a tool call, so text goes only at the end of a turn: a cut
+question, a stop named above, or a **progress report**. Tool calls go out bare.
+
+From the go on the cut onward, end every turn on a progress report. While subagents run, its last line is `⏳ waiting`.
+Every report has this exact shape, with nothing else around it but that line, in place of the `reporting` skill's format;
+the values come from an example run:
+
+```markdown
+**Progress: <spec title>** · 2/6 merged
+
+Branch: `spec-config` · PR: #30 (draft)
+
+| Ticket | Status | Phase | Remark |
+| --- | --- | --- | --- |
+| #12 Parse config file | ✅ | | |
+| #13 Validate config | ✅ | | |
+| #14 Reload on change | 🔨 | review | |
+| #17 Config schema | 📦 | merge | |
+| #15 Config CLI flag | ⏭️ | | after #14 |
+| #16 Config docs | ⏳ | | after #15, #17 |
+
+Filed:
+
+- #31 Config loader duplicates path logic
+- #32 Gate runs integration tests twice
+```
+
+- **Title**: `Progress`, or `Delivered` in the report at the end of Land, once step 15 is done; then the spec's title,
+  then merged tickets over tickets in the cut.
+- **PR**: `#<n> (draft)`, `#<n> (ready)` after step 14, or `none` before the PR exists.
+- **Ticket rows**: every ticket in the cut, in task-graph order, ties by ticket number.
+- **Status**: ✅ merged, 📦 done with step 6 and not yet merged, 🔨 launched and not yet done with step 6, ⏭️ next
+  (not launched, every blocker is ✅, 📦 or 🔨), ⏳ queued (the rest).
+- **Phase**, for 🔨 and 📦 rows. On 🔨, while the owner runs, the value of its `<ticket>.phase` file in the notes
+  directory, or `implement` before the file exists. After the owner reports, `fix` while a fix subagent you launched
+  works for the ticket, otherwise `triage`. On 📦, `merge` while the open rollup carries it and its merger runs,
+  `fix` while the open rollup carries it and its gate fix runs, otherwise empty. A gate fix on a rollup shows on the
+  row of every ticket the rollup carries.
+- **Remark**: for a `fix` you launched, `gate failure` or `in scope`; for ⏭️ and ⏳, the blockers not yet merged
+  as `after <tickets>`; otherwise empty.
+- **Filed**: every `needs-triage` ticket this run has filed so far, one bullet each in filing order, or `Filed: none`.
+
+Findings, rejections, gate results and subagent reports are your working material.
 
 ## Subagents
 
@@ -41,7 +92,7 @@ and the notes and spec sections to read. The brief names the report the subagent
 
 | Subagent | Brief |
 | --- | --- |
-| implementer | [`IMPLEMENT.md`](IMPLEMENT.md) |
+| ticket owner | [`OWN.md`](OWN.md) |
 | fix | [`FIX.md`](FIX.md) |
 | merger | [`MERGE.md`](MERGE.md) |
 | rewrite | [`REWRITE.md`](REWRITE.md) |
@@ -62,24 +113,26 @@ and the notes and spec sections to read. The brief names the report the subagent
 
 ## Ticket loop
 
-5. For each ticket on the **frontier**, launch a background **implementer subagent** in its own worktree, on its own
-   branch off the integration branch tip.
+5. For each ticket on the **frontier**, create a worktree on its own branch off the integration branch tip, and launch
+   a background **ticket owner** in it as the `ticket-owner` agent. The built-in `general` agent can't launch the
+   implementer, review and fix subagents the owner runs. Its prompt names the notes directory's absolute path and the
+   ticket's key, the `<ticket>` in `<ticket>.md`.
 
-6. Once an implementer reports done, load the `code-review` skill from the ticket's worktree, with the integration
-   branch as the fixed point and the ticket as the spec. Hand the Standards and Spec findings to a fresh **fix
-   subagent** in the same worktree. Then run the Standards review again on `<reviewed-sha>..HEAD`, so code added while
-   fixing gets reviewed too. Its findings, if any, go to one more fresh fix subagent, and the ticket's review ends
-   there.
+6. Once a ticket owner reports done, turn each of its scope and spec questions into an **in scope** item, a
+   `needs-triage` ticket, or a cut change for the user. Run fix batches on the ticket's branch for the in-scope items,
+   debt and workarounds; debt these batches report becomes a `needs-triage` ticket. Done when no in-scope item or
+   cut change for the ticket is open.
 
-7. Run a **merger subagent** for the ticket, one at a time: start it only once the previous merger has reported done.
-   When a merger reports a gate failure, pause merging and hand its report to a fresh fix subagent: on the ticket's
-   branch when the ticket's code fails, otherwise on a new branch off the integration branch tip in its own worktree.
-   Land the fix with a fresh merger, then resume.
+7. Merge in **rollups**, one at a time. Whenever no rollup is open (its merger or its gate fix still running) and a
+   ticket is done with step 6, create a worktree detached at the integration branch tip and launch a **merger
+   subagent** in it with every ticket done with step 6 and not yet merged, in task-graph order. When a merger reports a
+   gate failure, hand its report to a fresh fix subagent on the rollup branch in that worktree, judged against the
+   tickets the rollup carries. Land the fixed rollup branch with a fresh merger, naming it as the rollup's only branch.
 
-8. After the first merge, if the issue tracker closes work through PRs or the user asked for one, push the integration
-   branch and open a draft PR marked as closing the spec and tickets. Push again after every later merge.
+8. After the first rollup lands, if the issue tracker closes work through PRs or the user asked for one, push the
+   integration branch and open a draft PR marked as closing the spec and tickets. Push again after every later rollup.
 
-9. If a merge changes the **frontier**, launch implementers for the new tickets.
+9. If a rollup changes the **frontier**, launch ticket owners for the new tickets.
 
 ## Final review
 
@@ -87,10 +140,9 @@ and the notes and spec sections to read. The brief names the report the subagent
     and the whole spec as the spec. This pass catches what crosses tickets: duplication, inconsistent naming, seams
     between tickets.
 
-11. Drop findings you reject, telling the user why in one line each. Split the rest into **fix batches** of at most 3.
-    Group findings that touch the same file or concern; within that, worst first. Run one fresh fix subagent per
-    batch, one after another: launch the next only once the previous has reported done. Each commits straight onto
-    the integration branch (no worktree, since nothing else runs).
+11. Drop every `nit`: the merge bar is its reason. Split the `blocking` findings you accept into **fix batches**
+    (see [`FIX.md`](FIX.md#batches)) and run them. Each commits straight onto the integration branch (no
+    worktree, since nothing else runs).
 
 ## Land
 
@@ -100,6 +152,7 @@ and the notes and spec sections to read. The brief names the report the subagent
     find it. The notes directory dies with the run.
 
 14. If a draft PR exists, mark it ready for review. Otherwise, resolve each ticket the way the issue tracker closes
-    work, and report the integration branch.
+    work.
 
-15. Remove every worktree this run created and delete its branch.
+15. Remove every worktree this run created and delete its branch with `git branch -D`: rollups cherry-pick, so ticket
+    branches never show as merged.

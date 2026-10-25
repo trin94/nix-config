@@ -118,6 +118,30 @@ in
       // lib.optionalAttrs (mcp != { }) { inherit mcp; }
       // {
         inherit permissions;
+        # deliver-spec's ticket owner launches its own subagents; only agents allowed `subagent` can use the second level.
+        experimental.subagent_depth = 2;
+        agents.ticket-owner = {
+          description = "Owns one deliver-spec ticket: implementation, review and fixes. Launch only from deliver-spec.";
+          mode = "subagent";
+          # The built-in general agent can't launch subagents; the owner has to.
+          permissions = [
+            {
+              action = "subagent";
+              resource = "*";
+              effect = "deny";
+            }
+            {
+              action = "subagent";
+              resource = "general";
+              effect = "allow";
+            }
+            {
+              action = "subagent";
+              resource = "explore";
+              effect = "allow";
+            }
+          ];
+        };
       }
     );
 
