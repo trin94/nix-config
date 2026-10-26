@@ -6,7 +6,8 @@ batch or a merger's report.
 
 ## Batches
 
-A **fix batch** is at most 3 items: `blocking` findings, or debt and workarounds the coordinator ruled in scope.
+A **fix batch** is at most 3 items: `blocking` findings, seams, or debt and workarounds the coordinator ruled in
+scope.
 Group items that touch the same file or concern; within that, worst first. Each batch goes to a fresh fix subagent, one
 after another: the next launches only once the previous has reported done.
 
@@ -16,14 +17,20 @@ Each item in the batch counts as a finding, debt and workarounds included. Fix e
 one-line reason. Fix a stale-doc finding by deleting the lines the code or
 config already shows; list the rest as debt. Commit the fixes on top of the branch.
 
-You're done when every finding is fixed or rejected and the gate passes.
+You're done when every finding is fixed or rejected and the gate passes. A gate that hits the time limit your prompt
+names is a finding: report it with the elapsed time instead of re-running.
 
 ## Failing gate
 
-Load the `diagnosing-bugs` skill and find the root cause of the failure in the merger's report. A flaky test counts:
-find the race and remove it. Commit the fix on top of the branch.
+A failing test is **flaky** when it passes on a re-run of the same tree and no commit in the branch touches its file.
+Quarantine it: skip it with a marker naming the failure, commit the skip on top of the branch, and list it as debt in
+your report. Stop there; the next spec owes the root cause.
 
-You're done when you can name the root cause, the fix removes it, and the gate passes.
+For every other failure, load the `diagnosing-bugs` skill and find the root cause in the merger's report. A race a
+commit in the branch introduced counts: find it and remove it. Commit the fix on top of the branch.
+
+You're done when the gate passes and either you can name the root cause and the fix removes it, or the quarantine
+is in your report.
 
 ## Report
 

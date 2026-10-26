@@ -8,8 +8,8 @@ Load the `commit-conventions` skill, plus the project's `commit` or `committing`
 2. Write 1-2 commits per ticket in task-graph order, each naming its ticket the way the tracker links commits.
 3. Fold each fix into the commit of the ticket it belongs to. A fix spanning several tickets goes into the latest
    of them.
-4. Check that the history is linear, `git diff <backup> HEAD` is empty, and the gate your prompt names passes at every
-   ticket's last commit. Skip a commit whose tree (`git rev-parse <commit>^{tree}`) already passed the gate.
+4. Check that the history is linear and `git diff <backup> HEAD` is empty. The tip's tree is the backup's, which the
+   merger already gated: no gate runs here.
 5. If the branch has a remote, push with `--force-with-lease`.
 6. Delete the backup tag.
 

@@ -6,7 +6,8 @@ to read.
 
 Load the `delegating` skill: you are the coordinator for the subagents below. Hand each its brief by absolute path
 (the briefs sit next to this file), plus the ticket, worktree, branch, integration branch, gate, and the notes and spec
-sections to read.
+sections to read. Every gate run is a subagent's. Each fix subagent's prompt names a gate time limit of three times
+the implementer's reported gate duration; a gate that hits it is a finding the subagent reports, not a re-run.
 
 Your final message is your report: the coordinator takes it the moment your turn ends. So run every subagent in the
 foreground, where your turn waits for it. Send parallel subagents, like the two `code-review` reviewers, as foreground
@@ -21,16 +22,18 @@ with the step's **phase**: `implement`, `review` or `fix`.
 1. Launch an **implementer subagent** ([`IMPLEMENT.md`](IMPLEMENT.md)) in the worktree. Done when you have verified its
    report.
 
-2. Load the `code-review` skill from the worktree, with the integration branch as the fixed point and the ticket as
-   the spec.
+2. Load the `code-review` skill from the worktree, **blocking only**, with the integration branch as the fixed point
+   and the ticket as the spec.
 
-3. Drop every `nit`: the merge bar is its reason. Drop each `blocking` finding you reject, with a one-line reason.
-   Split the rest into **fix batches** (see [`FIX.md`](FIX.md#batches)) and run them in the worktree. When a fix
-   subagent rejects a finding, accept the rejection or overrule it once, by putting the finding and your reason into a
-   later batch. The ticket's review ends with the last fix batch.
+3. Drop every `nit`: the merge bar is its reason. A finding that names debt the implementer already reported is that
+   debt item: it stays on the debt list for the coordinator. Drop each other `blocking` finding you reject, with a
+   one-line reason. Split the rest into **fix batches** (see [`FIX.md`](FIX.md#batches)) and run them in the
+   worktree. When a fix subagent rejects a finding, accept the rejection or overrule it once, by putting the finding
+   and your reason into a later batch. The ticket's review ends with the last fix batch.
 
-You're done when every `blocking` finding is fixed or carries a reason, the gate passes on the branch head, and every
-subagent you launched has reported.
+You verify a report by reading: the branch head SHA equals the SHA in the report, its commits exist, and the gate
+result line was produced on that SHA. You're done when every `blocking` finding is fixed or carries a reason, every
+subagent you launched has reported, and the last report shows the gate green on the current head.
 
 ## Report
 

@@ -34,7 +34,8 @@ As tech lead you deliver the spec with every loose end accounted for:
   linked to the spec and labelled `needs-triage`.
 - Each `blocking` finding rejected by you, a ticket owner or a fix subagent gets your one-line reason on its ticket (on
   the spec for final-review findings), or becomes a `needs-triage` ticket when it is real but bigger than the spec.
-- A flaky or broken gate blocks every subagent. It gets fixed at the root cause before the next rollup.
+- A flaky test the cut didn't touch is quarantined, filed `needs-triage`, and rollups continue. A broken gate, or a
+  flake the cut introduced, is fixed at the root cause before the next rollup.
 - Every subagent report carries the gate's duration. A gate that grows during the run is a finding.
 
 ## Progress report
@@ -96,6 +97,7 @@ and the notes and spec sections to read. The brief names the report the subagent
 | fix | [`FIX.md`](FIX.md) |
 | merger | [`MERGE.md`](MERGE.md) |
 | rewrite | [`REWRITE.md`](REWRITE.md) |
+| seams reviewer | [`SEAMS.md`](SEAMS.md) |
 
 ## Prep
 
@@ -136,13 +138,11 @@ and the notes and spec sections to read. The brief names the report the subagent
 
 ## Final review
 
-10. Once all tickets are merged, load the `code-review` skill on the integration branch, with main as the fixed point
-    and the whole spec as the spec. This pass catches what crosses tickets: duplication, inconsistent naming, seams
-    between tickets.
+10. Once all tickets are merged, launch a **seams reviewer** on the integration branch, with main as the fixed point.
 
-11. Drop every `nit`: the merge bar is its reason. Split the `blocking` findings you accept into **fix batches**
-    (see [`FIX.md`](FIX.md#batches)) and run them. Each commits straight onto the integration branch (no
-    worktree, since nothing else runs).
+11. Each seam is **in scope** or bigger, by the Role rule. Split the in-scope seams into **fix batches**
+    (see [`FIX.md`](FIX.md#batches)) and run them. Each commits straight onto the integration branch (no worktree,
+    since nothing else runs).
 
 ## Land
 

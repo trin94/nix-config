@@ -105,8 +105,9 @@ in
 
     xdg.configFile."opencode/AGENTS.md".source = ./AGENTS.md;
 
-    # Shadows the npx-installed copy in ~/.agents/skills/tdd (higher precedence).
+    # Shadow the npx-installed copies in ~/.agents/skills (higher precedence).
     xdg.configFile."opencode/skills/tdd".source = ./skills/tdd;
+    xdg.configFile."opencode/skills/code-review".source = ./skills/code-review;
 
     xdg.configFile."opencode/opencode.json".text = builtins.toJSON (
       {
