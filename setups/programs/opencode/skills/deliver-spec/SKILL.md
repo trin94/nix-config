@@ -173,3 +173,7 @@ and the notes and spec sections to read. The brief names the report the subagent
 
 15. Remove every worktree this run created and delete its branch with `git branch -D`: rollups cherry-pick, so ticket
     branches never show as merged.
+
+______________________________________________________________________
+
+Adapted from Matt Pocock's implement-spec skill, MIT. See [`CREDITS.md`](CREDITS.md).

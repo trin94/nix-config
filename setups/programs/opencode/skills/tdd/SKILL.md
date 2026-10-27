@@ -37,3 +37,7 @@ When the shape of that interface is itself in question (how deep the module is, 
 - **Predict before every run.** Before each test run, state the expected outcome: pass, or fail with the failure you expect and why. When the result differs, stop and explain the gap to the user before touching production code.
 - **One slice at a time.** One seam, one test, one minimal implementation per cycle.
 - **Refactor after every green.** Once the slice passes, review it against the Four Rules of Simple Design (passes the tests, reveals intention, no duplication, fewest elements) and make one refactoring at a time, rerunning the tests after each. The `code-review` skill still runs at the end, for cleanup that spans slices.
+
+______________________________________________________________________
+
+Copied from Matt Pocock's tdd skill, MIT. See [`CREDITS.md`](CREDITS.md).
