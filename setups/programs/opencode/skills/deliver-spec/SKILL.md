@@ -60,14 +60,14 @@ the values come from an example run:
 
 Branch: `spec-config` · PR: #30 (draft)
 
-| Ticket | Status | Phase | Remark |
-| --- | --- | --- | --- |
-| #12 Parse config file | ✅ | | |
-| #13 Validate config | ✅ | | |
-| #14 Reload on change | 🔨 | review | |
-| #17 Config schema | 📦 | merge | |
-| #15 Config CLI flag | ⏭️ | | after #14 |
-| #16 Config docs | ⏳ | | after #15, #17 |
+| Ticket | Status | Remark |
+| --- | --- | --- |
+| #12 Parse config file | ✅ | |
+| #13 Validate config | ✅ | |
+| #14 Reload on change | 🔨 | |
+| #17 Config schema | 📦 | |
+| #15 Config CLI flag | ⏭️ | after #14 |
+| #16 Config docs | ⏳ | after #15, #17 |
 
 Filed:
 
@@ -83,14 +83,8 @@ Filed:
 - **Ticket rows**: every ticket in the cut, in task-graph order, ties by ticket number.
 - **Status**: ✅ merged, 📦 done with step 6 and not yet merged, 🔨 launched and not yet done with step 6, ⏭️ next
   (not launched, every blocker is ✅, 📦 or 🔨), ⏳ queued (the rest).
-- **Phase**, for 🔨 and 📦 rows. On 🔨, while the owner runs, the value of its `<ticket>.phase` file in the notes
-  directory, or `implement` before the file exists. After the owner reports, `triage` until you resume it. On 📦,
-  `merge` while the open rollup carries it and its merger runs,
-  `fix` while the open rollup carries it and its gate fix runs, otherwise empty. A gate fix on a rollup shows on the
-  row of every ticket the rollup carries.
-- **Remark**: `gate failure` for a rollup's gate fix, `in scope` for a resumed owner; for ⏭️ and ⏳, the blockers
-  not yet merged
-  as `after <tickets>`; otherwise empty.
+- **Remark**: `gate failure` on every ticket a rollup carries while its gate fix runs, `in scope` for a resumed
+  owner; for ⏭️ and ⏳, the blockers not yet merged as `after <tickets>`; otherwise empty.
 - **Filed**: every `needs-triage` ticket this run has filed so far, one bullet each in filing order, or `Filed: none`.
   A ticket that joined the cut is a row, not a Filed bullet.
 

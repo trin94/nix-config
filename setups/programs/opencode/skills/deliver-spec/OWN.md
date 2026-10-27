@@ -22,9 +22,6 @@ into your report for the coordinator.
 The coordinator may resume you with answers to your questions. Run the work an answer puts in scope as fix batches
 under the same rules, then report again.
 
-The coordinator can't see inside your turn. As you start each step, overwrite `<ticket>.phase` in the notes directory
-with the step's **phase**: `implement`, `review` or `fix`.
-
 1. Launch an **implementer subagent** ([`IMPLEMENT.md`](IMPLEMENT.md)) in the worktree. Done when you have verified its
    report.
 
