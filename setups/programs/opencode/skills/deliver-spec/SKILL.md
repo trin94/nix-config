@@ -12,10 +12,10 @@ tell the user to run `/to-tickets`.
 The issue tracker should have been provided to you. If not, tell the user to run `/setup-matt-pocock-skills`.
 
 When the user asks for a **debt run** and gives no spec, follow [`DEBT.md`](DEBT.md). It builds the spec and changes
-Prep and Land.
+Prep.
 
-The goal is the entire spec implemented on a single **integration branch**, with every ticket resolved the way the issue
-tracker closes work, and a history of 1-2 commits per ticket.
+The goal is the entire spec implemented on a single **integration branch** and merged into main, with every ticket
+resolved the way the issue tracker closes work, and a history of 1-2 commits per ticket.
 
 The tickets are not a list of steps. They are a **task graph** with blocking relationships between them. This means
 there is always a **frontier** of tickets which are ready to be grabbed.
@@ -49,10 +49,12 @@ As tech lead you deliver the spec with every loose end accounted for:
 ## Progress report
 
 Run **silent**. The user sees every word you write outside a tool call, so text goes only at the end of a turn: a cut
-question, a stop named above, or a **progress report**. Tool calls go out bare.
+question, a stop named above, or a **progress report**. Tool calls go out bare, with no text announcing them. When
+the user asks something mid-run, answer it in one line above the report.
 
 From the go on the cut onward, end every turn on a progress report. While subagents run, its last line is `⏳ waiting`.
-Every report has this exact shape, with nothing else around it but that line, in place of the `reporting` skill's format;
+Every report has this exact shape, with nothing else around it but that line and that answer, in place of the
+`reporting` skill's format;
 the values come from an example run:
 
 ```markdown
@@ -78,8 +80,8 @@ Filed:
 - **Title**: `Progress`, or `Delivered` in the report at the end of Land, once step 15 is done; then the spec's title,
   then merged tickets over tickets in the cut. When the run has a growth cap, append
   `· cap <tickets in the cut>/<cap>`, for example `· 2/6 merged · cap 6/10`.
-- **PR**: `#<n> (draft)`, `#<n> (ready)` after step 14, `#<n> (merged)` once merged into main, or `none` before the
-  PR exists.
+- **PR**: `#<n> (draft)`, `#<n> (ready)` once marked ready in step 14, `#<n> (merged)` once merged into main, or
+  `none` before the PR exists.
 - **Ticket rows**: every ticket in the cut, in task-graph order, ties by ticket number.
 - **Status**: ✅ merged, 📦 done with step 6 and not yet merged, 🔨 launched and not yet done with step 6, ⏭️ next
   (not launched, every blocker is ✅, 📦 or 🔨), ⏳ queued (the rest).
@@ -140,10 +142,12 @@ and the notes and spec sections to read. The brief names the report the subagent
    ticket is done with step 6, create a worktree detached at the integration branch tip and launch a **merger
    subagent** in it with every ticket done with step 6 and not yet merged, in task-graph order. When a merger reports a
    gate failure, hand its report to a fresh fix subagent on the rollup branch in that worktree, judged against the
-   tickets the rollup carries. Land the fixed rollup branch with a fresh merger, naming it as the rollup's only branch.
+   tickets the rollup carries. A rollup of a single branch whose history contains the integration branch tip
+   (`git merge-base --is-ancestor`) was gated on that exact head, by its owner or by the fix subagent: fast-forward the
+   integration branch to it yourself, without a merger.
 
-8. After the first rollup lands, if the issue tracker closes work through PRs or the user asked for one, push the
-   integration branch and open a draft PR marked as closing the spec and tickets. Push again after every later rollup.
+8. After the first rollup lands, push the integration branch and open a draft PR marked as closing the spec and
+   tickets. Push again after every later rollup.
 
 9. When an owner is done with step 6, or a rollup changes the **frontier**, fill free slots by step 5.
 
@@ -162,8 +166,8 @@ and the notes and spec sections to read. The brief names the report the subagent
 13. Move what the next spec should know from the notes directory into the tracker, where the next spec's agents will
     find it. The notes directory dies with the run.
 
-14. If a draft PR exists, mark it ready for review. Otherwise, resolve each ticket the way the issue tracker closes
-    work.
+14. Mark the PR ready for review. Once CI passes, merge it into main the way the repo merges PRs. Hand a CI failure to
+    a fresh fix subagent on the integration branch. Done when the PR is merged and every ticket in the cut is closed.
 
 15. Remove every worktree this run created and delete its branch with `git branch -D`: rollups cherry-pick, so ticket
     branches never show as merged.

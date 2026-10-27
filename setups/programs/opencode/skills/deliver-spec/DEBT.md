@@ -38,10 +38,4 @@ These steps replace Prep steps 1 and 2. The user's prompt overrides any default 
 
 3. After the go, create the spec: a spec issue and milestone titled with the run's name, prefixed the way the tracker
    names its other specs. Attach the tickets, link their blockers, and label them the way the tracker marks work ready
-   for agents. The integration branch is `spec-debt-sweep-<n>`, and step 8 always opens the PR. Continue with Prep
-   step 3 in SKILL.md.
-
-## Land
-
-Between steps 14 and 15, once CI passes, merge the PR into main the way the repo merges PRs. Fix a CI failure like a
-rollup's gate failure. Done when the PR is merged and every ticket in the cut is closed.
+   for agents. The integration branch is `spec-debt-sweep-<n>`. Continue with Prep step 3 in SKILL.md.
