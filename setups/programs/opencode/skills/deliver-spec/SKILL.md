@@ -31,7 +31,8 @@ As tech lead you deliver the spec with every loose end accounted for:
 
 - Each workaround and each piece of debt a subagent reports is either **in scope**, when fixing it belongs to
   delivering the spec, or bigger. In scope goes into a fix batch on the branch it was found on. Bigger becomes a ticket
-  linked to the spec and labelled `needs-triage`.
+  linked to the spec and labelled `needs-triage`. A ticket owner makes this call for its own ticket and reports the
+  bigger items.
 - Each `blocking` finding rejected by you, a ticket owner or a fix subagent gets your one-line reason on its ticket (on
   the spec for final-review findings), or becomes a `needs-triage` ticket when it is real but bigger than the spec.
 - A flaky test the cut didn't touch is quarantined, filed `needs-triage`, and rollups continue. A broken gate, or a
@@ -74,11 +75,12 @@ Filed:
 - **Status**: ✅ merged, 📦 done with step 6 and not yet merged, 🔨 launched and not yet done with step 6, ⏭️ next
   (not launched, every blocker is ✅, 📦 or 🔨), ⏳ queued (the rest).
 - **Phase**, for 🔨 and 📦 rows. On 🔨, while the owner runs, the value of its `<ticket>.phase` file in the notes
-  directory, or `implement` before the file exists. After the owner reports, `fix` while a fix subagent you launched
-  works for the ticket, otherwise `triage`. On 📦, `merge` while the open rollup carries it and its merger runs,
+  directory, or `implement` before the file exists. After the owner reports, `triage` until you resume it. On 📦,
+  `merge` while the open rollup carries it and its merger runs,
   `fix` while the open rollup carries it and its gate fix runs, otherwise empty. A gate fix on a rollup shows on the
   row of every ticket the rollup carries.
-- **Remark**: for a `fix` you launched, `gate failure` or `in scope`; for ⏭️ and ⏳, the blockers not yet merged
+- **Remark**: `gate failure` for a rollup's gate fix, `in scope` for a resumed owner; for ⏭️ and ⏳, the blockers
+  not yet merged
   as `after <tickets>`; otherwise empty.
 - **Filed**: every `needs-triage` ticket this run has filed so far, one bullet each in filing order, or `Filed: none`.
 
@@ -118,12 +120,12 @@ and the notes and spec sections to read. The brief names the report the subagent
 5. For each ticket on the **frontier**, create a worktree on its own branch off the integration branch tip, and launch
    a background **ticket owner** in it as the `ticket-owner` agent. The built-in `general` agent can't launch the
    implementer, review and fix subagents the owner runs. Its prompt names the notes directory's absolute path and the
-   ticket's key, the `<ticket>` in `<ticket>.md`.
+   ticket's key, the `<ticket>` in `<ticket>.md`. Keep each owner's session ID.
 
-6. Once a ticket owner reports done, turn each of its scope and spec questions into an **in scope** item, a
-   `needs-triage` ticket, or a cut change for the user. Run fix batches on the ticket's branch for the in-scope items,
-   debt and workarounds; debt these batches report becomes a `needs-triage` ticket. Done when no in-scope item or
-   cut change for the ticket is open.
+6. Once a ticket owner reports done, file each item it ruled bigger as a `needs-triage` ticket. Turn each of its scope
+   and spec questions into an **in scope** item, a `needs-triage` ticket, or a cut change for the user. Resume the
+   owner in the background by its session ID with the in-scope items. Done when the owner reports with no in-scope
+   item or cut change for the ticket left open.
 
 7. Merge in **rollups**, one at a time. Whenever no rollup is open (its merger or its gate fix still running) and a
    ticket is done with step 6, create a worktree detached at the integration branch tip and launch a **merger

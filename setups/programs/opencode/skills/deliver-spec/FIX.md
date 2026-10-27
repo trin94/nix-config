@@ -6,8 +6,7 @@ batch or a merger's report.
 
 ## Batches
 
-A **fix batch** is at most 3 items: `blocking` findings, seams, or debt and workarounds the coordinator ruled in
-scope.
+A **fix batch** is at most 3 items: `blocking` findings, seams, or debt and workarounds ruled in scope.
 Group items that touch the same file or concern; within that, worst first. Each batch goes to a fresh fix subagent, one
 after another: the next launches only once the previous has reported done.
 
