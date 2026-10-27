@@ -226,6 +226,9 @@ in
       "nix-command"
       "flakes"
     ];
+    extraOptions = ''
+      !include ${homeDirectory}/.config/nix/access-tokens.conf
+    '';
   };
 
   home.enableNixpkgsReleaseCheck = false;
