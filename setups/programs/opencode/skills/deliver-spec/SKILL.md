@@ -11,6 +11,9 @@ tell the user to run `/to-tickets`.
 
 The issue tracker should have been provided to you. If not, tell the user to run `/setup-matt-pocock-skills`.
 
+When the user asks for a **debt run** and gives no spec, follow [`DEBT.md`](DEBT.md). It builds the spec and changes
+Prep and Land.
+
 The goal is the entire spec implemented on a single **integration branch**, with every ticket resolved the way the issue
 tracker closes work, and a history of 1-2 commits per ticket.
 
@@ -33,6 +36,10 @@ As tech lead you deliver the spec with every loose end accounted for:
   delivering the spec, or bigger. In scope goes into a fix batch on the branch it was found on. Bigger becomes a ticket
   linked to the spec and labelled `needs-triage`. A ticket owner makes this call for its own ticket and reports the
   bigger items.
+- When the run has a **growth cap** (the most tickets the cut may grow to, set by the user or by
+  [`DEBT.md`](DEBT.md)), every item this section would file `needs-triage` whose fix is clear and needs no input from
+  the user **joins the cut** instead: it becomes a ticket in the spec, like the others, until the cut reaches the cap.
+  Joining needs no go from the user. Items found past the cap, or from step 10 on, are filed `needs-triage`.
 - Each `blocking` finding rejected by you, a ticket owner or a fix subagent gets your one-line reason on its ticket (on
   the spec for final-review findings), or becomes a `needs-triage` ticket when it is real but bigger than the spec.
 - A flaky test the cut didn't touch is quarantined, filed `needs-triage`, and rollups continue. A broken gate, or a
@@ -69,8 +76,10 @@ Filed:
 ```
 
 - **Title**: `Progress`, or `Delivered` in the report at the end of Land, once step 15 is done; then the spec's title,
-  then merged tickets over tickets in the cut.
-- **PR**: `#<n> (draft)`, `#<n> (ready)` after step 14, or `none` before the PR exists.
+  then merged tickets over tickets in the cut. When the run has a growth cap, append
+  `· cap <tickets in the cut>/<cap>`, for example `· 2/6 merged · cap 6/10`.
+- **PR**: `#<n> (draft)`, `#<n> (ready)` after step 14, `#<n> (merged)` once merged into main, or `none` before the
+  PR exists.
 - **Ticket rows**: every ticket in the cut, in task-graph order, ties by ticket number.
 - **Status**: ✅ merged, 📦 done with step 6 and not yet merged, 🔨 launched and not yet done with step 6, ⏭️ next
   (not launched, every blocker is ✅, 📦 or 🔨), ⏳ queued (the rest).
@@ -83,6 +92,7 @@ Filed:
   not yet merged
   as `after <tickets>`; otherwise empty.
 - **Filed**: every `needs-triage` ticket this run has filed so far, one bullet each in filing order, or `Filed: none`.
+  A ticket that joined the cut is a row, not a Filed bullet.
 
 Findings, rejections, gate results and subagent reports are your working material.
 
@@ -117,15 +127,20 @@ and the notes and spec sections to read. The brief names the report the subagent
 
 ## Ticket loop
 
-5. For each ticket on the **frontier**, create a worktree on its own branch off the integration branch tip, and launch
-   a background **ticket owner** in it as the `ticket-owner` agent. The built-in `general` agent can't launch the
-   implementer, review and fix subagents the owner runs. Its prompt names the notes directory's absolute path and the
+5. Run at most 2 ticket owners at once, unless the user sets another number. While a slot is free, take the next
+   ticket on the **frontier** in task-graph order, create a worktree on its own branch off the integration branch tip,
+   and launch a background **ticket owner** in it as the `ticket-owner` agent. The built-in `general` agent can't
+   launch the implementer, review and fix subagents the owner runs. Its prompt names the notes directory's absolute
+   path and the
    ticket's key, the `<ticket>` in `<ticket>.md`. Keep each owner's session ID.
 
-6. Once a ticket owner reports done, file each item it ruled bigger as a `needs-triage` ticket. Turn each of its scope
-   and spec questions into an **in scope** item, a `needs-triage` ticket, or a cut change for the user. Resume the
-   owner in the background by its session ID with the in-scope items. Done when the owner reports with no in-scope
-   item or cut change for the ticket left open.
+6. Once a ticket owner reports done, turn each item it ruled bigger into a ticket that joins the cut or a
+   `needs-triage` ticket, by the Role rule. Attach each joined ticket to the spec like the cut's other tickets, blocked
+   by the ticket it was found on when its fix touches that ticket's change, and save it as `<ticket>.md` in the notes
+   directory. Turn each
+   of its scope and spec questions into an **in scope** item, a `needs-triage` ticket, or a cut change for the user.
+   Resume the owner in the background by its session ID with the in-scope items. Done when the owner reports with no
+   in-scope item or cut change for the ticket left open.
 
 7. Merge in **rollups**, one at a time. Whenever no rollup is open (its merger or its gate fix still running) and a
    ticket is done with step 6, create a worktree detached at the integration branch tip and launch a **merger
@@ -136,7 +151,7 @@ and the notes and spec sections to read. The brief names the report the subagent
 8. After the first rollup lands, if the issue tracker closes work through PRs or the user asked for one, push the
    integration branch and open a draft PR marked as closing the spec and tickets. Push again after every later rollup.
 
-9. If a rollup changes the **frontier**, launch ticket owners for the new tickets.
+9. When an owner is done with step 6, or a rollup changes the **frontier**, fill free slots by step 5.
 
 ## Final review
 

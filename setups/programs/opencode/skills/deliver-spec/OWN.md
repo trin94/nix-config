@@ -50,5 +50,5 @@ Return only this:
 - the gate's result line, and each gate duration your subagents reported, in order
 - each acceptance criterion not met, with the reason
 - each `blocking` finding rejected, with the reason, and the number of `nit`s dropped
-- each workaround and each piece of debt you ruled bigger, one line each
+- each workaround and each piece of debt you ruled bigger, one line each, with its fix when you can name it in one line
 - each scope or spec question for the coordinator
