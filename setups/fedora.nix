@@ -178,6 +178,7 @@ in
     homeDirectory = homeDirectory;
 
     packages = with pkgs; [
+      forgejo-cli
       gh
       nodejs
       bun
