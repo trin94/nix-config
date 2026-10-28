@@ -19,4 +19,4 @@ Return only this:
 - the branch and its head SHA
 - the gate's result line and duration
 - each acceptance criterion you didn't meet, with the reason
-- each piece of debt you noticed outside the ticket, one line each
+- each piece of debt ([`FIX.md`](FIX.md#debt)) you noticed outside the ticket, one line each with its witness

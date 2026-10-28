@@ -16,8 +16,9 @@ calls in one message. If a launch fails, stop and report the error.
 You decide what gets fixed, measured against the ticket and the spec. That covers each workaround and each piece of
 debt the implementer or a reviewer reports: it is **in scope** when fixing it belongs to this ticket, and **bigger**
 when it reaches past the ticket or into another ticket's area. Bigger goes into your report for the coordinator to
-file. Debt a fix subagent reports is always bigger. A question that would change the ticket's scope or the spec goes
-into your report for the coordinator.
+file. Debt counts only with a witness ([`FIX.md`](FIX.md#debt)): drop the rest, with `no witness` as the reason.
+Debt a fix subagent reports is always bigger. A question that would change the ticket's scope or the spec goes into
+your report for the coordinator.
 
 The coordinator may resume you with answers to your questions. Run the work an answer puts in scope as fix batches
 under the same rules, then report again.
@@ -46,6 +47,7 @@ Return only this:
 - the branch and its head SHA
 - the gate's result line, and each gate duration your subagents reported, in order
 - each acceptance criterion not met, with the reason
-- each `blocking` finding rejected, with the reason, and the number of `nit`s dropped
-- each workaround and each piece of debt you ruled bigger, one line each, with its fix when you can name it in one line
+- each `blocking` finding rejected, with the reason, and the number of `nit`s and of `no witness` debt items dropped
+- each workaround and each piece of debt you ruled bigger, one line each, with its witness, and its fix when you can
+  name it in one line
 - each scope or spec question for the coordinator

@@ -10,6 +10,13 @@ A **fix batch** is at most 3 items: `blocking` findings, seams, or debt and work
 Group items that touch the same file or concern; within that, worst first. Each batch goes to a fresh fix subagent, one
 after another: the next launches only once the previous has reported done.
 
+## Debt
+
+**Debt** is a cost the repo pays today. Its **witness** is where that cost shows, named so anyone can check it: a
+`path:line` that pays it (duplicated code, a stale doc, a call that trips a bug), a run that failed or was measured
+slow, or a bug someone hit. A gap that only code not yet written would reach is **speculative**: it has no witness,
+however plausible that code.
+
 ## Findings
 
 Each item in the batch counts as a finding, debt and workarounds included. Fix each finding, or reject it with a
@@ -39,4 +46,4 @@ Return only this:
 - the gate's result line and duration
 - each rejected finding with its reason
 - the root cause, for a failing gate
-- each piece of debt you noticed outside your batch, one line each
+- each piece of debt you noticed outside your batch, one line each with its witness
