@@ -6,7 +6,8 @@ batch or a merger's report.
 
 ## Batches
 
-A **fix batch** is at most 3 items: `blocking` findings, seams, or debt and workarounds ruled in scope.
+A **fix batch** is at most 3 items: `blocking` findings, kept `nit`s, seams, finding classes, or debt and workarounds
+ruled in scope.
 Group items that touch the same file or concern; within that, worst first. Each batch goes to a fresh fix subagent, one
 after another: the next launches only once the previous has reported done.
 
@@ -21,7 +22,11 @@ however plausible that code.
 
 Each item in the batch counts as a finding, debt and workarounds included. Fix each finding, or reject it with a
 one-line reason. Fix a stale-doc finding by deleting the lines the code or
-config already shows; list the rest as debt. Commit the fixes on top of the branch.
+config already shows; list the rest as debt. Fix a finding class with the lint rule it names, or a line in the repo's
+documented standards where no linter checks it, and name the class's tickets in the commit message. A rule that
+flags code outside the batch's tickets becomes the standards line instead: list the rule as debt, with the flagged
+code as its witness. Commit the fixes on top of the branch, then run the **red proof**
+([`IMPLEMENT.md`](IMPLEMENT.md#red-proof)) on them.
 
 You're done when every finding is fixed or rejected and the gate passes. A gate that hits the time limit your prompt
 names is a finding: report it with the elapsed time instead of re-running.
@@ -30,7 +35,7 @@ names is a finding: report it with the elapsed time instead of re-running.
 
 A failing test is **flaky** when it passes on a re-run of the same tree and no commit in the branch touches its file.
 Quarantine it: skip it with a marker naming the failure, commit the skip on top of the branch, and list it as debt in
-your report. Stop there; the next spec owes the root cause.
+your report. The skip is debt, outside the red proof. Stop there; the next spec owes the root cause.
 
 For every other failure, load the `diagnosing-bugs` skill and find the root cause in the merger's report. A race a
 commit in the branch introduced counts: find it and remove it. Commit the fix on top of the branch.
@@ -44,6 +49,7 @@ Return only this:
 
 - the branch and its head SHA
 - the gate's result line and duration
+- each test your commits add or rewrite, with its failure line from the red proof or its reason for passing
 - each rejected finding with its reason
 - the root cause, for a failing gate
 - each piece of debt you noticed outside your batch, one line each with its witness

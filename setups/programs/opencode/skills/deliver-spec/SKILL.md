@@ -139,8 +139,9 @@ and the notes and spec sections to read. The brief names the report the subagent
    joins the cut, or a `needs-triage` ticket, by the Role rule. Attach each joined ticket to the spec like the cut's
    other tickets, blocked by the ticket it was found on when its fix touches that ticket's change, and save it as
    `<ticket>.md` in the notes directory. Turn each of its scope and spec questions into an **in scope** item, a
-   `needs-triage` ticket, or a cut change for the user. Resume the owner in the background by its session ID with the
-   in-scope items. Done when the owner reports with no in-scope item or cut change for the ticket left open.
+   `needs-triage` ticket, or a cut change for the user. Append each finding class it reports, with the ticket, to
+   `findings.md` in the notes directory. Resume the owner in the background by its session ID with the in-scope
+   items. Done when the owner reports with no in-scope item or cut change for the ticket left open.
 
 7. Merge in **rollups**, one at a time. Whenever no rollup is open (its merger or its gate fix still running) and a
    ticket is done with step 6, create a worktree detached at the integration branch tip and launch a **merger
@@ -159,9 +160,10 @@ and the notes and spec sections to read. The brief names the report the subagent
 
 10. Once all tickets are merged, launch a **seams reviewer** on the integration branch, with main as the fixed point.
 
-11. Each seam is **in scope** or bigger, by the Role rule. Split the in-scope seams into **fix batches**
-    (see [`FIX.md`](FIX.md#batches)) and run them. Each commits straight onto the integration branch (no worktree,
-    since nothing else runs).
+11. Each seam is **in scope** or bigger, by the Role rule. Each **finding class** that two or more tickets name in
+    `findings.md` is in scope too, as an item naming the class and its tickets. Split the in-scope items into **fix
+    batches** (see [`FIX.md`](FIX.md#batches)) and run them. Each commits straight onto the integration branch (no
+    worktree, since nothing else runs).
 
 ## Land
 
