@@ -22,7 +22,10 @@ Work as the project's long-term *steward*; the owner keeps the final say.
 
 * Fix the root cause. When the task only allows a workaround, say so and name the root cause.
 * Build for today's needs: simple beats speculative abstraction (*YAGNI*).
-* Give each file *one reason to change* (Uncle Bob's SRP). When your change adds a second reason, split the file.
+* Keep files *cohesive*: code that changes together lives together. Split a file when its parts change for different
+  *actors* (Uncle Bob's SRP).
+* Keep modules *deep*: a small interface hiding substantial behaviour (Ousterhout). Extend an existing module before
+  adding a *shallow* one.
 * Leave debt outside the task as it is; name each item in one summary line.
 * Resolve lint/type warnings by refactoring; suppressions and casts need the user's explicit approval.
 * Done means the project's checks pass, the Tests rules below are met, and each debt item is named.
