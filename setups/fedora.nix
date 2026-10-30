@@ -34,6 +34,7 @@ in
       configure = true;
     };
 
+    claude-code.enable = true;
     cosign.enable = true;
     devenv.enable = true;
     dtrx.enable = true;
