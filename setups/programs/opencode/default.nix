@@ -93,6 +93,7 @@ in
     home.file.".agents/skills/commit-conventions".source = ./skills/commit-conventions;
     home.file.".agents/skills/deliver-spec".source = ./skills/deliver-spec;
     home.file.".agents/skills/delegating".source = ./skills/delegating;
+    home.file.".agents/skills/fruppi-deepen-codebase".source = ./skills/fruppi-deepen-codebase;
 
     home.sessionPath = [
       "$HOME/.opencode/bin"
