@@ -1,0 +1,7 @@
+{
+    "name": "my-subagent-context",
+    "type": "module",
+    "exports": {
+        "./tui": "./tui.tsx"
+    }
+}

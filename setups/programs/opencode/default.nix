@@ -41,6 +41,7 @@ let
   # V2 appends sidebar contributions in plugin order. Keep Git next to the footer.
   tuiPlugins =
     lib.optional cfg.plugins.my-loaded-skills.enable (pluginPath "tui" "my-loaded-skills")
+    ++ lib.optional cfg.plugins.my-subagent-context.enable (pluginPath "tui" "my-subagent-context")
     ++ lib.optional cfg.plugins.my-vcs-status.enable (pluginPath "tui" "my-vcs-status")
     ++ lib.optional cfg.plugins.herdr.enable "./herdr-opencode";
 in

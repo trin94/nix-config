@@ -72,6 +72,7 @@ in
       plugins = {
         my-agents-local.enable = true;
         my-loaded-skills.enable = true;
+        my-subagent-context.enable = true;
         my-vcs-status.enable = true;
         with-claude.enable = true;
       };
