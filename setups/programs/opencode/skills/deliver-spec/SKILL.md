@@ -15,7 +15,7 @@ When the user asks for a **debt run** and gives no spec, follow [`DEBT.md`](DEBT
 Prep.
 
 The goal is the entire spec implemented on a single **integration branch** and merged into main, with every ticket
-resolved the way the issue tracker closes work, and a history of 1-2 commits per ticket.
+resolved the way the issue tracker closes work, and a history of one commit per ticket.
 
 The tickets are not a list of steps. They are a **task graph** with blocking relationships between them. This means
 there is always a **frontier** of tickets which are ready to be grabbed.
