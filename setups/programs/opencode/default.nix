@@ -94,6 +94,7 @@ in
     home.file.".agents/skills/deliver-spec".source = ./skills/deliver-spec;
     home.file.".agents/skills/delegating".source = ./skills/delegating;
     home.file.".agents/skills/fruppi-deepen-codebase".source = ./skills/fruppi-deepen-codebase;
+    home.file.".agents/skills/next-tickets".source = ./skills/next-tickets;
 
     home.sessionPath = [
       "$HOME/.opencode/bin"
