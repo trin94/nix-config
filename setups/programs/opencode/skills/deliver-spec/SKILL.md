@@ -114,10 +114,12 @@ and the notes and spec sections to read. The brief names the report the subagent
 
 ## Prep
 
-1. Read the spec and tickets. Done when you can name every ticket's blockers and the current **frontier**.
+1. Read the spec and tickets. Done when you can name every ticket's blockers, its **design** (the module it changes,
+   the interface change, extend or new, as `to-tickets` writes it) or that it lacks one, and the current
+   **frontier**.
 
-2. Propose the **cut** to the user, splitting any ticket too big for one implementer. Wait for their go, then make the
-   splits in the tracker.
+2. Propose the **cut** to the user, splitting any ticket too big for one implementer and writing a design for each
+   ticket that lacks one. Wait for their go, then make the splits and add the designs in the tracker.
 
 3. Save the spec and each ticket in the cut as markdown in `$TMPDIR/<spec-slug>-notes/` (`spec.md`, `<ticket>.md`), so
    subagents read the spec by section instead of fetching all of it from the tracker. If tickets need codebase or
@@ -137,11 +139,14 @@ and the notes and spec sections to read. The brief names the report the subagent
 
 6. Once a ticket owner reports done, turn each item it ruled bigger into a comment on an open ticket, a ticket that
    joins the cut, or a `needs-triage` ticket, by the Role rule. Attach each joined ticket to the spec like the cut's
-   other tickets, blocked by the ticket it was found on when its fix touches that ticket's change, and save it as
-   `<ticket>.md` in the notes directory. Turn each of its scope and spec questions into an **in scope** item, a
-   `needs-triage` ticket, or a cut change for the user. Append each finding class it reports, with the ticket, to
-   `findings.md` in the notes directory. Resume the owner in the background by its session ID with the in-scope
-   items. Done when the owner reports with no in-scope item or cut change for the ticket left open.
+   other tickets, with its design, blocked by the ticket it was found on when its fix touches that ticket's change,
+   and save it as `<ticket>.md` in the notes directory. Turn each of its scope and spec questions into an **in scope**
+   item, a `needs-triage` ticket, or a cut change for the user. A **design gap** (the implementer found the design
+   names the wrong module or misses an interface) gets a corrected design in the tracker and in `<ticket>.md`, and is
+   the owner's in-scope item. When the correction adds an interface another ticket needs, one ticket owns it and the
+   other is blocked by it. Append each finding class it reports, with the ticket, to `findings.md` in the notes
+   directory. Resume the owner in the background by its session ID with the
+   in-scope items. Done when the owner reports with no in-scope item or cut change for the ticket left open.
 
 7. Merge in **rollups**, one at a time. Whenever no rollup is open (its merger or its gate fix still running) and a
    ticket is done with step 6, create a worktree detached at the integration branch tip and launch a **merger

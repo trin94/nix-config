@@ -9,13 +9,15 @@ integration branch, the gate, and the notes and spec sections to read.
 3. Load the `tdd` skill and build the ticket with it, in 1-2 commits. You run without a user: the seams are the ones
    the spec's Testing Decisions and the ticket name, a prediction that misses goes into your report while you carry
    on, and the `code-review` run is your ticket owner's. **Red** is a test failing on its assertion: when a test
-   doesn't compile, add the stub that compiles it and run it again.
+   doesn't compile, add the stub that compiles it and run it again. Build inside the ticket's **design**: when the
+   module it names is the wrong place for the change, or the change needs an interface the design doesn't name, stop
+   there, reset the worktree to the integration branch tip, and report the **design gap**.
 4. Rebase onto the integration branch tip.
 5. Run the **red proof** on your commits.
 6. Run the gate.
 
 You're done when every acceptance criterion is met or listed in your report, the red proof is done, and the gate
-passes on the rebased branch.
+passes on the rebased branch, or when you have reported a design gap.
 
 ## Red proof
 
@@ -34,6 +36,8 @@ Otherwise it isn't testing your change yet: fix the test and prove it again.
 
 Return only this:
 
+- the design gap, when you stopped on one: what the design names, where the change belongs instead, and the code that
+  shows it; nothing else below
 - the branch and its head SHA
 - the gate's result line and duration
 - each test your commits add or rewrite, with its failure line from the red proof or its reason for passing

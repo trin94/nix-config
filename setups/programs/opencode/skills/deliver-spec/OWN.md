@@ -10,7 +10,7 @@ sections to read. Every gate run is a subagent's. Each fix subagent's prompt nam
 the implementer's reported gate duration; a gate that hits it is a finding the subagent reports, not a re-run.
 
 Your final message is your report: the coordinator takes it the moment your turn ends. So run every subagent in the
-foreground, where your turn waits for it. Send parallel subagents, like the two `code-review` reviewers, as foreground
+foreground, where your turn waits for it. Send parallel subagents, like the `code-review` reviewers, as foreground
 calls in one message. If a launch fails, stop and report the error.
 
 You decide what gets fixed, measured against the ticket and the spec. That covers each workaround and each piece of
@@ -24,10 +24,11 @@ The coordinator may resume you with answers to your questions. Run the work an a
 under the same rules, then report again.
 
 1. Launch an **implementer subagent** ([`IMPLEMENT.md`](IMPLEMENT.md)) in the worktree. Done when you have verified its
-   report.
+   report. When it reports a **design gap**, report the gap as your only spec question and stop. The coordinator
+   resumes you with a corrected design: run this step again with a fresh implementer.
 
 2. Load the `code-review` skill from the worktree, with the integration branch as the fixed point and the ticket as
-   the spec.
+   the spec and its design.
 
 3. Keep each `nit` whose fix stays inside the lines the ticket's diff changes: it joins the fix batches like a
    `blocking` finding. Drop the other `nit`s: the merge bar is their reason. A finding that names debt the
@@ -42,11 +43,13 @@ result line was produced on that SHA. Every test the report's commits add or rew
 ([`IMPLEMENT.md`](IMPLEMENT.md#red-proof)): a test without one, or passing on its base for a reason that doesn't hold,
 is a `blocking` finding for the next fix batch. You're done when every `blocking` finding and every in-scope item is
 fixed or carries a reason, every subagent you launched has reported, and the last report shows the gate green on the
-current head.
+current head. After a design gap, you're done once you have reported it: its report has no SHA or gate line to verify.
 
 ## Report
 
 Return only this:
+
+- the design gap, when the implementer stopped on one, as its report states it; nothing else below
 
 - the branch and its head SHA
 - the gate's result line, and each gate duration your subagents reported, in order
