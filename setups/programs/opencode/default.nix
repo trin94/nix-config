@@ -111,6 +111,7 @@ in
     # Shadow the npx-installed copies in ~/.agents/skills (higher precedence).
     xdg.configFile."opencode/skills/tdd".source = ./skills/tdd;
     xdg.configFile."opencode/skills/code-review".source = ./skills/code-review;
+    xdg.configFile."opencode/skills/to-tickets".source = ./skills/to-tickets;
 
     xdg.configFile."opencode/opencode.json".text = builtins.toJSON (
       {
