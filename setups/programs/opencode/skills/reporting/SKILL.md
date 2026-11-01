@@ -1,6 +1,6 @@
 ---
 name: reporting
-description: Report to Elias in scan-first format. Use when writing any answer, summary, findings, status, or review that Elias reads himself, and when he replies with a shortcode asking for a concept expanded. Subagents returning to a parent agent use the parent's requested format instead.
+description: Report to Elias in scan-first format. Use when writing any answer, summary, findings, status, or review that Elias reads himself, and when he replies with a shortcode or DT code. Subagents returning to a parent agent use the parent's requested format instead.
 ---
 
 # Reporting
@@ -63,7 +63,7 @@ Place a shortcode at the end of the thing it names:
 
 Refresh races the expiry check 🟢 `AB`.
 
-He replies with codes to get them expanded. Answer in exactly this shape, one block per code, in the order he gave
+He replies with shortcodes to get them expanded. Answer in exactly this shape, one block per code, in the order he gave
 them, carrying the same dot the code had:
 
 **Explaining** 🟢 `AB`: Refresh race
@@ -72,17 +72,27 @@ them, carrying the same dot the code had:
 * Under load the request wins, so the check sees a dead token.
 * Fix is to refresh on the check path.
 
-Every line a bullet, every bullet one sentence.
+In the block, every line a bullet, every bullet one sentence.
 
 ## DO THIS
 
-Close with a **DO THIS** block: numbered, highest priority first, each line one concrete action Elias performs
-himself.
+Close with a **DO THIS** block: a bullet list, highest priority first, each line one concrete action Elias performs
+himself. Lead each line with a **DT code** (**D**O **T**HIS: `DT1`, `DT2`, …, restarting each message).
+
+He replies with a DT code to answer that line (`DT2 timer`, `DT1 done`). Act on the answer; when it leaves a
+question open, ask it.
+
+Elias often reads only this block, so each line is **standalone**: he can act on it without having read the
+report. Name the thing in the line itself (file, option, value), repeating the body's fact in a phrase.
+
+A decision line names the choice, the options with their deciding tradeoff, and your pick, inline even where the
+body tables them. End it with the body's shortcode so he can expand it.
 
 <!-- rumdl-disable-next-line MD036 -->
 **DO THIS**
 
-1. Run `nix flake update`.
-2. Review `setups/fedora.nix:40`.
+* `DT1` Run `nix flake update`.
+* `DT2` Pick token refresh: on timer (simple, races under load) or on check path (no race, +1 request).
+  Recommend check path 🟢 `AB`.
 
 Keep it to actions that need him. When the work leaves nothing for him to do, end without the block.
