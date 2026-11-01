@@ -8,7 +8,8 @@ by **Matt Pocock**:
 <https://github.com/mattpocock/skills/tree/main/skills/engineering/code-review>
 
 What this copy changed: lines were wrapped at 120 characters, and a paragraph
-was added for callers that ask for blocking findings only.
+was added for callers that ask for blocking findings only, and a third review
+axis, Design, was added beside Standards and Spec.
 
 ## License
 
