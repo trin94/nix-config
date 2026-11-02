@@ -55,7 +55,8 @@ Run **silent**. The user sees every word you write outside a tool call, so text 
 question, a stop named above, or a **progress report**. Tool calls go out bare, with no text announcing them. When
 the user asks something mid-run, answer it in one line above the report.
 
-From the go on the cut onward, end every turn on a progress report. While subagents run, its last line is `⏳ waiting`.
+From the go on the cut onward, end every turn on a progress report. While subagents run, its last line is `⏳ waiting`;
+while step 4 waits, `⏳ waiting on <predecessor>`.
 Every report has this exact shape, with nothing else around it but that line and that answer, in place of the
 `reporting` skill's format;
 the values come from an example run:
@@ -126,7 +127,10 @@ and the notes and spec sections to read. The brief names the report the subagent
    external-doc context their text doesn't carry, run an **exploration subagent** that adds notes to the same
    directory.
 
-4. Create the integration branch.
+4. When the user names a **predecessor** (an issue in any repo that must close before this run builds), wait for it
+   first: run a background shell that polls the tracker every 5 minutes and exits once the predecessor is closed. When
+   it is in this repo, pull main and check each design against it, correcting it in the tracker and `<ticket>.md` where
+   it no longer fits; a correction that changes the cut goes to the user. Then create the integration branch.
 
 ## Ticket loop
 
