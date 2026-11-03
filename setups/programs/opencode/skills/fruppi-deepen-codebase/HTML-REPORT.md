@@ -62,6 +62,7 @@ Each candidate is one `<article>`:
 - **Problem**: one sentence. What hurts.
 - **Solution**: one sentence. What changes.
 - **Wins**: bullets, ≤6 words each. e.g. "Tests hit one interface", "Pricing logic stops leaking", "Delete 4 shallow wrappers".
+- **Cost**: bullets, ≤6 words each. e.g. "7 call sites change", "Rewrite 12 tests", "Touches payment flow".
 - **ADR callout** (if applicable): one line in an amber-tinted box.
 
 No paragraphs of explanation. If the diagram needs a paragraph to be understood, redraw the diagram.

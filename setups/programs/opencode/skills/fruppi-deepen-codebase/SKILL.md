@@ -37,6 +37,8 @@ Then spawn a sub-agent to walk the codebase. Don't follow rigid heuristics; expl
 
 Apply the **deletion test** to anything you suspect is shallow: would deleting it concentrate complexity, or just move it? A "yes, concentrates" is the signal you want.
 
+A module is **good enough** when a typical change lands in it alone and its tests run through its interface. Leave good-enough modules out of the report, however they could be shaped better.
+
 ### 2. Present candidates as an HTML report
 
 Write a self-contained HTML file to `.scratch/architecture-review-<YYYYMMDD-HHMM>.html` in the repo root, so later sessions can pick up its candidates. If `git check-ignore -q .scratch/` fails, add `.scratch/` to `.git/info/exclude`. Open it for the user (`xdg-open <path>` on Linux, `open <path>` on macOS, `start <path>` on Windows) and tell them the absolute path.
@@ -49,8 +51,9 @@ For each candidate, render a card with:
 - **Problem**: why the current architecture is causing friction
 - **Solution**: plain English description of what would change
 - **Benefits**: explained in terms of locality and leverage, and how tests would improve
+- **Cost**: what the refactor touches: call sites, tests rewritten, risky paths
 - **Before / After diagram**: side-by-side, illustrating the shallowness and the deepening
-- **Recommendation strength**: one of `Strong`, `Worth exploring`, `Speculative`, rendered as a badge
+- **Recommendation strength**: one of `Strong`, `Worth exploring`, `Speculative`, rendered as a badge; `Strong` only when the benefits clearly outweigh the cost
 
 End the report with a **Top recommendation** section: which `Strong` candidate you'd tackle first and why. With no `Strong` candidate, it says no refactor is worth doing now.
 
