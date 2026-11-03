@@ -52,7 +52,7 @@ For each candidate, render a card with:
 - **Before / After diagram**: side-by-side, illustrating the shallowness and the deepening
 - **Recommendation strength**: one of `Strong`, `Worth exploring`, `Speculative`, rendered as a badge
 
-End the report with a **Top recommendation** section: which candidate you'd tackle first and why.
+End the report with a **Top recommendation** section: which `Strong` candidate you'd tackle first and why. With no `Strong` candidate, it says no refactor is worth doing now.
 
 **Use GLOSSARY.md vocabulary for the domain, and the `/codebase-design` vocabulary for the architecture.** If `GLOSSARY.md` defines "Order," talk about "the Order intake module," not "the FooBarHandler," and not "the Order service."
 
@@ -60,7 +60,7 @@ End the report with a **Top recommendation** section: which candidate you'd tack
 
 See [HTML-REPORT.md](HTML-REPORT.md) for the full HTML scaffold, theme, and diagram patterns.
 
-The report names problems and directions; interfaces come from the design agents in step 4. After the file is written, ask the user: "Which one or two would you like to explore?"
+The report names problems and directions; interfaces come from the design agents in step 4. After the file is written, ask the user: "Which one or two would you like to explore?" With no top recommendation, tell the user and stop instead.
 
 ### 3. Check overlap
 

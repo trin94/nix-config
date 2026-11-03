@@ -113,7 +113,7 @@ After:
 
 ## Top recommendation section
 
-One larger card. Candidate name, one sentence on why, anchor link to its card. That's it.
+One larger card. Candidate name, one sentence on why, anchor link to its card. That's it. Only a `Strong` candidate qualifies; with none, the card reads "No refactor worth doing now."
 
 ## Tone
 
