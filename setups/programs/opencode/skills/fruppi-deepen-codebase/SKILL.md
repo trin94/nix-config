@@ -64,18 +64,18 @@ The report names problems and directions; interfaces come from the design agents
 
 ### 3. Check overlap
 
-Give each pick a slug, `<n>-<kebab-case title>`, and create `.scratch/<slug>/`. With two picks, compare their files and the modules whose interface each would change:
+With two picks, compare their files and the modules whose interface each would change:
 
-- **Independent**: no shared module, and neither design is likely to reshape the other. Design both in parallel.
-- **Overlapping**: design the first. The second starts once the first is settled (step 6), with the first's settled doc in its design and judge briefs.
+- **Independent**: no shared module, and neither design is likely to reshape the other. Each pick is its own candidate.
+- **Overlapping**: merge both into one candidate, so the owner settles them together.
 
-Fill every path placeholder in the briefs with an absolute path.
+Give each candidate a slug, `<n>-<kebab-case title>` (merged: `<n>+<m>-<kebab-case title>`), and create `.scratch/<slug>/`. Fill every path placeholder in the briefs with an absolute path.
 
-Done when each pick has its slug directory, and two picks have a verdict.
+Done when each candidate has its slug directory, and two picks have a verdict.
 
 ### 4. Design three times
 
-Per candidate, launch three general-purpose subagents in the background, each with the same prompt from [DESIGN-BRIEF.md](DESIGN-BRIEF.md) and its own output, `.scratch/<slug>/design-{a,b,c}.md`. Give them no angles: the designs **converge** on their own, and the judge decides where they part.
+Per candidate, launch three general-purpose subagents in the background, each with the same prompt from [DESIGN-BRIEF.md](DESIGN-BRIEF.md) and its own output, `.scratch/<slug>/design-{a,b,c}.md`. Give them no angles: the designs **converge** on their own, and the judge decides where they part. With two candidates, launch all six at once.
 
 Done when all three docs exist.
 
@@ -83,11 +83,15 @@ Done when all three docs exist.
 
 Per candidate, launch one general-purpose judge subagent with the prompt from [JUDGE-BRIEF.md](JUDGE-BRIEF.md). It writes `.scratch/<slug>/settled.md` and returns the verdict, product questions and follow-up count.
 
-Done when `settled.md` exists and you have seen every claim you relay.
+With two candidates, show both verdict tables side by side and name the one to settle first, with why.
+
+Done when every `settled.md` exists and you have seen every claim you relay.
 
 ### 6. Grill on product questions
 
-Call the Skill tool with "grilling", one candidate at a time. Ask **product questions** only: what the owner sees, hears or taps, phrased in those terms. Decide technical questions yourself and log each with its reason under Decisions in `settled.md`; put them to the owner only when they ask for that. With no product questions, skip the grilling and say so.
+Steps 6 to 9 run for one candidate at a time, starting with the one named in step 5.
+
+Call the Skill tool with "grilling". Ask **product questions** only: what the owner sees, hears or taps, phrased in those terms. Decide technical questions yourself and log each with its reason under Decisions in `settled.md`; put them to the owner only when they ask for that. With no product questions, skip the grilling and say so.
 
 Refactor steps are **behaviour-preserving**. An answer that changes behaviour becomes its own step in `settled.md`, pinned by a test first, when it shrinks the design; otherwise add it under Follow-ups in `settled.md`.
 
@@ -97,7 +101,7 @@ Write each answer under Decisions in `settled.md` as it lands. Side effects happ
 - **Sharpening a fuzzy term during the conversation?** Update `GLOSSARY.md` right there.
 - **User rejects the candidate with a load-bearing reason?** Offer an ADR, framed as: _"Want me to record this as an ADR so future architecture reviews don't re-suggest it?"_ Only offer when the reason would actually be needed by a future explorer to avoid re-suggesting the same thing; skip ephemeral reasons ("not worth it right now") and self-evident ones.
 
-Done when every product question in `settled.md` has the owner's answer and the owner confirms the shared understanding. A rejected candidate is done too: record the reason in `settled.md`; steps 7 and 8 still run.
+Done when every product question in `settled.md` has the owner's answer and the owner confirms the shared understanding. A rejected candidate is done too: record the reason in `settled.md`; steps 7 to 9 still run.
 
 ### 7. File follow-ups
 
@@ -107,13 +111,25 @@ Done when every follow-up has an issue number or the note.
 
 ### 8. Close
 
-Per candidate, report:
+Report:
 
 - the `settled.md` path, or the rejection reason
 - which remaining report candidates it absorbs, changes or leaves alone
 - filed follow-ups
 
-End with: run `to-spec` on the `settled.md`.
+End with: run `to-spec`, then `to-tickets`, on the `settled.md`.
+
+### 9. Hand off
+
+With another candidate left, stop here and print the line that resumes it in a fresh session, absolute paths filled in:
+
+```sh
+opencode <repo> --prompt '@fruppi-deepen-codebase <n · title> from <report>'
+```
+
+The owner says "continue" or pastes the line. Either way, resume that candidate at its first step whose "Done when" isn't met.
+
+Done when the owner is back, or no candidate is left.
 
 ______________________________________________________________________
 

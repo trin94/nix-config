@@ -9,10 +9,11 @@
 
 What this copy changed: the report goes to `.scratch/` with numbered
 candidates, a system-following dark theme, system fonts and Mermaid-only
-diagrams, and a later session can re-enter from it. Steps 3 to 8 (overlap check,
-three design agents per candidate, a judge, product-only grilling, filed
-follow-ups, close) replace the grilling loop and end at a settled doc for
-`to-spec`. [`DESIGN-BRIEF.md`](DESIGN-BRIEF.md) and
+diagrams, and a later session can re-enter from it. Steps 3 to 9 (overlap check
+that merges overlapping picks, three design agents per candidate, a judge,
+product-only grilling, filed follow-ups, close, hand-off between candidates)
+replace the grilling loop and end at a settled doc for `to-spec` and
+`to-tickets`. [`DESIGN-BRIEF.md`](DESIGN-BRIEF.md) and
 [`JUDGE-BRIEF.md`](JUDGE-BRIEF.md) are new. `agents/openai.yaml` was dropped.
 
 ## License

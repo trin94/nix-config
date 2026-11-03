@@ -4,7 +4,7 @@ Fill the placeholders and send the identical prompt to all three design agents; 
 
 > You are designing one refactoring in the repo at `{repo}`. The candidate is `{n · title}` from `{report}`.
 > Its card: files `{files}`; problem: {problem}; direction: {solution}.
-> {Overlapping only: build on the settled design at `{settled}`.}
+> {Merged only: it also covers `{m · title}`. Its card: files `{files}`; problem: {problem}; direction: {solution}. Design both as one refactoring.}
 >
 > - Work read-only on tracked files and write only `{doc}`. Run the project's checks when a claim needs proof.
 > - First read `GLOSSARY.md`, `docs/adr/` and any architecture docs, and call the Skill tool with "codebase-design". Use its vocabulary.
