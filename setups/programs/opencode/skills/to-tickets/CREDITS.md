@@ -8,7 +8,10 @@ by **Matt Pocock**:
 <https://github.com/mattpocock/skills/tree/main/skills/engineering/to-tickets>
 
 What this copy changed: every ticket carries a design (module, interface
-change, extend or new), shown in the quiz and both ticket templates.
+change, extend or new), shown in the quiz and both ticket templates. The agent
+self-checks granularity and blocking edges before the quiz, which asks only for
+approval, plus the design question when a design adds a module or changes an
+interface.
 
 ## License
 

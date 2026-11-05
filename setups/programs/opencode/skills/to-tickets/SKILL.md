@@ -41,6 +41,8 @@ Give each ticket its **design**, in the vocabulary of the `codebase-design` skil
 
 **Wide refactors are the exception to vertical slicing.** A **wide refactor** is one mechanical change (rename a column, retype a shared symbol) whose **blast radius** fans across the whole codebase, so a single edit breaks thousands of call sites at once and no vertical slice can land green. Don't force it into a tracer bullet; sequence it as **expand–contract**. First expand: add the new form beside the old so nothing breaks. Then migrate the call sites over in batches sized by blast radius (per package, per directory), each batch its own ticket blocked by the expand, keeping CI green batch to batch because the old form still exists. Finally contract: delete the old form once no caller remains, in a ticket blocked by every migrate batch. When even the batches can't stay green alone, keep the sequence but let them share an integration branch that all block a final integrate-and-verify ticket; green is promised only there.
 
+The draft is done when every ticket outside an expand–contract sequence passes the vertical-slice rules, no ticket is small enough to merge into a neighbour, and every blocking edge names a ticket that gates it.
+
 ### 4. Quiz the user
 
 Present the proposed breakdown as a numbered list. For each ticket, show:
@@ -50,12 +52,7 @@ Present the proposed breakdown as a numbered list. For each ticket, show:
 - **What it delivers**: the end-to-end behaviour this ticket makes work
 - **Design**: the module, its interface change, and extend or new (with why, for a new one)
 
-Ask the user:
-
-- Does the granularity feel right? (too coarse / too fine)
-- Are the blocking edges correct: does each ticket only depend on tickets that genuinely gate it?
-- Should any tickets be merged or split further?
-- Does each design extend the right module, and does each new module earn its place?
+Ask the user to approve the breakdown. When any design adds a module or changes an interface, also ask whether each design extends the right module and each new module earns its place.
 
 Iterate until the user approves the breakdown.
 
