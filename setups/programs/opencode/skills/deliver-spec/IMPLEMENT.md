@@ -10,8 +10,9 @@ integration branch, the gate, and the notes and spec sections to read.
    the spec's Testing Decisions and the ticket name, a prediction that misses goes into your report while you carry
    on, and the `code-review` run is your ticket owner's. **Red** is a test failing on its assertion: when a test
    doesn't compile, add the stub that compiles it and run it again. Build inside the ticket's **design**: when the
-   module it names is the wrong place for the change, or the change needs an interface the design doesn't name, stop
-   there, reset the worktree to the integration branch tip, and report the **design gap**.
+   change doesn't fit the module it names cleanly, start with *preparatory refactoring* inside that module, in its own
+   commit. When the module is the wrong place for the change, or the change needs an interface the design doesn't
+   name, stop there, reset the worktree to the integration branch tip, and report the **design gap**.
 4. Rebase onto the integration branch tip.
 5. Run the **red proof** on your commits.
 6. Run the gate.
