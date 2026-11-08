@@ -16,17 +16,21 @@ let
     defaultModel = "claude-opus-5-5";
     defaultThinkingLevel = "high";
     theme = "catppuccin-latte/catppuccin-mocha";
-    # Pi has no verbosity setting; these come closest to OpenCode's low verbosity. Tool output starts
-    # collapsed already.
+    # Pi has no verbosity setting; pi-claude-code-ui folds tool calls and thinking as OpenCode does.
     hideThinkingBlock = true;
     collapseChangelog = true;
+    # The transcript has one column of padding (outputPad); the editor has none by default.
+    editorPaddingX = 1;
+    # pi-claude-code-ui: keep the theme above and drop the rules around tool rows.
+    terminalTheme = false;
+    toolBackground = "transparent";
   };
 
   # Replaced whole at every activation, so each machine runs the same packages. Exact versions stay pinned:
   # Pi installs them into ~/.pi/agent/npm at startup and never updates them.
   packages = [
     "npm:pi-catppuccin@0.1.0"
-    "npm:pi-footer@0.5.1"
+    "npm:pi-claude-code-ui@1.0.109"
     "npm:pi-permission-system@0.8.0"
     "npm:pi-subagents@0.87.0"
     "npm:pi-web-access@0.47.0"
@@ -193,6 +197,25 @@ let
       ) rules
     }}";
 
+  # Kitty sends Ctrl+Backspace as ctrl+backspace under its keyboard protocol and as raw ^H, which Pi reads as
+  # ctrl+h, without it.
+  keybindings = {
+    "tui.editor.deleteWordBackward" = [
+      "ctrl+w"
+      "alt+backspace"
+      "ctrl+backspace"
+      "ctrl+h"
+    ];
+  };
+
+  # The footer shows the same Git figures as OpenCode's sidebar, from the same module. One store directory, so
+  # the entrypoint can import its sibling.
+  footerExtension = pkgs.runCommand "pi-footer-extension" { } ''
+    mkdir $out
+    cp ${./extensions/footer/index.ts} $out/index.ts
+    cp ${../opencode/plugins/my-vcs-status/vcs.ts} $out/vcs.ts
+  '';
+
   herdrExtension = pkgs.fetchurl {
     url = "https://raw.githubusercontent.com/herdrdev/herdr/v${pkgs.herdr.version}/src/integration/assets/pi/herdr-agent-state.ts";
     hash = "sha256-LFJy1zK0dbv5GgJyA7H5jSX+Q9LBQCUwpEKyiK6soeQ=";
@@ -227,15 +250,16 @@ in
 
     # Pi finds ~/.agents/skills itself but reads its global rules only from its own directory.
     # Skills in ~/.pi/agent/skills win name clashes over ~/.agents/skills.
-    # Extensions are linked one by one: pi-footer writes its config into the extensions directory.
     home.file = {
       ".pi/agent/AGENTS.md".source = agents.rules;
       ".pi/agent/models.json".text = builtins.toJSON models;
+      ".pi/agent/keybindings.json".text = builtins.toJSON keybindings;
       ".pi/agent/pi-permissions.jsonc".text = ''
         {"defaultPolicy":${builtins.toJSON permissions.defaultPolicy},"tools":${rulesJSON permissions.tools},"special":${rulesJSON permissions.special}}
       '';
       ".pi/agent/extensions/agents-local.ts".source = ./extensions/agents-local.ts;
       ".pi/agent/extensions/loaded-skills.ts".source = ./extensions/loaded-skills.ts;
+      ".pi/agent/extensions/footer".source = footerExtension;
     }
     // lib.optionalAttrs cfg.extensions.herdr.enable {
       ".pi/agent/extensions/herdr-agent-state.ts".source = herdrExtension;
@@ -243,6 +267,10 @@ in
     // lib.mapAttrs' (
       name: source: lib.nameValuePair ".pi/agent/skills/${name}" { inherit source; }
     ) agents.skillOverrides;
+
+    # Pi's default, set explicitly: without it pi-claude-code-ui 1.0.109 reads its settings from
+    # ~/.pi/settings.json instead of ~/.pi/agent/settings.json, and switches the theme.
+    home.sessionVariables.PI_CODING_AGENT_DIR = "${config.home.homeDirectory}/.pi/agent";
 
     home.activation.piSettings = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
       run ${mergeSettings}
