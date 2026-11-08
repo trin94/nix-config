@@ -40,7 +40,11 @@ in
           { path = "${piIdentity}/lib/pi-identity.mjs"; }
         ];
       };
-      environment.MERIDIAN_NO_UPDATE_CHECK = "1";
+      environment = {
+        MERIDIAN_NO_UPDATE_CHECK = "1";
+        # Meridian appends a "Files changed" summary to Pi's replies; Pi shows edits itself.
+        MERIDIAN_NO_FILE_CHANGES = "1";
+      };
     };
 
     # Two Meridians refreshing the same ~/.claude/.credentials.json can rotate each other's refresh token
