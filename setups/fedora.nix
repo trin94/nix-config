@@ -134,6 +134,11 @@ in
       ];
     };
 
+    pi = {
+      enable = true;
+      extensions.herdr.enable = true;
+    };
+
     procs.enable = true;
     ripgrep.enable = true;
     sd.enable = true;
