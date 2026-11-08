@@ -12,9 +12,10 @@
 ## Shell and tools
 
 * In shell, search with `rg` and `fd`.
-* In OpenCode, load every skill through the `skill` tool by its registered ID, including skills another skill points
-  to. Never read skill entry files directly through read, shell, grep, or other tools. Supporting files referenced by
-  a loaded skill may be read normally. If loading fails, report it instead of bypassing the tool.
+* Load every skill, including skills another skill points to, the way the client offers. When it has a skill tool, load
+  through that tool by the skill's registered ID and never read skill entry files directly through read, shell, grep,
+  or other tools; if loading fails, report it instead of bypassing the tool. When it has none, read the skill's
+  `SKILL.md` with the read tool. Supporting files referenced by a loaded skill may be read normally.
 
 ## Long-term ownership
 
