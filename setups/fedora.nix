@@ -68,6 +68,7 @@ in
     };
 
     libwebp.enable = true;
+    meridian.enable = true;
 
     mpv = {
       enable = false;

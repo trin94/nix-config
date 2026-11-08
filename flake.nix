@@ -27,6 +27,14 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    meridian = {
+      url = "github:rynfar/meridian/meridian-v1.79.0";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.home-manager.follows = "home-manager";
+      # 0.2.3 strips Pi's docs block whole; the 0.2.2 pin leaves a stray <docs> tag.
+      inputs.meridian-plugin-pi-scrub.url = "github:rynfar/meridian-plugin-pi-scrub/09c4b53a0dc0194e037a0953a1d5ee321a6349c3";
+    };
+
   };
 
   outputs =
