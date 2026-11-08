@@ -55,7 +55,7 @@ hooks = [
         id = "rumdl",
         name = "format md",
         # skills/tdd is adapted from mattpocock/skills; keep its line layout for diffing against upstream
-        exclude = '\.github/|setups/programs/opencode/skills/',
+        exclude = '\.github/|setups/programs/agents/skills/',
         args = ["--fix", "--config", ".config/rumdl.toml"],
     },
 ]

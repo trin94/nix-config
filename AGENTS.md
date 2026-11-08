@@ -17,7 +17,7 @@ here.
 
 ## Agent config
 
-The opencode program holds Elias's global agent rules and skills, not this repo's. Edit them here; deployed copies
+The agents program holds Elias's global agent rules and skills, not this repo's. Edit them here; deployed copies
 are read-only until `just apply`. Skills adapted from upstream keep their line layout for diffing.
 
 ## Commits

@@ -6,6 +6,7 @@
 }:
 let
   cfg = config.myOS.programs.opencode;
+  agents = config.myOS.programs.agents;
   jsonFormat = pkgs.formats.json { };
   pluginPath = kind: name: "file://${config.xdg.configHome}/opencode/${kind}-plugin/${name}";
 
@@ -87,14 +88,12 @@ in
 
   config = lib.mkIf cfg.enable {
 
-    home.file.".agents/AGENTS.md".source = ./AGENTS.md;
-    home.file.".agents/skills/ghostwriter".source = ./skills/ghostwriter;
-    home.file.".agents/skills/reporting".source = ./skills/reporting;
-    home.file.".agents/skills/commit-conventions".source = ./skills/commit-conventions;
-    home.file.".agents/skills/deliver-spec".source = ./skills/deliver-spec;
-    home.file.".agents/skills/delegating".source = ./skills/delegating;
-    home.file.".agents/skills/fruppi-deepen-codebase".source = ./skills/fruppi-deepen-codebase;
-    home.file.".agents/skills/next-tickets".source = ./skills/next-tickets;
+    assertions = [
+      {
+        assertion = agents.enable;
+        message = "myOS.programs.opencode.enable requires myOS.programs.agents.enable.";
+      }
+    ];
 
     home.sessionPath = [
       "$HOME/.opencode/bin"
@@ -106,12 +105,13 @@ in
       OPENCODE_DISABLE_FREE_MODELS = "1";
     };
 
-    xdg.configFile."opencode/AGENTS.md".source = ./AGENTS.md;
+    xdg.configFile."opencode/AGENTS.md".source = agents.rules;
 
     # Shadow the npx-installed copies in ~/.agents/skills (higher precedence).
-    xdg.configFile."opencode/skills/tdd".source = ./skills/tdd;
-    xdg.configFile."opencode/skills/code-review".source = ./skills/code-review;
-    xdg.configFile."opencode/skills/to-tickets".source = ./skills/to-tickets;
+    home.file = lib.mapAttrs' (
+      name: source:
+      lib.nameValuePair "${config.xdg.configHome}/opencode/skills/${name}" { inherit source; }
+    ) agents.skillOverrides;
 
     xdg.configFile."opencode/opencode.json".text = builtins.toJSON (
       {

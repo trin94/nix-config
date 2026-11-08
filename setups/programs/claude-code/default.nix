@@ -7,11 +7,8 @@
 let
   cfg = config.myOS.programs.claude-code;
 
-  # Claude Code mirrors the OpenCode setup, so it reads the rules and skills from there.
-  opencode = ../opencode;
-  repoSkills = lib.attrNames (
-    lib.filterAttrs (_: type: type == "directory") (builtins.readDir (opencode + "/skills"))
-  );
+  agents = config.myOS.programs.agents;
+  repoSkills = lib.attrNames agents.skills;
 
   # The same paths OpenCode reaches through external_directory and its edit rule.
   externalDirectories = [
@@ -31,8 +28,15 @@ in
 
   config = lib.mkIf cfg.enable {
 
+    assertions = [
+      {
+        assertion = agents.enable;
+        message = "myOS.programs.claude-code.enable requires myOS.programs.agents.enable.";
+      }
+    ];
+
     home.file = {
-      ".claude/CLAUDE.md".source = opencode + "/AGENTS.md";
+      ".claude/CLAUDE.md".source = agents.rules;
 
       ".claude/agents/deliver-spec-ticket-owner.md".text = ''
         ---
@@ -100,11 +104,9 @@ in
         };
       };
     }
-    // lib.listToAttrs (
-      map (
-        name: lib.nameValuePair ".claude/skills/${name}" { source = opencode + "/skills/${name}"; }
-      ) repoSkills
-    );
+    // lib.mapAttrs' (
+      name: source: lib.nameValuePair ".claude/skills/${name}" { inherit source; }
+    ) agents.skills;
 
     # The npx-installed skills in ~/.agents/skills aren't managed by Nix, and ~/.claude/skills can't be
     # a link to that directory: Claude Code downloads claude.ai skills into ~/.claude/skills/synced.
