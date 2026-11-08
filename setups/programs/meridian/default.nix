@@ -40,12 +40,12 @@ in
           { path = "${piIdentity}/lib/pi-identity.mjs"; }
         ];
       };
-      environment = {
-        MERIDIAN_NO_UPDATE_CHECK = "1";
-        # OpenCode's Meridian shares ~/.claude/.credentials.json and already refreshes it.
-        MERIDIAN_CREDENTIALS_READONLY = "1";
-      };
+      environment.MERIDIAN_NO_UPDATE_CHECK = "1";
     };
+
+    # Two Meridians refreshing the same ~/.claude/.credentials.json can rotate each other's refresh token
+    # away. The always-on service owns refreshing; the one opencode-with-claude starts in-process only reads.
+    home.sessionVariables.MERIDIAN_CREDENTIALS_READONLY = "1";
 
   };
 
