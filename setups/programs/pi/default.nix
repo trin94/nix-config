@@ -12,7 +12,7 @@ let
   # Pi rewrites settings.json from /model and /settings, so it stays a real file. Activation fills in these
   # defaults where it lacks them, so a choice made in Pi sticks.
   defaultSettings = {
-    defaultProvider = "meridian";
+    defaultProvider = "anthropic";
     defaultModel = "claude-opus-5-5";
     defaultThinkingLevel = "high";
     theme = "catppuccin-latte/catppuccin-mocha";
@@ -50,81 +50,31 @@ let
     mv "$tmp" "$settings"
   '';
 
-  # Meridian forwards the effort but drops `budget_tokens`, so every model uses adaptive thinking and
-  # Pi's levels map to Anthropic efforts. Low to high map by name; xhigh and max need an entry.
-  efforts = {
-    xhigh = "xhigh";
-    max = "max";
-  };
-
+  # Meridian stands in for Anthropic's API, so Pi keeps its own Claude catalog and new models show up
+  # without an entry here. Only what Meridian changes is overridden.
   models = {
-    providers.meridian = {
+    providers.anthropic = {
       baseUrl = "http://127.0.0.1:${toString meridian.port}";
-      api = "anthropic-messages";
       # Meridian holds the Claude login; Pi only needs some key to list the models.
       apiKey = "meridian";
       headers.x-meridian-agent = "pi";
+      # Provider values win over the catalog's per-model values.
       compat = {
+        # Meridian forwards the effort but drops `budget_tokens`, so every model uses adaptive thinking.
         forceAdaptiveThinking = true;
         # Meridian keys its sessions on this header.
         sendSessionAffinityHeaders = true;
+        # API features the catalog turns on for Anthropic's own endpoint; Meridian isn't known to pass them on.
+        supportsMidConvoEffort = false;
+        supportsMidConvoSystemMessages = false;
+        supportsMidConvoToolChanges = false;
+        supportsStrictTools = false;
+        allowedFallbackModels = [ ];
       };
-      models = [
-        {
-          id = "claude-opus-5-5";
-          name = "Claude Opus 5.5";
-          reasoning = true;
-          input = [
-            "text"
-            "image"
-          ];
-          contextWindow = 1000000;
-          maxTokens = 128000;
-          # Adaptive thinking only, as in Pi's own anthropic catalog.
-          thinkingLevelMap = efforts // {
-            off = null;
-            minimal = null;
-          };
-          compat.supportsTemperature = false;
-        }
-        {
-          id = "claude-fable-5-1";
-          name = "Claude Fable 5.1";
-          reasoning = true;
-          input = [
-            "text"
-            "image"
-          ];
-          contextWindow = 1000000;
-          maxTokens = 128000;
-          thinkingLevelMap = efforts;
-        }
-        {
-          id = "claude-sonnet-5-5";
-          name = "Claude Sonnet 5.5";
-          reasoning = true;
-          input = [
-            "text"
-            "image"
-          ];
-          contextWindow = 200000;
-          maxTokens = 128000;
-          thinkingLevelMap = efforts;
-          compat.supportsTemperature = false;
-        }
-        {
-          id = "claude-haiku-4-5";
-          name = "Claude Haiku 4.5";
-          reasoning = true;
-          input = [
-            "text"
-            "image"
-          ];
-          contextWindow = 200000;
-          maxTokens = 64000;
-          thinkingLevelMap = efforts;
-        }
-      ];
+      # Meridian runs Sonnet and Haiku without the 1M window, which costs Extra Usage on Max.
+      modelOverrides = lib.genAttrs [ "claude-sonnet-5-5" "claude-haiku-5-5" ] (_: {
+        contextWindow = 200000;
+      });
     };
   };
 
