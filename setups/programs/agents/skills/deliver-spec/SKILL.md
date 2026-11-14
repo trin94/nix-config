@@ -52,11 +52,16 @@ As tech lead you deliver the spec with every loose end accounted for:
 ## Progress report
 
 Run **silent**. The user sees every word you write outside a tool call, so text goes only at the end of a turn: a cut
-question, a stop named above, or a **progress report**. Tool calls go out bare, with no text announcing them. When
-the user asks something mid-run, answer it in one line above the report.
+question, a stop named above, a **progress report** or an **event line**. Tool calls go out bare, with no text
+announcing them. When the user asks something mid-run, answer it in one line above the report or event line.
 
-From the go on the cut onward, end every turn on a progress report. While subagents run, its last line is `⏳ waiting`;
-while step 4 waits, `⏳ waiting on <predecessor>`.
+From the go on the cut onward, end every turn on one of the two:
+
+- A **progress report**, when any line of it would differ from the last report you posted. While subagents run, its
+  last line is `⏳ waiting`; while step 4 waits, `⏳ waiting on <predecessor>`.
+- Otherwise an **event line**: `⏳ <ticket or rollup> · <what it does now>`, taken from the message that woke you,
+  such as `⏳ #14 · fix batch 2/4` or `⏳ rollup 2 · gate fix`.
+
 Every report has this exact shape, with nothing else around it but that line and that answer, in place of the
 `reporting` skill's format;
 the values come from an example run:
@@ -95,6 +100,28 @@ Filed:
 - **Filed**: every `needs-triage` ticket this run has filed so far, then every comment it added to an open ticket as
   `#<n> (comment) <item>`, one bullet each in order, or `Filed: none`. A ticket that joined the cut is a row, not a
   Filed bullet.
+
+The `Delivered` report goes on below Filed with two sections in the `reporting` skill's format, shortcodes and DT
+codes included:
+
+```markdown
+Decisions:
+
+- #17 joined the cut: the schema check #13's review found 🔴 `AA`
+- #15 design corrected: the flag extends the config loader, not the CLI parser 🟢 `AB`
+- #14 `blocking` rejected: debounce reloads; the watcher already coalesces events 🔵 `AC`
+
+**DO THIS**
+
+* `DT1` #14: edit the config while the app runs and check that it reloads.
+```
+
+- **Decisions**: every call the run made in the user's place: a ticket that joined the cut, a corrected design, a
+  scope or spec question answered without the user, a `blocking` finding rejected. One bullet each, naming its
+  ticket, or `Decisions: none`. Append each to `decisions.md` in the notes directory when you make it; the section
+  is that file.
+- **DO THIS**: one line per acceptance criterion left for a human, such as a check on a device, naming the ticket
+  and the check. Leave the block out when none is left.
 
 ## Subagents
 
