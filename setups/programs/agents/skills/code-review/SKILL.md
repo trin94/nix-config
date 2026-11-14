@@ -1,6 +1,6 @@
 ---
 name: code-review
-description: "Review the changes since a fixed point (commit, branch, tag, or merge-base) along three axes: Standards (does the code follow this repo's documented coding standards?), Spec (does the code match what the originating issue/spec asked for?) and Design (does the change sit in the right modules and keep them deep?). Runs the reviews in parallel sub-agents and reports them side by side. Use when the user wants to review a branch, a PR, work-in-progress changes, or asks to \"review since X\"."
+description: "Review the changes since a fixed point (commit, branch, tag, or merge-base) along three axes, Standards, Spec and Design, in parallel sub-agents. Use when the user wants to review a branch, a PR, work-in-progress changes, or asks to \"review since X\"."
 ---
 
 Three-axis review of the diff between `HEAD` and a fixed point the user supplies:
@@ -30,8 +30,11 @@ The issue tracker should have been provided to you. If `docs/agents/issue-tracke
 Whatever the user said is the fixed point (a commit SHA, branch name, tag, `main`, `HEAD~5`, etc.). If they didn't
 specify one, ask for it.
 
-Capture the diff command once: `git diff <fixed-point>...HEAD` (three-dot, so the comparison is against the merge-base).
+Capture the diff command once: `git diff $(git merge-base <fixed-point> HEAD)` (against the merge-base, with uncommitted
+work).
 Also note the list of commits via `git log <fixed-point>..HEAD --oneline`.
+Write the diff, plus each untracked file as a new-file diff (`git diff --no-index /dev/null <file>`), to `diff.patch`
+in a fresh temp directory, the **review directory**: sub-agents read it there, since a review agent may have no shell.
 
 Before going further, confirm the fixed point resolves (`git rev-parse <fixed-point>`) and the diff is non-empty. A bad
 ref or empty diff should fail here, not inside three parallel sub-agents.
@@ -46,6 +49,8 @@ Look for the originating spec, in this order:
 3. A spec file under `docs/`, `specs/`, or `.scratch/` matching the branch name or feature.
 4. If nothing is found, ask the user where the spec is. If they say there isn't one, the **Spec** sub-agent will skip
    and report "no spec available".
+
+Save each spec or issue you fetched as a file in the review directory.
 
 ### 3. Identify the standards sources
 
@@ -92,12 +97,14 @@ The spec's design, when it names one (a ticket's **Design** section from `to-tic
 
 ### 4. Spawn the sub-agents in parallel
 
+Launch each as the client's read-only review agent: `reviewer` in pi.
+
 When the caller asks for **blocking only**, each brief below ends with "Report `blocking` findings only." instead of
 its tag sentence; the smell baseline then never fires, since every smell is a `nit`.
 
 **Standards sub-agent prompt** should include:
 
-- The full diff command and commit list.
+- The diff file's path and the commit list.
 - The list of standards-source files you found in step 3, **plus the smell baseline from step 3 and the merge bar**
   pasted in full (the sub-agent has no other access to them).
 - The brief: "Report, per file/hunk where relevant, (a) every place the diff violates a documented standard: cite the
@@ -107,18 +114,20 @@ its tag sentence; the smell baseline then never fires, since every smell is a `n
 
 **Spec sub-agent prompt** should include:
 
-- The diff command and commit list.
-- The path or fetched contents of the spec, **plus the merge bar** pasted in full.
+- The diff file's path and the commit list.
+- The spec's path, **plus the merge bar** pasted in full.
 - The brief: "Report: (a) requirements the spec asked for that are missing or partial; (b) behaviour in the diff that
-  wasn't asked for (scope creep); (c) requirements that look implemented but where the implementation looks wrong. Quote
-  the spec line for each finding. Tag each finding `blocking` or `nit` per the merge bar. Under 400 words."
+  wasn't asked for (scope creep); (c) requirements that look implemented but where the implementation looks wrong;
+  (d) each change to what existing code accepts, rejects or surfaces as an error that the spec doesn't ask for, with
+  the old and new behaviour, tagged `blocking`. Quote the spec line each finding rests on; `not in spec` for (b) and
+  (d). Tag each other finding `blocking` or `nit` per the merge bar. Under 400 words."
 
 If the spec is missing, skip the Spec sub-agent and note this in the final report.
 
 **Design sub-agent prompt** should include:
 
-- The diff command and commit list.
-- The design sources from step 3b, as paths or fetched contents, **plus the merge bar** pasted in full.
+- The diff file's path and the commit list.
+- The design sources from step 3b, as paths, **plus the merge bar** pasted in full.
 - The brief: "Load the `codebase-design` skill. Read every module the diff touches in full, and its callers, not just
   the hunks. Report: (a) a change placed outside the module the design names, or an interface change the design
   doesn't name; (b) a new module where an existing one could take the behaviour: name that module; (c) a module the

@@ -96,11 +96,10 @@ Filed:
   `#<n> (comment) <item>`, one bullet each in order, or `Filed: none`. A ticket that joined the cut is a row, not a
   Filed bullet.
 
-Findings, rejections, gate results and subagent reports are your working material.
-
 ## Subagents
 
-Load the `delegating` skill. Its rules on subagents, the **gate**, and verifying reports hold for every subagent below.
+Load the `delegating` skill. Its rules on subagents, the **gate**, and verifying reports hold for every subagent below;
+the ticket owner is the one subagent you resume (step 6).
 
 Each role has a brief next to this skill. Hand the subagent its brief by absolute path, plus the ticket or findings
 and the notes and spec sections to read. The brief names the report the subagent returns.
@@ -141,16 +140,23 @@ and the notes and spec sections to read. The brief names the report the subagent
    path and the
    ticket's key, the `<ticket>` in `<ticket>.md`. Keep each owner's session ID.
 
-6. Once a ticket owner reports done, turn each item it ruled bigger into a comment on an open ticket, a ticket that
-   joins the cut, or a `needs-triage` ticket, by the Role rule. Attach each joined ticket to the spec like the cut's
-   other tickets, with its design, blocked by the ticket it was found on when its fix touches that ticket's change,
-   and save it as `<ticket>.md` in the notes directory. Turn each of its scope and spec questions into an **in scope**
-   item, a `needs-triage` ticket, or a cut change for the user. A **design gap** (the implementer found the design
-   names the wrong module or misses an interface) gets a corrected design in the tracker and in `<ticket>.md`, and is
-   the owner's in-scope item. When the correction adds an interface another ticket needs, one ticket owns it and the
-   other is blocked by it. Append each finding class it reports, with the ticket, to `findings.md` in the notes
-   directory. Resume the owner in the background by its session ID with the
-   in-scope items. Done when the owner reports with no in-scope item or cut change for the ticket left open.
+6. Once a ticket owner reports done, work through its report:
+
+   - Check each `blocking` finding it rejected against the code: when the reason doesn't hold, the finding is an
+     **in scope** item.
+   - Turn each item it ruled bigger into a comment on an open ticket, a ticket that joins the cut, or a
+     `needs-triage` ticket, by the Role rule. Attach each joined ticket to the spec like the cut's other tickets, with
+     its design, blocked by the ticket it was found on when its fix touches that ticket's change, and save it as
+     `<ticket>.md` in the notes directory.
+   - Turn each of its scope and spec questions into an **in scope** item, a `needs-triage` ticket, or a cut change
+     for the user.
+   - A **design gap** (the implementer found the design names the wrong module or misses an interface) gets a
+     corrected design in the tracker and in `<ticket>.md`, and is the owner's in-scope item. When the correction adds
+     an interface another ticket needs, one ticket owns it and the other is blocked by it.
+   - Append each finding class it reports, with the ticket, to `findings.md` in the notes directory.
+
+   Resume the owner in the background by its session ID with the in-scope items. Done when the owner reports with no
+   in-scope item or cut change for the ticket left open.
 
 7. Merge in **rollups**, one at a time. Whenever no rollup is open (its merger or its gate fix still running) and a
    ticket is done with step 6, create a worktree detached at the integration branch tip and launch a **merger

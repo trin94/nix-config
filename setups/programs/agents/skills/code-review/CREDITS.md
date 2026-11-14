@@ -9,7 +9,11 @@ by **Matt Pocock**:
 
 What this copy changed: lines were wrapped at 120 characters, and a paragraph
 was added for callers that ask for blocking findings only, and a third review
-axis, Design, was added beside Standards and Spec.
+axis, Design, was added beside Standards and Spec. The diff now includes
+uncommitted work, and sub-agents read it, the spec and the design sources
+from files and run as the client's review agent. The Spec axis also checks
+changes to existing input validation and error handling, and the description
+no longer restates the axes.
 
 ## License
 
