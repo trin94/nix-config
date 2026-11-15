@@ -199,7 +199,6 @@ in
     ];
 
     # Pi finds ~/.agents/skills itself but reads its global rules only from its own directory.
-    # Skills in ~/.pi/agent/skills win name clashes over ~/.agents/skills.
     home.file = {
       ".pi/agent/AGENTS.md".source = agents.rules;
       ".pi/agent/models.json".text = builtins.toJSON models;
@@ -213,10 +212,7 @@ in
     }
     // lib.optionalAttrs cfg.extensions.herdr.enable {
       ".pi/agent/extensions/herdr-agent-state.ts".source = herdrExtension;
-    }
-    // lib.mapAttrs' (
-      name: source: lib.nameValuePair ".pi/agent/skills/${name}" { inherit source; }
-    ) agents.skillOverrides;
+    };
 
     # Pi's default, set explicitly: without it pi-claude-code-ui 1.0.109 reads its settings from
     # ~/.pi/settings.json instead of ~/.pi/agent/settings.json, and switches the theme.

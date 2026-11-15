@@ -110,7 +110,7 @@ in
 
     # The npx-installed skills in ~/.agents/skills aren't managed by Nix, and ~/.claude/skills can't be
     # a link to that directory: Claude Code downloads claude.ai skills into ~/.claude/skills/synced.
-    # Link each one by name instead; the repo's skills above win over npx copies of the same name.
+    # Link each one by name instead, skipping the repo's own skills, which are linked above.
     # Runs before the link check, so a stale link never collides with a skill the repo just took over.
     home.activation.claudeCodeSkills = lib.hm.dag.entryBefore [ "checkLinkTargets" ] ''
       agents="$HOME/.agents/skills"

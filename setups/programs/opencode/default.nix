@@ -107,12 +107,6 @@ in
 
     xdg.configFile."opencode/AGENTS.md".source = agents.rules;
 
-    # Shadow the npx-installed copies in ~/.agents/skills (higher precedence).
-    home.file = lib.mapAttrs' (
-      name: source:
-      lib.nameValuePair "${config.xdg.configHome}/opencode/skills/${name}" { inherit source; }
-    ) agents.skillOverrides;
-
     xdg.configFile."opencode/opencode.json".text = builtins.toJSON (
       {
         "$schema" = "https://opencode.ai/config.json";
