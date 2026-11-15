@@ -120,7 +120,7 @@ in
         # deliver-spec's ticket owner launches its own subagents; only agents allowed `subagent` can use the second level.
         experimental.subagent_depth = 2;
         agents.ticket-owner = {
-          description = "Owns one deliver-spec ticket: implementation, review and fixes. Launch only from deliver-spec.";
+          inherit (agents.ticketOwner) description;
           mode = "subagent";
           # The built-in general agent can't launch subagents; the owner has to.
           permissions = [

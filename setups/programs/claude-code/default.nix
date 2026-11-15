@@ -37,16 +37,14 @@ in
     home.file = {
       ".claude/CLAUDE.md".source = agents.rules;
 
-      ".claude/agents/deliver-spec-ticket-owner.md".text = ''
+      ".claude/agents/ticket-owner.md".text = ''
         ---
-        name: deliver-spec-ticket-owner
-        description: "Owns one deliver-spec ticket: implementation, review and fixes. Launch only from deliver-spec."
+        name: ticket-owner
+        description: ${builtins.toJSON agents.ticketOwner.description}
         tools: Agent, Bash, Edit, Glob, Grep, LSP, Monitor, NotebookEdit, Read, SendMessage, Skill, TaskStop, TodoWrite, ToolSearch, WebFetch, WebSearch, Write
         ---
 
-        You own one deliver-spec ticket. Your prompt names the brief to follow and the notes to read. Launch the
-        subagents the brief asks for yourself.
-      '';
+        ${agents.ticketOwner.prompt}'';
 
       # Claude Code rewrites this file from /config and /model. Those changes now last one session; the
       # file it wrote before held only `theme`, which is carried over here.

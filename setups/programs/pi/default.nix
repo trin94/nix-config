@@ -209,6 +209,20 @@ in
       ".pi/agent/extensions/agents-local.ts".source = ./extensions/agents-local.ts;
       ".pi/agent/extensions/loaded-skills.ts".source = ./extensions/loaded-skills.ts;
       ".pi/agent/extensions/footer".source = footerExtension;
+      # pi-subagents: the owner keeps the default tools and Pi's own prompt, rules and skills, and gets the
+      # nested subagent tool. Its default depth of 2 covers the main session -> ticket owner -> its workers.
+      ".pi/agent/agents/ticket-owner.md".text = ''
+        ---
+        name: ticket-owner
+        description: ${builtins.toJSON agents.ticketOwner.description}
+        systemPromptMode: append
+        inheritProjectContext: true
+        inheritGlobalContext: true
+        inheritSkills: true
+        allowNestedSubagents: true
+        ---
+
+        ${agents.ticketOwner.prompt}'';
     }
     // lib.optionalAttrs cfg.extensions.herdr.enable {
       ".pi/agent/extensions/herdr-agent-state.ts".source = herdrExtension;
