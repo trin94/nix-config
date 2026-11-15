@@ -35,6 +35,11 @@
       inputs.meridian-plugin-pi-scrub.url = "github:rynfar/meridian-plugin-pi-scrub/09c4b53a0dc0194e037a0953a1d5ee321a6349c3";
     };
 
+    mattpocock-skills = {
+      url = "github:mattpocock/skills/v1.3.1";
+      flake = false;
+    };
+
   };
 
   outputs =

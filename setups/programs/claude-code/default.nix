@@ -8,7 +8,6 @@ let
   cfg = config.myOS.programs.claude-code;
 
   agents = config.myOS.programs.agents;
-  repoSkills = lib.attrNames agents.skills;
 
   # The same paths OpenCode reaches through external_directory and its edit rule.
   externalDirectories = [
@@ -107,36 +106,6 @@ in
     // lib.mapAttrs' (
       name: source: lib.nameValuePair ".claude/skills/${name}" { inherit source; }
     ) agents.skills;
-
-    # The npx-installed skills in ~/.agents/skills aren't managed by Nix, and ~/.claude/skills can't be
-    # a link to that directory: Claude Code downloads claude.ai skills into ~/.claude/skills/synced.
-    # Link each one by name instead, skipping the repo's own skills, which are linked above.
-    # Runs before the link check, so a stale link never collides with a skill the repo just took over.
-    home.activation.claudeCodeSkills = lib.hm.dag.entryBefore [ "checkLinkTargets" ] ''
-      agents="$HOME/.agents/skills"
-      skills="$HOME/.claude/skills"
-      isRepoSkill() {
-        case " ${lib.concatStringsSep " " repoSkills} " in *" $1 "*) return 0 ;; esac
-        return 1
-      }
-
-      run mkdir -p "$skills"
-      for link in "$skills"/*; do
-        [ -L "$link" ] || continue
-        case "$(readlink "$link")" in "$agents"/*) ;; *) continue ;; esac
-        name=$(basename "$link")
-        if [ ! -e "$link" ] || isRepoSkill "$name"; then
-          run rm "$link"
-        fi
-      done
-      for dir in "$agents"/*/; do
-        [ -d "$dir" ] || continue
-        name=$(basename "$dir")
-        isRepoSkill "$name" && continue
-        [ -e "$skills/$name" ] || [ -L "$skills/$name" ] && continue
-        run ln -s "$agents/$name" "$skills/$name"
-      done
-    '';
 
   };
 
