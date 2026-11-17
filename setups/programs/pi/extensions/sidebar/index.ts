@@ -1,10 +1,12 @@
 import { homedir } from "node:os";
 import type { ExtensionAPI, ExtensionContext } from "@earendil-works/pi-coding-agent";
-import type { RgbColor, TUI } from "@earendil-works/pi-tui";
+import type { Component, RgbColor, TUI } from "@earendil-works/pi-tui";
 import { Dock } from "./dock";
 import { subagentFeed } from "./feed";
-import { type GitState, panelBackground, sidebarLines } from "./sections";
+import { actionAt, type GitState, type Hit, panelBackground, type SidebarAction, sidebarLines } from "./sections";
 import { trackSkills } from "./skills";
+import { findNode } from "./subagents";
+import { transcriptViewer } from "./transcript";
 import { collectStatus, type GitRunner, gitRunner } from "./vcs";
 
 // Git is read from outside Pi; the footer this replaces refreshed as often.
@@ -32,6 +34,22 @@ export default function (pi: ExtensionAPI) {
     const redraw = () => tui?.requestRender();
     const skills = trackSkills(pi, redraw);
     const subagents = subagentFeed(pi, redraw);
+    const viewer = transcriptViewer((path) => findNode(subagents.nodes(), path), redraw);
+    // Subtrees the person opened or folded, until the session changes.
+    const folds = new Map<string, boolean>();
+
+    const act = (action: SidebarAction, ctx: ExtensionContext) => {
+        if (action.kind === "main") viewer.close();
+        else if (action.kind === "fold") folds.set(action.path, action.open);
+        else {
+            const settings = pi.getSettings();
+            viewer.toggle(action.path, ctx, {
+                hideThinkingBlock: settings.hideThinkingBlock ?? false,
+                outputPad: settings.outputPad ?? 1,
+            });
+        }
+        redraw();
+    };
 
     // Tool calls and the timer overlap; one git pass at a time is enough.
     const refresh = async (cwd: string) => {
@@ -56,10 +74,14 @@ export default function (pi: ExtensionAPI) {
         context: ctx.getContextUsage(),
         skills: skills(),
         subagents: subagents.nodes(),
+        folds,
+        viewed: viewer.viewed(),
         git,
     });
 
     pi.on("session_start", (_event, ctx) => {
+        folds.clear();
+        viewer.close();
         if (!ctx.hasUI) return;
         ctx.ui.setWidget(
             "sidebar",
@@ -76,18 +98,26 @@ export default function (pi: ExtensionAPI) {
                     void renderer.queryTerminalColors({ timeoutMs: COLOR_QUERY_MS, onLateReply: learn }).then(learn);
                 askColors();
                 const stopSchemeWatch = renderer.onTerminalColorSchemeChange(askColors);
-                const dock = new Dock(renderer, {
+                // Where the last frame put each clickable span.
+                let hits: readonly Hit[] = [];
+                const panel: Component = {
                     // The panel spans the whole screen, so its background reaches the bottom row.
-                    render: (width) =>
-                        sidebarLines(
-                            data(ctx),
-                            theme,
-                            width,
-                            renderer.terminal.rows,
-                            panelBackground(theme, terminalBg),
-                        ),
+                    render(width) {
+                        const bg = panelBackground(theme, terminalBg);
+                        const drawn = sidebarLines(data(ctx), theme, width, renderer.terminal.rows, bg);
+                        hits = drawn.hits;
+                        return drawn.lines;
+                    },
+                    // Claiming the press makes the release a click on the panel; elsewhere text selection keeps it.
+                    handleMouse(event) {
+                        const action = event.button === "left" ? actionAt(hits, event.x, event.y) : undefined;
+                        if (!action) return;
+                        if (event.type === "click") act(action, ctx);
+                        return { handled: true };
+                    },
                     invalidate() {},
-                });
+                };
+                const dock = new Dock(renderer, panel);
                 void refresh(ctx.cwd);
                 const timer = setInterval(() => void refresh(ctx.cwd), REFRESH_MS);
                 const scan = () => void subagents.refresh(ctx.sessionManager.getSessionFile());
@@ -100,6 +130,7 @@ export default function (pi: ExtensionAPI) {
                         clearInterval(timer);
                         clearInterval(subagentTimer);
                         stopSchemeWatch();
+                        viewer.close();
                         dock.dispose();
                         tui = undefined;
                     },

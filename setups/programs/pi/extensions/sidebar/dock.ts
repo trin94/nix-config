@@ -8,6 +8,9 @@ export const SIDEBAR_COLUMNS = 42;
 /** Below this many columns left for the chat, the sidebar steps aside. */
 const MIN_MAIN_COLUMNS = 80;
 
+/** Whether a screen `columns` wide has room for the sidebar beside the chat. */
+export const sidebarShown = (columns: number) => columns >= SIDEBAR_COLUMNS + MIN_MAIN_COLUMNS;
+
 // Shared across module copies, so a root an earlier runtime (a reload, a session switch) left mounted is still
 // recognised and unwrapped instead of nested.
 const BASE = Symbol.for("dotfiles/pi-sidebar:base");
@@ -22,7 +25,7 @@ class DockRoot extends HStack {
                 component: panel,
                 basis: SIDEBAR_COLUMNS,
                 shrink: 0,
-                visible: (viewport) => viewport.width >= SIDEBAR_COLUMNS + MIN_MAIN_COLUMNS,
+                visible: (viewport) => sidebarShown(viewport.width),
             },
         ]);
         this[BASE] = base;

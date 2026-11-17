@@ -167,6 +167,7 @@ let
     cp ${./extensions/sidebar/feed.ts} $out/feed.ts
     cp ${./extensions/sidebar/subagents.ts} $out/subagents.ts
     cp ${./extensions/sidebar/sections.ts} $out/sections.ts
+    cp ${./extensions/sidebar/transcript.ts} $out/transcript.ts
     cp ${./extensions/sidebar/skills.ts} $out/skills.ts
     cp ${../opencode/plugins/my-vcs-status/vcs.ts} $out/vcs.ts
   '';
@@ -214,9 +215,13 @@ in
       ".pi/agent/extensions/agents-local.ts".source = ./extensions/agents-local.ts;
       ".pi/agent/extensions/footer.ts".source = ./extensions/footer.ts;
       ".pi/agent/extensions/sidebar".source = sidebarExtension;
-      # The sidebar lists background runs with the rest of the subagents, so pi-subagents' widget below the
-      # editor would only repeat them. Pi loads no extension from this directory: it holds no index.ts.
-      ".pi/agent/extensions/subagent/config.json".text = builtins.toJSON { asyncWidget = false; };
+      # The sidebar lists every subagent and opens its transcript, so pi-subagents' widget and FleetView below
+      # the editor would only repeat them; /subagents-fleet still opens its inspector. Pi loads no extension
+      # from this directory: it holds no index.ts.
+      ".pi/agent/extensions/subagent/config.json".text = builtins.toJSON {
+        asyncWidget = false;
+        fleetView = false;
+      };
       # pi-subagents: the owner keeps the default tools and Pi's own prompt, rules and skills, and gets the
       # nested subagent tool. Its default depth of 2 covers the main session -> ticket owner -> its workers.
       ".pi/agent/agents/ticket-owner.md".text = ''

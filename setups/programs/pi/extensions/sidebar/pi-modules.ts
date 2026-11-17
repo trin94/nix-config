@@ -8,7 +8,7 @@ const install = `${process.env.PI_CODING_AGENT_DIR ?? `${homedir()}/.pi/agent`}/
 const version = readFileSync(`${install}/current-version`, "utf8").trim();
 const modules = `${install}/releases/${version}/node_modules`;
 
-for (const name of ["@earendil-works/pi-tui"]) {
+for (const name of ["@earendil-works/pi-tui", "@earendil-works/pi-coding-agent"]) {
     const module = await import(Bun.resolveSync(name, modules));
     mock.module(name, () => module);
 }

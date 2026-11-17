@@ -11,7 +11,7 @@ import {
     truncateToWidth,
     visibleWidth,
 } from "@earendil-works/pi-tui";
-import { descendants, type SubagentNode, subagentRows } from "./subagents";
+import { descendants, type Folds, type SubagentNode, type SubagentState, subagentRows } from "./subagents";
 import { statusSegments, type VcsStatus } from "./vcs";
 
 export type Style = Pick<Theme, "fg" | "bold" | "getBgAnsi" | "getColorMode">;
@@ -31,6 +31,17 @@ export type GitState = VcsStatus & {
     head: string;
 };
 
+/** What a click on the panel does. */
+export type SidebarAction =
+    | { kind: "view"; path: string }
+    | { kind: "fold"; path: string; open: boolean }
+    | { kind: "main" };
+
+/** A clickable span on one row: columns `from` up to `to`. The first span listed for a cell wins. */
+export type Hit = { row: number; from: number; to: number; action: SidebarAction };
+
+export type Section = { lines: string[]; hits: Hit[] };
+
 export type SidebarData = {
     title: string | undefined;
     cwd: string;
@@ -41,6 +52,10 @@ export type SidebarData = {
     context: ContextUsage | undefined;
     skills: readonly string[];
     subagents: readonly SubagentNode[];
+    /** Subtrees the person opened or folded, by session file. */
+    folds: Folds;
+    /** The session file of the subagent whose transcript is open. */
+    viewed: string | undefined;
     /** Null outside a repository. */
     git: GitState | null;
 };
@@ -101,26 +116,64 @@ const ERROR_TOKENS = 225_000;
 const MARK = { running: "●", done: "✓", failed: "✗" } as const;
 const MARK_COLOR = { running: "accent", done: "success", failed: "error" } as const;
 
-/** Hidden until the session has launched a subagent. Finished rows dim, as in the Claude Code sidebar. */
-function subagents(nodes: readonly SubagentNode[], style: Style, width: number): string[] {
-    if (nodes.length === 0) return [];
-    const count = nodes.reduce((sum, node) => sum + 1 + descendants(node), 0);
-    const rows = subagentRows(nodes).map((row) => {
-        const tone = row.tokens >= ERROR_TOKENS ? "error" : row.tokens >= WARNING_TOKENS ? "warning" : "dim";
-        const tokens = row.tokens > 0 ? style.fg(tone, formatTokens(row.tokens)) : "";
-        const name = row.state === "running" ? row.agent : style.fg("dim", row.agent);
-        const folded = row.hidden > 0 ? style.fg("dim", ` +${row.hidden}`) : "";
-        const left = `${style.fg("dim", row.prefix)}${style.fg(MARK_COLOR[row.state], MARK[row.state])} ${name}${folded}`;
-        return spread(left, tokens, width);
-    });
-    return [style.bold(`Subagents (${count})`), ...rows];
+export function tokenTone(tokens: number): "error" | "warning" | "dim" {
+    return tokens >= ERROR_TOKENS ? "error" : tokens >= WARNING_TOKENS ? "warning" : "dim";
 }
+
+export function stateMark(state: SubagentState, style: Style): string {
+    return style.fg(MARK_COLOR[state], MARK[state]);
+}
+
+const MAIN = "← Main conversation";
 
 /** `left` and `right` on one row, `right` flush to the edge, `left` clipped when they do not fit. */
 function spread(left: string, right: string, width: number): string {
     if (!right) return clipEnd(left, width);
     const clipped = clipEnd(left, Math.max(1, width - visibleWidth(right) - 1));
     return clipped + " ".repeat(Math.max(1, width - visibleWidth(clipped) - visibleWidth(right))) + right;
+}
+
+/**
+ * Hidden until the session has launched a subagent. Each row is the agent, then its task under it; finished rows
+ * dim, the viewed one stands out, as in the Claude Code sidebar. A click on a row views its transcript, on `+N`
+ * or `−` opens or folds its subtree.
+ */
+function subagents(data: SidebarData, style: Style, width: number): Section {
+    const nodes = data.subagents;
+    if (nodes.length === 0) return { lines: [], hits: [] };
+    const count = nodes.reduce((sum, node) => sum + 1 + descendants(node), 0);
+    const title = style.bold(`Subagents (${count})`);
+    const lines = [data.viewed ? spread(title, style.fg("accent", MAIN), width) : title];
+    const hits: Hit[] = data.viewed
+        ? [{ row: 0, from: width - visibleWidth(MAIN), to: width, action: { kind: "main" } }]
+        : [];
+    for (const row of subagentRows(nodes, data.folds)) {
+        const { node } = row;
+        const viewed = node.path === data.viewed;
+        const name = viewed
+            ? style.bold(style.fg("accent", node.agent))
+            : node.state === "running"
+              ? node.agent
+              : style.fg("dim", node.agent);
+        const fold = row.hidden > 0 ? `+${row.hidden}` : row.expanded ? "−" : "";
+        const tokens = node.tokens > 0 ? style.fg(tokenTone(node.tokens), formatTokens(node.tokens)) : "";
+        const right = [fold && style.fg("dim", fold), tokens].filter(Boolean).join(" ");
+        const top = lines.length;
+        lines.push(spread(`${style.fg("dim", row.prefix)}${stateMark(node.state, style)} ${name}`, right, width));
+        if (fold) {
+            const from = width - visibleWidth(right);
+            const action = { kind: "fold", path: node.path, open: !row.expanded } as const;
+            hits.push({ row: top, from, to: from + visibleWidth(fold), action });
+        }
+        if (node.task) {
+            const guide = style.fg("dim", `${row.continuation}${row.expanded ? "│ " : "  "}`);
+            lines.push(clipEnd(`${guide}${viewed ? node.task : style.fg("dim", node.task)}`, width));
+        }
+        for (let line = top; line < lines.length; line++) {
+            hits.push({ row: line, from: 0, to: width, action: { kind: "view", path: node.path } });
+        }
+    }
+    return { lines, hits };
 }
 
 function git(state: GitState | null, style: Style, width: number): string[] {
@@ -138,22 +191,33 @@ function git(state: GitState | null, style: Style, width: number): string[] {
 const PADDING_X = 2;
 
 /** Padding on each side, a blank row on top and between sections. */
-export function sidebarContent(data: SidebarData, style: Style, width: number): string[] {
+export function sidebarContent(data: SidebarData, style: Style, width: number): Section {
     const inner = Math.max(1, width - PADDING_X * 2);
     const pad = " ".repeat(PADDING_X);
+    const plain = (lines: string[]): Section => ({ lines, hits: [] });
     const sections = [
-        header(data, style, inner),
-        context(data.context, style, inner),
-        skills(data.skills, style, inner),
-        subagents(data.subagents, style, inner),
-        git(data.git, style, inner),
-    ].filter((lines) => lines.length > 0);
+        plain(header(data, style, inner)),
+        plain(context(data.context, style, inner)),
+        plain(skills(data.skills, style, inner)),
+        subagents(data, style, inner),
+        plain(git(data.git, style, inner)),
+    ].filter((section) => section.lines.length > 0);
     const lines = [""];
+    const hits: Hit[] = [];
     for (const [index, section] of sections.entries()) {
         if (index > 0) lines.push("");
-        lines.push(...section.map((line) => `${pad}${line}`));
+        const offset = lines.length;
+        lines.push(...section.lines.map((line) => `${pad}${line}`));
+        for (const hit of section.hits) {
+            hits.push({ ...hit, row: hit.row + offset, from: hit.from + PADDING_X, to: hit.to + PADDING_X });
+        }
     }
-    return lines;
+    return { lines, hits };
+}
+
+/** What a click at column `x` of row `y` does. */
+export function actionAt(hits: readonly Hit[], x: number, y: number): SidebarAction | undefined {
+    return hits.find((hit) => hit.row === y && x >= hit.from && x < hit.to)?.action;
 }
 
 /**
@@ -168,11 +232,12 @@ export function panelBackground(style: Style, terminal: RgbColor | undefined): s
 }
 
 /** The content on a panel `height` rows tall, every row padded to `width`, in the `bg` escape. */
-export function sidebarLines(data: SidebarData, style: Style, width: number, height: number, bg: string): string[] {
+export function sidebarLines(data: SidebarData, style: Style, width: number, height: number, bg: string): Section {
     const content = sidebarContent(data, style, width);
-    const rows = Array.from({ length: Math.max(height, content.length) }, (_, row) => content[row] ?? "");
-    return rows.map((line) => {
+    const rows = Array.from({ length: Math.max(height, content.lines.length) }, (_, row) => content.lines[row] ?? "");
+    const lines = rows.map((line) => {
         const padded = truncateToWidth(line, width, "", true);
         return `${bg}${padded.replaceAll(RESET, `${RESET}${bg}`)}${DEFAULT_BG}`;
     });
+    return { lines, hits: content.hits };
 }

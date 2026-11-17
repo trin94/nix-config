@@ -6,10 +6,18 @@
 import { open, readdir } from "node:fs/promises";
 import { basename, join, relative, sep } from "node:path";
 import type { ExtensionAPI } from "@earendil-works/pi-coding-agent";
-import { type SubagentNode, type SubagentSession, subagentTree, summarize } from "./subagents";
+import {
+    readHead,
+    type SubagentHead,
+    type SubagentNode,
+    type SubagentSession,
+    subagentTree,
+    summarize,
+} from "./subagents";
 
-// The header and name sit in the first lines, before the system prompt; the last response fits in the tail.
-const HEAD_BYTES = 8 * 1024;
+// The header, name and task sit in the first lines, the task after the system prompt; the last response fits
+// in the tail.
+const HEAD_BYTES = 64 * 1024;
 const TAIL_BYTES = 64 * 1024;
 // pi-subagents fires its events in bursts; it asks hosts to coalesce them.
 const STATUS_COALESCE_MS = 250;
@@ -26,16 +34,25 @@ function isRecord(value: unknown): value is Record<string, unknown> {
     return typeof value === "object" && value !== null;
 }
 
-async function readEdges(path: string): Promise<{ head: string; tail: string }> {
+// A head stops changing once its task is in; read on every scan until then.
+const heads = new Map<string, SubagentHead>();
+
+async function readSession(path: string): Promise<SubagentSession | undefined> {
     const file = await open(path, "r");
     try {
         const { size } = await file.stat();
-        const head = Buffer.alloc(Math.min(size, HEAD_BYTES));
-        await file.read(head, 0, head.length, 0);
+        let head = heads.get(path);
+        if (!head) {
+            const bytes = Buffer.alloc(Math.min(size, HEAD_BYTES));
+            await file.read(bytes, 0, bytes.length, 0);
+            head = readHead(bytes.toString("utf8"));
+            if (!head) return;
+            if (head.task || size > HEAD_BYTES) heads.set(path, head);
+        }
         const tailStart = Math.max(0, size - TAIL_BYTES);
         const tail = Buffer.alloc(size - tailStart);
         await file.read(tail, 0, tail.length, tailStart);
-        return { head: head.toString("utf8"), tail: tail.toString("utf8") };
+        return summarize(path, head, tail.toString("utf8"));
     } finally {
         await file.close();
     }
@@ -53,10 +70,8 @@ async function childSessions(dir: string): Promise<SubagentSession[]> {
         files
             .filter((file) => basename(file) === "session.jsonl")
             .map(async (file) => {
-                const path = join(dir, file);
                 try {
-                    const { head, tail } = await readEdges(path);
-                    return summarize(path, head, tail);
+                    return await readSession(join(dir, file));
                 } catch {
                     return undefined;
                 }
