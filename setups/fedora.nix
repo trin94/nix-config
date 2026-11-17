@@ -35,7 +35,10 @@ in
       configure = true;
     };
 
-    claude-code.enable = true;
+    claude-code = {
+      enable = true;
+      plugins.my-sidebar.enable = true;
+    };
     cosign.enable = true;
     devenv.enable = true;
     dtrx.enable = true;
