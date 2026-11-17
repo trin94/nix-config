@@ -1,0 +1,6 @@
+{
+    "name": "my-sidebar",
+    "version": "0.1.0",
+    "description": "Permanent sidebar laid out like OpenCode's: context, skills, subagents, Git",
+    "types": "./types/index.d.ts"
+}

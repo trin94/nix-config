@@ -16,12 +16,17 @@ let
     "~/git"
     "~/PycharmProjects"
   ];
+
+  # Loaded from the store through CLAUDE_CODE_PLUGIN_DIRS; no marketplace install.
+  pluginDirs = lib.optional cfg.plugins.my-sidebar.enable ./plugins/my-sidebar;
 in
 {
 
   options.myOS.programs.claude-code = with lib; {
 
     enable = mkEnableOption "Claude Code configuration (the binary stays with the native installer in ~/.local/bin)";
+
+    plugins.my-sidebar.enable = mkEnableOption "the my-sidebar Claude Code plugin, which replaces the status line";
 
   };
 
@@ -50,55 +55,68 @@ in
       # file it wrote before held only `theme`, which is carried over here.
       ".claude/settings.json" = {
         force = true;
-        text = builtins.toJSON {
-          "$schema" = "https://json.schemastore.org/claude-code-settings.json";
-          theme = "dark";
-          showThinkingSummaries = false;
-          # commit-conventions: the user is the sole author.
-          attribution = {
-            commit = "";
-            pr = "";
-            sessionUrl = false;
-          };
-          env = {
-            DISABLE_TELEMETRY = "1";
-            # deliver-spec: the main session -> ticket owner -> its workers, like OpenCode's subagent_depth.
-            CLAUDE_CODE_MAX_SUBAGENT_SPAWN_DEPTH = "2";
-          };
-          # Deny beats ask beats allow here, whatever the order. Only a `!` deny pattern carves an
-          # exception out of the deny patterns before it.
-          permissions = {
-            allow = [
-              "Bash"
-              "Edit(./**)"
-              "Skill"
-              "WebFetch"
-              "WebSearch"
-              "Read(//nix/store/**)"
-            ]
-            ++ lib.concatMap (dir: [
-              "Read(${dir}/**)"
-              "Edit(${dir}/**)"
-            ]) externalDirectories;
-            deny = [
-              "Read(*.env)"
-              "Read(*.env.*)"
-              "Read(!*.env.example)"
-              # Skills load through the Skill tool. A Read deny also blocks edits, so the repo sources stay open.
-              "Read(~/.claude/skills/**/SKILL.md)"
-              "Read(~/.agents/skills/**/SKILL.md)"
-              "Read(**/.claude/skills/**/SKILL.md)"
-              # Personal rule, as in OpenCode.
-              "AskUserQuestion"
-            ];
-          };
-          statusLine = {
-            type = "command";
-            command = "${lib.getExe pkgs.nushell} --stdin ${./statusline.nu}";
-            # Background subagents change Git while the main session idles; my-vcs-status polls every 5 s too.
-            refreshInterval = 5;
-          };
-        };
+        text = builtins.toJSON (
+          {
+            "$schema" = "https://json.schemastore.org/claude-code-settings.json";
+            theme = "dark";
+            showThinkingSummaries = false;
+            # commit-conventions: the user is the sole author.
+            attribution = {
+              commit = "";
+              pr = "";
+              sessionUrl = false;
+            };
+            env = {
+              DISABLE_TELEMETRY = "1";
+              # deliver-spec: the main session -> ticket owner -> its workers, like OpenCode's subagent_depth.
+              CLAUDE_CODE_MAX_SUBAGENT_SPAWN_DEPTH = "2";
+            }
+            // lib.optionalAttrs (pluginDirs != [ ]) {
+              CLAUDE_CODE_PLUGIN_DIRS = lib.concatMapStringsSep ":" (dir: "${dir}") pluginDirs;
+            };
+            # Deny beats ask beats allow here, whatever the order. Only a `!` deny pattern carves an
+            # exception out of the deny patterns before it.
+            permissions = {
+              allow = [
+                "Bash"
+                "Edit(./**)"
+                "Skill"
+                "WebFetch"
+                "WebSearch"
+                "Read(//nix/store/**)"
+              ]
+              ++ lib.concatMap (dir: [
+                "Read(${dir}/**)"
+                "Edit(${dir}/**)"
+              ]) externalDirectories;
+              deny = [
+                "Read(*.env)"
+                "Read(*.env.*)"
+                "Read(!*.env.example)"
+                # Skills load through the Skill tool. A Read deny also blocks edits, so the repo sources stay open.
+                "Read(~/.claude/skills/**/SKILL.md)"
+                "Read(~/.agents/skills/**/SKILL.md)"
+                "Read(**/.claude/skills/**/SKILL.md)"
+                # Personal rule, as in OpenCode.
+                "AskUserQuestion"
+              ];
+            };
+          }
+          # my-sidebar shows the status line's context, Git and skills, and only the alt-screen renderer docks it.
+          // (
+            if cfg.plugins.my-sidebar.enable then
+              { tui = "fullscreen"; }
+            else
+              {
+                statusLine = {
+                  type = "command";
+                  command = "${lib.getExe pkgs.nushell} --stdin ${./statusline.nu}";
+                  # Background subagents change Git while the main session idles; my-vcs-status polls every 5 s too.
+                  refreshInterval = 5;
+                };
+              }
+          )
+        );
       };
     }
     // lib.mapAttrs' (
