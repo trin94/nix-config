@@ -2,12 +2,15 @@ import { homedir } from "node:os";
 import type { ExtensionAPI, ExtensionContext } from "@earendil-works/pi-coding-agent";
 import type { RgbColor, TUI } from "@earendil-works/pi-tui";
 import { Dock } from "./dock";
+import { subagentFeed } from "./feed";
 import { type GitState, panelBackground, sidebarLines } from "./sections";
 import { trackSkills } from "./skills";
 import { collectStatus, type GitRunner, gitRunner } from "./vcs";
 
 // Git is read from outside Pi; the footer this replaces refreshed as often.
 const REFRESH_MS = 5000;
+// Subagents' token counts grow without an event; the Claude Code sidebar redraws as often.
+const SUBAGENT_MS = 2000;
 // As long as Pi waits for its own colour query; a later reply still lands through onLateReply.
 const COLOR_QUERY_MS = 100;
 
@@ -20,7 +23,7 @@ async function collectGit(run: GitRunner): Promise<GitState | null> {
 
 /**
  * A permanent sidebar beside the chat, as in the Claude Code and OpenCode setups: session, context, loaded
- * skills and Git. Fullscreen mode only; the footer keeps just the other extensions' statuses.
+ * skills, subagents and Git. Fullscreen mode only; the footer keeps just the other extensions' statuses.
  */
 export default function (pi: ExtensionAPI) {
     let tui: TUI | undefined;
@@ -28,6 +31,7 @@ export default function (pi: ExtensionAPI) {
     let refreshing = false;
     const redraw = () => tui?.requestRender();
     const skills = trackSkills(pi, redraw);
+    const subagents = subagentFeed(pi, redraw);
 
     // Tool calls and the timer overlap; one git pass at a time is enough.
     const refresh = async (cwd: string) => {
@@ -51,6 +55,7 @@ export default function (pi: ExtensionAPI) {
         thinking: ctx.model?.reasoning ? pi.getThinkingLevel() : undefined,
         context: ctx.getContextUsage(),
         skills: skills(),
+        subagents: subagents.nodes(),
         git,
     });
 
@@ -85,11 +90,15 @@ export default function (pi: ExtensionAPI) {
                 });
                 void refresh(ctx.cwd);
                 const timer = setInterval(() => void refresh(ctx.cwd), REFRESH_MS);
+                const scan = () => void subagents.refresh(ctx.sessionManager.getSessionFile());
+                scan();
+                const subagentTimer = setInterval(scan, SUBAGENT_MS);
                 return {
                     render: (width: number) => dock.render(width),
                     invalidate() {},
                     dispose() {
                         clearInterval(timer);
+                        clearInterval(subagentTimer);
                         stopSchemeWatch();
                         dock.dispose();
                         tui = undefined;

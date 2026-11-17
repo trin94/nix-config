@@ -11,6 +11,7 @@ import {
     truncateToWidth,
     visibleWidth,
 } from "@earendil-works/pi-tui";
+import { descendants, type SubagentNode, subagentRows } from "./subagents";
 import { statusSegments, type VcsStatus } from "./vcs";
 
 export type Style = Pick<Theme, "fg" | "bold" | "getBgAnsi" | "getColorMode">;
@@ -39,6 +40,7 @@ export type SidebarData = {
     thinking: string | undefined;
     context: ContextUsage | undefined;
     skills: readonly string[];
+    subagents: readonly SubagentNode[];
     /** Null outside a repository. */
     git: GitState | null;
 };
@@ -92,6 +94,35 @@ function skills(names: readonly string[], style: Style, width: number): string[]
     return [style.bold(`Skills (${names.length})`), ...names.map((name) => style.fg("dim", clipEnd(name, width)))];
 }
 
+// The Claude Code sidebar's thresholds, so one size reads the same colour in both.
+const WARNING_TOKENS = 125_000;
+const ERROR_TOKENS = 225_000;
+
+const MARK = { running: "●", done: "✓", failed: "✗" } as const;
+const MARK_COLOR = { running: "accent", done: "success", failed: "error" } as const;
+
+/** Hidden until the session has launched a subagent. Finished rows dim, as in the Claude Code sidebar. */
+function subagents(nodes: readonly SubagentNode[], style: Style, width: number): string[] {
+    if (nodes.length === 0) return [];
+    const count = nodes.reduce((sum, node) => sum + 1 + descendants(node), 0);
+    const rows = subagentRows(nodes).map((row) => {
+        const tone = row.tokens >= ERROR_TOKENS ? "error" : row.tokens >= WARNING_TOKENS ? "warning" : "dim";
+        const tokens = row.tokens > 0 ? style.fg(tone, formatTokens(row.tokens)) : "";
+        const name = row.state === "running" ? row.agent : style.fg("dim", row.agent);
+        const folded = row.hidden > 0 ? style.fg("dim", ` +${row.hidden}`) : "";
+        const left = `${style.fg("dim", row.prefix)}${style.fg(MARK_COLOR[row.state], MARK[row.state])} ${name}${folded}`;
+        return spread(left, tokens, width);
+    });
+    return [style.bold(`Subagents (${count})`), ...rows];
+}
+
+/** `left` and `right` on one row, `right` flush to the edge, `left` clipped when they do not fit. */
+function spread(left: string, right: string, width: number): string {
+    if (!right) return clipEnd(left, width);
+    const clipped = clipEnd(left, Math.max(1, width - visibleWidth(right) - 1));
+    return clipped + " ".repeat(Math.max(1, width - visibleWidth(clipped) - visibleWidth(right))) + right;
+}
+
 function git(state: GitState | null, style: Style, width: number): string[] {
     if (!state) return [];
     const segments = statusSegments(state).map((segment) => {
@@ -114,6 +145,7 @@ export function sidebarContent(data: SidebarData, style: Style, width: number): 
         header(data, style, inner),
         context(data.context, style, inner),
         skills(data.skills, style, inner),
+        subagents(data.subagents, style, inner),
         git(data.git, style, inner),
     ].filter((lines) => lines.length > 0);
     const lines = [""];

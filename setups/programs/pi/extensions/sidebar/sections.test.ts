@@ -17,6 +17,7 @@ const data = (fields: Partial<SidebarData> = {}): SidebarData => ({
     thinking: "high",
     context: undefined,
     skills: [],
+    subagents: [],
     git: null,
     ...fields,
 });
@@ -116,4 +117,25 @@ test("the panel is a shade darker than the terminal, as mantle is to base in Cat
 
 test("until the terminal reports its background, the panel takes the theme's custom-message background", () => {
     expect(panelBackground(style, undefined)).toBe("<bg>");
+});
+
+test("subagents list under their own heading, tokens flush right", () => {
+    const lines = sidebarContent(
+        data({
+            subagents: [
+                {
+                    agent: "ticket-owner",
+                    tokens: 48_100,
+                    state: "running",
+                    startedAt: 0,
+                    children: [{ agent: "worker", tokens: 130_000, state: "failed", startedAt: 0, children: [] }],
+                },
+            ],
+        }),
+        style,
+        80,
+    );
+    const section = lines.slice(lines.indexOf("  *Subagents (2)*"));
+    expect(section[1]).toMatch(/^ {2}<dim>└─ <\/><accent>●<\/> ticket-owner +<dim>48\.1k<\/>$/);
+    expect(section[2]).toMatch(/^ {2}<dim> {3}└─ <\/><error>✗<\/> <dim>worker<\/> +<warning>130\.0k<\/>$/);
 });
