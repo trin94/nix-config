@@ -158,11 +158,14 @@ let
     ];
   };
 
-  # The footer shows the same Git figures as OpenCode's sidebar, from the same module. One store directory, so
-  # the entrypoint can import its sibling.
-  footerExtension = pkgs.runCommand "pi-footer-extension" { } ''
+  # The sidebar shows the same Git figures as OpenCode's sidebar, from the same module. One store directory, so
+  # the entrypoint can import its siblings; the tests stay behind.
+  sidebarExtension = pkgs.runCommand "pi-sidebar-extension" { } ''
     mkdir $out
-    cp ${./extensions/footer/index.ts} $out/index.ts
+    cp ${./extensions/sidebar/index.ts} $out/index.ts
+    cp ${./extensions/sidebar/dock.ts} $out/dock.ts
+    cp ${./extensions/sidebar/sections.ts} $out/sections.ts
+    cp ${./extensions/sidebar/skills.ts} $out/skills.ts
     cp ${../opencode/plugins/my-vcs-status/vcs.ts} $out/vcs.ts
   '';
 
@@ -207,8 +210,8 @@ in
         {"defaultPolicy":${builtins.toJSON permissions.defaultPolicy},"tools":${rulesJSON permissions.tools},"special":${rulesJSON permissions.special}}
       '';
       ".pi/agent/extensions/agents-local.ts".source = ./extensions/agents-local.ts;
-      ".pi/agent/extensions/loaded-skills.ts".source = ./extensions/loaded-skills.ts;
-      ".pi/agent/extensions/footer".source = footerExtension;
+      ".pi/agent/extensions/footer.ts".source = ./extensions/footer.ts;
+      ".pi/agent/extensions/sidebar".source = sidebarExtension;
       # pi-subagents: the owner keeps the default tools and Pi's own prompt, rules and skills, and gets the
       # nested subagent tool. Its default depth of 2 covers the main session -> ticket owner -> its workers.
       ".pi/agent/agents/ticket-owner.md".text = ''

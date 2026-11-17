@@ -2,15 +2,13 @@ import { homedir } from "node:os";
 import { basename, dirname, resolve } from "node:path";
 import { type ExtensionAPI, type ExtensionContext, parseSkillBlock } from "@earendil-works/pi-coding-agent";
 
-/** Shows the skills loaded into this session, in first-use order, as the "skills" footer status. */
-export default function (pi: ExtensionAPI) {
+/**
+ * Tracks the skills loaded into this session, in first-use order: skill commands the person ran and SKILL.md
+ * files the model read. Calls `changed` when the list may have grown; read it through the returned function.
+ */
+export function trackSkills(pi: ExtensionAPI, changed: () => void): () => readonly string[] {
     const skills = new Set<string>();
     const reads = new Map<string, string>();
-
-    const show = (ctx: ExtensionContext) => {
-        const text = skills.size > 0 ? ctx.ui.theme.fg("dim", `skills: ${[...skills].join(", ")}`) : undefined;
-        ctx.ui.setStatus("skills", text);
-    };
 
     const isSkill = (name: string) => pi.getCommands().some((c) => c.source === "skill" && c.name === `skill:${name}`);
 
@@ -55,23 +53,25 @@ export default function (pi: ExtensionAPI) {
             }
         }
         reads.clear();
-        show(ctx);
+        changed();
     };
 
     pi.on("session_start", (_event, ctx) => rebuild(ctx));
     pi.on("session_tree", (_event, ctx) => rebuild(ctx));
 
-    pi.on("input", (event, ctx) => {
+    pi.on("input", (event) => {
         const name = event.text.match(/^\/skill:(\S+)/)?.[1];
         if (!name || !isSkill(name)) return;
         skills.add(name);
-        show(ctx);
+        changed();
     });
 
     pi.on("tool_execution_start", (event) => track(event.toolCallId, event.toolName, event.args));
 
     pi.on("tool_execution_end", (event, ctx) => {
         finish(event.toolCallId, event.isError, ctx.cwd);
-        show(ctx);
+        changed();
     });
+
+    return () => [...skills];
 }

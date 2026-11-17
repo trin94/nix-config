@@ -1,0 +1,1 @@
+../../../opencode/plugins/my-vcs-status/vcs.ts
