@@ -32,7 +32,6 @@ let
     ];
     productivity = [
       "grill-me"
-      "grilling"
       "handoff"
       "teach"
       "writing-for-agents"
