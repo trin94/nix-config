@@ -116,7 +116,10 @@ let
       { "read:*.env" = "deny"; }
       { "read:*.env.*" = "deny"; }
       { "read:*.env.example" = "allow"; }
+      # Pi's own tools
+      { codemode = "allow"; }
       # pi-web-access
+      { web_enable = "allow"; }
       { web_search = "allow"; }
       { fetch_content = "allow"; }
       { get_search_content = "allow"; }
