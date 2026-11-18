@@ -13,6 +13,10 @@ essence" section keeps ADRs to the decision and leaves details to code, docs
 and git history; a changed decision rewrites its ADR, so the `superseded by`
 status was dropped.
 
+What this copy changed in [`SKILL.md`](SKILL.md): ADRs are never written or
+offered during the session; a decision that earns one becomes work in the first
+ticket unless the user says otherwise.
+
 ## License
 
 ```text

@@ -11,7 +11,7 @@ What this copy changed: every ticket carries a design (module, interface
 change, extend or new), shown in the quiz and both ticket templates. The agent
 self-checks granularity and blocking edges before the quiz, which asks only for
 approval, plus the design question when a design adds a module or changes an
-interface.
+interface. ADRs the conversation settled are work in the first ticket.
 
 ## License
 
