@@ -76,8 +76,11 @@ In the block, every line a bullet, every bullet one sentence.
 
 ## DO THIS
 
-Close with a **DO THIS** block: a bullet list, highest priority first, each line one concrete action Elias performs
-himself. Lead each line with a **DT code** (**D**O **T**HIS: `DT1`, `DT2`, …, restarting each message).
+A **DO THIS** block holds only actions that need Elias. Most messages have none and end without the block. The next
+skill or workflow step is his to start, so it never gets a line.
+
+When there are actions, close with the block: a bullet list, highest priority first, each line one concrete action
+Elias performs himself. Lead each line with a **DT code** (**D**O **T**HIS: `DT1`, `DT2`, …, restarting each message).
 
 He replies with a DT code to answer that line (`DT2 timer`, `DT1 done`). Act on the answer; when it leaves a
 question open, ask it.
@@ -94,5 +97,3 @@ body tables them. End it with the body's shortcode so he can expand it.
 * `DT1` Run `nix flake update`.
 * `DT2` Pick token refresh: on timer (simple, races under load) or on check path (no race, +1 request).
   Recommend check path 🟢 `AB`.
-
-Keep it to actions that need him. When the work leaves nothing for him to do, end without the block.

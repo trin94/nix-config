@@ -7,6 +7,10 @@
 
 <https://github.com/mattpocock/skills/tree/v1.3.1/skills/productivity/grilling>
 
+What this copy changed in [`SKILL.md`](SKILL.md): the design tree holds design
+decisions only, leaving workflow to the user; a finished session ends the turn
+in one line, and the user's next instruction is the confirmation.
+
 ## License
 
 ```text
