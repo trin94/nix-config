@@ -17,7 +17,6 @@ let
     engineering = [
       "codebase-design"
       "diagnosing-bugs"
-      "domain-modeling"
       "grill-with-docs"
       "implement"
       "improve-codebase-architecture"
