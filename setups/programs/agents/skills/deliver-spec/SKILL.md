@@ -177,9 +177,10 @@ and the notes and spec sections to read. The brief names the report the subagent
      `<ticket>.md` in the notes directory.
    - Turn each of its scope and spec questions into an **in scope** item, a `needs-triage` ticket, or a cut change
      for the user.
-   - A **design gap** (the implementer found the design names the wrong module or misses an interface) gets a
-     corrected design in the tracker and in `<ticket>.md`, and is the owner's in-scope item. When the correction adds
-     an interface another ticket needs, one ticket owns it and the other is blocked by it.
+   - A **design gap** (the implementer or the owner's make-it-right subagent found the change belongs in a module or
+     needs an interface the design doesn't name) gets a corrected design in the tracker and in `<ticket>.md`, and is
+     the owner's in-scope item. When the correction adds an interface another ticket needs, one ticket owns it and the
+     other is blocked by it.
    - Append each finding class it reports, with the ticket, to `findings.md` in the notes directory.
 
    Resume the owner in the background by its session ID with the in-scope items. Done when the owner reports with no
