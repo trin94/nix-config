@@ -8,6 +8,11 @@
 
 <https://github.com/mattpocock/skills/tree/v1.3.1/skills/engineering/domain-modeling>
 
+What this copy changed in [`ADR-FORMAT.md`](ADR-FORMAT.md): a "Keep it to the
+essence" section keeps ADRs to the decision and leaves details to code, docs
+and git history; a changed decision rewrites its ADR, so the `superseded by`
+status was dropped.
+
 ## License
 
 ```text

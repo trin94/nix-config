@@ -14,11 +14,19 @@ Create the `docs/adr/` directory lazily: only when the first ADR is needed.
 
 That's it. An ADR can be a single paragraph. The value is in recording *that* a decision was made and *why*, not in filling out sections.
 
+## Keep it to the essence
+
+An ADR records the decision, why, the rejected alternatives worth remembering, and the lasting consequences.
+
+Details already held by code, architecture docs, task runners or git history stay there: module and file paths; convention, plugin and recipe names; versions, dates and counts; rollout plans; patch notes between ADRs.
+
+When a later decision changes an ADR, rewrite the ADR to state the current decision.
+
 ## Optional sections
 
 Only include these when they add genuine value. Most ADRs won't need them.
 
-- **Status** frontmatter (`proposed | accepted | deprecated | superseded by ADR-NNNN`): useful when decisions are revisited
+- **Status** frontmatter (`proposed | accepted | deprecated`): useful when decisions are revisited
 - **Considered Options**: only when the rejected alternatives are worth remembering
 - **Consequences**: only when non-obvious downstream effects need to be called out
 
