@@ -1,6 +1,5 @@
 {
   pkgs,
-  dirImport,
   ...
 }:
 
@@ -9,12 +8,6 @@ let
   username = builtins.getEnv "USER";
 in
 {
-  imports = dirImport {
-    paths = [
-      ./programs
-    ];
-  };
-
   myOS = {
 
     programs = {

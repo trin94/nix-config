@@ -1,6 +1,5 @@
 {
   pkgs,
-  dirImport,
   ...
 }:
 let
@@ -15,12 +14,6 @@ let
   '';
 in
 {
-
-  imports = dirImport {
-    paths = [
-      ./programs
-    ];
-  };
 
   myOS.programs = {
 

@@ -2,17 +2,12 @@
   config,
   pkgs,
   lib,
-  inputs,
   ...
 }:
 let
   cfg = config.myOS.programs.vim;
 in
 {
-
-  imports = [
-    inputs.nixvim.homeModules.nixvim
-  ];
 
   options.myOS.programs.vim = with lib; {
 

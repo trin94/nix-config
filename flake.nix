@@ -52,34 +52,26 @@
     }:
 
     let
-      inherit (nixpkgs) lib;
-
       dirImport = (import ./setups/lib/dirImport.nix { inherit (nixpkgs) lib; }).dirImport;
-
-      pkgs = import nixpkgs {
-        system = "x86_64-linux";
-        config.allowUnfree = true;
-      };
-
-      extraSpecialArgs = {
-        inherit
-          inputs
-          dirImport
-          pkgs
-          ;
-      };
     in
 
     {
 
+      # Consumers pass their own `inputs`, so the modules reach this flake's inputs as
+      # `nixConfigInputs`. Module args can't feed `imports`, so input modules are imported here.
       homeModules.programs = {
-        imports = dirImport { paths = [ ./setups/programs ]; };
+        imports = [
+          inputs.nixvim.homeModules.nixvim
+          inputs.meridian.homeModules.default
+        ]
+        ++ dirImport { paths = [ ./setups/programs ]; };
+        _module.args.nixConfigInputs = inputs;
       };
 
       homeConfigurations = {
 
         "elias@fedora" = home-manager.lib.homeManagerConfiguration {
-          extraSpecialArgs = extraSpecialArgs // {
+          extraSpecialArgs = {
             pkgs = import nixpkgs {
               system = "x86_64-linux";
             };
@@ -89,12 +81,13 @@
 
           modules = [
             stylix.homeModules.stylix
+            self.homeModules.programs
             ./setups/fedora.nix
           ];
         };
 
         "elias@t470p" = home-manager.lib.homeManagerConfiguration {
-          extraSpecialArgs = extraSpecialArgs // {
+          extraSpecialArgs = {
             pkgs = import nixpkgs {
               system = "x86_64-linux";
             };
@@ -104,12 +97,13 @@
 
           modules = [
             stylix.homeModules.stylix
+            self.homeModules.programs
             ./setups/t470p.nix
           ];
         };
 
         "elias@p16gen2" = home-manager.lib.homeManagerConfiguration {
-          extraSpecialArgs = extraSpecialArgs // {
+          extraSpecialArgs = {
             pkgs = import nixpkgs {
               system = "x86_64-linux";
             };
@@ -119,12 +113,13 @@
 
           modules = [
             stylix.homeModules.stylix
+            self.homeModules.programs
             ./setups/p16gen2.nix
           ];
         };
 
         "elias@mac" = home-manager.lib.homeManagerConfiguration {
-          extraSpecialArgs = extraSpecialArgs // {
+          extraSpecialArgs = {
             pkgs = import nixpkgs {
               system = "aarch64-darwin"; # or "x86_64-darwin" for Intel
             };
@@ -134,6 +129,7 @@
 
           modules = [
             stylix.homeModules.stylix
+            self.homeModules.programs
             ./setups/mac.nix
           ];
         };

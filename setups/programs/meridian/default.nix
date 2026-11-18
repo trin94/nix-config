@@ -1,18 +1,17 @@
 {
   config,
-  inputs,
+  nixConfigInputs,
   lib,
   pkgs,
   ...
 }:
 let
   cfg = config.myOS.programs.meridian;
-  plugins = inputs.meridian.legacyPackages.${pkgs.stdenv.hostPlatform.system}.meridianPlugins;
+  plugins =
+    nixConfigInputs.meridian.legacyPackages.${pkgs.stdenv.hostPlatform.system}.meridianPlugins;
   piIdentity = pkgs.writeTextDir "lib/pi-identity.mjs" (builtins.readFile ./pi-identity.mjs);
 in
 {
-
-  imports = [ inputs.meridian.homeModules.default ];
 
   options.myOS.programs.meridian = with lib; {
 

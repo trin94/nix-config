@@ -1,7 +1,7 @@
 {
   config,
   lib,
-  inputs,
+  nixConfigInputs,
   ...
 }:
 let
@@ -12,7 +12,7 @@ let
   );
 
   # Matt Pocock's skills used as they are, by the category folder each sits in upstream.
-  upstream = category: name: "${inputs.mattpocock-skills}/skills/${category}/${name}";
+  upstream = category: name: "${nixConfigInputs.mattpocock-skills}/skills/${category}/${name}";
   upstreamSkills = lib.concatMapAttrs (category: names: lib.genAttrs names (upstream category)) {
     engineering = [
       "codebase-design"
