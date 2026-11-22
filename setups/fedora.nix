@@ -143,6 +143,27 @@ in
 
     tokei.enable = true;
 
+    umbriel = {
+      enable = true;
+      settings = {
+        input.touchpad.enabled = false;
+
+        # Output names must match exactly; wildcards are unsupported.
+        output."DP-3" = {
+          mode = "3840x2160@240.000";
+          scale = 1.25;
+          transform = "normal";
+          position = [
+            0
+            0
+          ];
+          # HDR selects its own 10-bit format; do not force 10-bit SDR here.
+          hdr = "on";
+          vrr = "fullscreen";
+        };
+      };
+    };
+
     vim.enable = true;
     yq.enable = true;
     yazi.enable = true;
