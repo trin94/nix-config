@@ -87,7 +87,6 @@ in
 
       bat.enable = true;
       k9s.enable = true;
-      lazygit.enable = true;
       nixvim.enable = true;
       starship.enable = true;
       yazi.enable = true;

@@ -43,27 +43,7 @@ in
   config = {
 
     home.packages =
-      lib.optional cfg.enable pkgs.git
-      ++ lib.optional cfg.configure pkgs.lazygit
-      ++ lib.optional (cfg.configure && cfg.githubCli) pkgs.gh;
-
-    programs.lazygit = lib.mkIf cfg.configure {
-      enable = true;
-      settings = {
-        keybinding.universal = {
-          undo = "u";
-          redo = "U";
-          nextBlock = "<c-n>";
-          prevBlock = "<c-p>";
-          prevBlock-alt = "<disabled>";
-          nextBlock-alt = "<disabled>";
-          scrollLeft = "<disabled>";
-          scrollRight = "<disabled>";
-          goInto = "l";
-          return-alt1 = "h";
-        };
-      };
-    };
+      lib.optional cfg.enable pkgs.git ++ lib.optional (cfg.configure && cfg.githubCli) pkgs.gh;
 
     home.file = lib.mkIf cfg.configure {
       ".config/git/ignore".text = ''
