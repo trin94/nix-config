@@ -175,30 +175,6 @@ in
     };
   };
 
-  stylix = {
-    enable = true;
-    autoEnable = false;
-    base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-mocha.yaml";
-
-    targets = {
-      fontconfig.enable = true;
-
-      bat.enable = true;
-      k9s.enable = true;
-      lazygit.enable = true;
-      nixvim.enable = true;
-      starship.enable = true;
-      yazi.enable = true;
-    };
-
-    fonts = {
-      monospace.name = "MonoLisaCode Variable";
-      sansSerif.name = "MonoLisaText Variable";
-      serif.name = "MonoLisaText Variable";
-    };
-
-  };
-
   home = {
     username = username;
     homeDirectory = homeDirectory;
@@ -260,7 +236,16 @@ in
 
   home.enableNixpkgsReleaseCheck = false;
 
-  fonts.fontconfig.enable = true;
+  # MonoLisa lives in ~/.local/share/fonts and Noto Color Emoji ships with Fedora.
+  fonts.fontconfig = {
+    enable = true;
+    defaultFonts = {
+      monospace = [ "MonoLisaCode Variable" ];
+      sansSerif = [ "MonoLisaText Variable" ];
+      serif = [ "MonoLisaText Variable" ];
+      emoji = [ "Noto Color Emoji" ];
+    };
+  };
 
   gtk.enable = true;
 
