@@ -12,12 +12,6 @@ in
 
     programs = {
 
-      alacritty = {
-        enable = true;
-        shell = "${pkgs.fish}/bin/fish";
-        fontSize = 16;
-      };
-
       bat.enable = true;
       bottom.enable = true;
       devenv.enable = false;

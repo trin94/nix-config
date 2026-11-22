@@ -18,7 +18,6 @@ in
   myOS.programs = {
 
     agents.enable = true;
-    alacritty.enable = true;
 
     bat.enable = true;
     bottom.enable = true;
