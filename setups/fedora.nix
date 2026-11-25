@@ -63,7 +63,6 @@ in
     };
 
     libwebp.enable = true;
-    meridian.enable = true;
 
     mpv = {
       enable = false;
@@ -127,11 +126,6 @@ in
           effect = "deny";
         }
       ];
-    };
-
-    pi = {
-      enable = true;
-      extensions.herdr.enable = true;
     };
 
     procs.enable = true;

@@ -97,8 +97,6 @@ The spec's design, when it names one (a ticket's **Design** section from `to-tic
 
 ### 4. Spawn the sub-agents in parallel
 
-Launch each as the client's read-only review agent: `reviewer` in pi.
-
 When the caller asks for **blocking only**, each brief below ends with "Report `blocking` findings only." instead of
 its tag sentence; the smell baseline then never fires, since every smell is a `nit`.
 
