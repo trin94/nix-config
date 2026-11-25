@@ -2,108 +2,43 @@
 
 // Context size of every subagent in the current session's tree. Mirrors the
 // prompt footer's figure: the last assistant step's tokens against the model limit.
+// A click on a row opens that session, as the Claude Code sidebar puts a subagent in the main view.
 
-import type { ModelInfo, SessionInfo, SessionMessageInfo } from "@opencode/client";
 import { Plugin, usePlugin } from "@opencode/plugin/tui";
+import { TextAttributes } from "@opentui/core";
 import { createEffect, createMemo, For, Show } from "solid-js";
+import { contextUsage, foldText, formatTokens, type Row, type State, state, tree } from "./tree";
 
-const HEADING = "Subagents";
 const PERCENT_FROM_TOKENS = 200_000;
 const WARNING_TOKENS = 125_000;
 const ERROR_TOKENS = 225_000;
-
-interface Row {
-    session: SessionInfo;
-    prefix: string;
-    /** Descendants folded away under this row. */
-    hidden: number;
-    expanded: boolean;
-    hasChildren: boolean;
-}
-
-/**
- * Descendants of `rootID` in depth-first order, with tree-drawing prefixes.
- * A subtree with no open session folds into its top row unless `overrides` says otherwise.
- */
-function tree(
-    sessions: readonly SessionInfo[],
-    rootID: string,
-    open: (sessionID: string) => boolean,
-    overrides: Readonly<Record<string, boolean>>,
-): Row[] {
-    const children = new Map<string, SessionInfo[]>();
-    for (const session of sessions) {
-        if (!session.parentID) continue;
-        children.set(session.parentID, [...(children.get(session.parentID) ?? []), session]);
-    }
-    const descendants = (sessionID: string): SessionInfo[] =>
-        (children.get(sessionID) ?? []).flatMap((child) => [child, ...descendants(child.id)]);
-
-    const walk = (parentID: string, indent: string): Row[] => {
-        const group = (children.get(parentID) ?? []).toSorted((a, b) => a.time.created - b.time.created);
-        return group.flatMap((session, index) => {
-            const last = index === group.length - 1;
-            const prefix = indent + (last ? "└─ " : "├─ ");
-            const hidden = descendants(session.id);
-            const hasChildren = hidden.length > 0;
-            const expanded = overrides[session.id] ?? [session, ...hidden].some((member) => open(member.id));
-            if (hasChildren && !expanded) {
-                return [{ session, prefix, hidden: hidden.length, expanded, hasChildren }];
-            }
-            return [
-                { session, prefix, hidden: 0, expanded, hasChildren },
-                ...walk(session.id, indent + (last ? "   " : "│  ")),
-            ];
-        });
-    };
-    return walk(rootID, "");
-}
-
-/** Tokens of the last assistant step since the latest compaction, as in OpenCode's prompt footer. */
-function contextUsage(messages: readonly SessionMessageInfo[], models: readonly ModelInfo[], boundary?: string) {
-    const boundaryIndex = boundary ? messages.findIndex((message) => message.id === boundary) : -1;
-    const end = boundaryIndex === -1 ? messages.length : boundaryIndex;
-    const compaction = messages.findLastIndex(
-        (message, index) => message.type === "compaction" && message.status === "completed" && index < end,
-    );
-    const last = messages.findLast(
-        (message, index) => message.type === "assistant" && message.tokens && index > compaction && index < end,
-    );
-    if (last?.type !== "assistant" || !last.tokens) return;
-
-    const { input, output, reasoning, cache } = last.tokens;
-    const tokens = input + output + reasoning + cache.read + cache.write;
-    if (tokens <= 0) return;
-    const model = models.find((model) => model.providerID === last.model.providerID && model.id === last.model.id);
-    return { tokens, percent: model?.limit.context ? Math.round((tokens / model.limit.context) * 100) : undefined };
-}
-
-function formatTokens(tokens: number): string {
-    if (tokens >= 999_950) return `${(tokens / 1_000_000).toFixed(1)}M`;
-    if (tokens >= 1000) return `${(tokens / 1000).toFixed(1)}K`;
-    return String(tokens);
-}
+const MAIN = "← Main conversation";
+const MARK: Record<State, string> = { running: "●", done: "✓", failed: "✗" };
 
 function Subagents(props: { sessionID: string }) {
     const api = usePlugin();
     const session = api.data.session;
     const running = (sessionID: string) => session.status(sessionID) === "running";
+    const root = () => session.root(props.sessionID);
     // Clicked folds, kept across session switches until the TUI exits.
     const [folds, updateFolds] = api.storage.memory("folds", { initial: {} as Record<string, boolean> });
-    const rows = createMemo(() =>
-        tree(session.list(), session.root(props.sessionID), (id) => running(id) || id === props.sessionID, folds),
-    );
+    const model = createMemo(() => tree(session.list(), root(), (id) => running(id) || id === props.sessionID, folds));
     const toggle = (row: Row) => {
-        if (!row.hasChildren) return;
         updateFolds((draft) => {
             draft[row.session.id] = !row.expanded;
         });
+    };
+    const view = (sessionID: string) => api.ui.router.navigate({ type: "session", sessionID });
+    const markColor = (value: State) => {
+        const { feedback } = api.theme.text;
+        if (value === "running") return feedback.info.base;
+        return value === "done" ? feedback.success.base : feedback.error.base;
     };
 
     // The host only loads messages for opened sessions. Once loaded, step events keep them current.
     const requested = new Set<string>();
     createEffect(() => {
-        for (const { session: shown } of rows()) {
+        for (const { session: shown } of model().rows) {
             if (requested.has(shown.id)) continue;
             requested.add(shown.id);
             void session.message.sync(shown.id);
@@ -111,12 +46,25 @@ function Subagents(props: { sessionID: string }) {
     });
 
     return (
-        <Show when={rows().length > 0}>
+        <Show when={model().rows.length > 0}>
             <box flexDirection="column" flexShrink={0}>
-                <text fg={api.theme.text.base} wrapMode="none">
-                    <b>{HEADING}</b>
-                </text>
-                <For each={rows()}>
+                <box flexDirection="row" gap={1} flexShrink={0}>
+                    <text fg={api.theme.text.base} wrapMode="none" flexGrow={1}>
+                        <b>Subagents ({model().total})</b>
+                    </text>
+                    <Show when={props.sessionID !== root()}>
+                        {/* biome-ignore lint/a11y/noStaticElementInteractions: OpenTUI element, no DOM roles */}
+                        <text
+                            fg={api.theme.text.action.primary.selected}
+                            wrapMode="none"
+                            flexShrink={0}
+                            onMouseUp={() => view(root())}
+                        >
+                            {MAIN}
+                        </text>
+                    </Show>
+                </box>
+                <For each={model().rows}>
                     {(row) => {
                         const usage = createMemo(() =>
                             contextUsage(
@@ -125,10 +73,10 @@ function Subagents(props: { sessionID: string }) {
                                 row.session.revert?.messageID,
                             ),
                         );
-                        const fg = () =>
-                            running(row.session.id) || row.session.id === props.sessionID
-                                ? api.theme.text.base
-                                : api.theme.text.muted;
+                        const viewed = () => row.session.id === props.sessionID;
+                        const rowState = () => state(row.session, running(row.session.id));
+                        const fg = () => (rowState() === "running" ? api.theme.text.base : api.theme.text.muted);
+                        const labelFg = () => (viewed() ? api.theme.text.action.primary.selected : fg());
                         const usageFg = () => {
                             const tokens = usage()?.tokens ?? 0;
                             if (tokens >= ERROR_TOKENS) return api.theme.text.feedback.error.base;
@@ -143,20 +91,38 @@ function Subagents(props: { sessionID: string }) {
                             return `${tokens} ${value.percent}%`;
                         };
                         const label = row.session.title ?? row.session.agent ?? row.session.id;
+                        // Clicking the open session again goes back to the main one, as the Claude Code tasks list does.
+                        const open = () => view(viewed() ? root() : row.session.id);
                         return (
-                            // biome-ignore lint/a11y/noStaticElementInteractions: OpenTUI box, no DOM roles
-                            <box flexDirection="row" gap={1} flexShrink={0} onMouseUp={() => toggle(row)}>
-                                <box flexDirection="row" flexGrow={1} flexShrink={1} minWidth={0}>
-                                    <text fg={fg()} wrapMode="none" flexShrink={0}>
+                            <box flexDirection="row" gap={1} flexShrink={0}>
+                                {/* biome-ignore lint/a11y/noStaticElementInteractions: OpenTUI element, no DOM roles */}
+                                <box flexDirection="row" flexGrow={1} flexShrink={1} minWidth={0} onMouseUp={open}>
+                                    <text fg={api.theme.text.muted} wrapMode="none" flexShrink={0}>
                                         {row.prefix}
                                     </text>
-                                    <text fg={fg()} wrapMode="none" truncate flexShrink={1} minWidth={0}>
+                                    <text fg={markColor(rowState())} wrapMode="none" flexShrink={0}>
+                                        {`${MARK[rowState()]} `}
+                                    </text>
+                                    <text
+                                        fg={labelFg()}
+                                        attributes={viewed() ? TextAttributes.BOLD : TextAttributes.NONE}
+                                        wrapMode="none"
+                                        truncate
+                                        flexShrink={1}
+                                        minWidth={0}
+                                    >
                                         {label}
                                     </text>
                                 </box>
-                                <Show when={row.hidden > 0}>
-                                    <text fg={api.theme.text.muted} wrapMode="none" flexShrink={0}>
-                                        +{row.hidden}
+                                <Show when={foldText(row)}>
+                                    {/* biome-ignore lint/a11y/noStaticElementInteractions: OpenTUI element, no DOM roles */}
+                                    <text
+                                        fg={api.theme.text.muted}
+                                        wrapMode="none"
+                                        flexShrink={0}
+                                        onMouseUp={() => toggle(row)}
+                                    >
+                                        {foldText(row)}
                                     </text>
                                 </Show>
                                 <Show when={usageText()}>
