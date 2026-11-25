@@ -1,5 +1,8 @@
 const FALLBACK_BASE = "main"
 const BASE_CANDIDATES = [main master]
+# Same absolute thresholds as my-sidebar; percentage catches smaller windows.
+const WARNING_TOKENS = 125_000
+const ERROR_TOKENS = 225_000
 
 # Trimmed stdout, or null when git fails (not a repo, unknown ref, ...).
 def --wrapped run-git [dir: string, ...args: string] {
@@ -87,11 +90,25 @@ def token-count [tokens: int] {
 # used_percentage. current_usage is null before the first response and right after /compact.
 def context-line [window] {
   if $window == null or $window.current_usage? == null { return null }
-  let percent = $window.used_percentage? | default 0
-  let color = if $percent >= 90 { "red" } else if $percent >= 70 { "yellow" } else { "green" }
-  let used = token-count ($window.total_input_tokens | into int)
-  let size = token-count ($window.context_window_size | into int)
-  $"(ansi attr_bold)Context(ansi reset) (ansi $color)($used)(ansi reset)(ansi attr_dimmed)/($size)(ansi reset)"
+  let usage = $window.current_usage
+  let used_tokens = (
+    ($usage.input_tokens? | default 0 | into int)
+    + ($usage.cache_creation_input_tokens? | default 0 | into int)
+    + ($usage.cache_read_input_tokens? | default 0 | into int)
+  )
+  if $used_tokens <= 0 { return null }
+  let window_size = $window.context_window_size? | default 0 | into int
+  let percent = if $window_size > 0 { $used_tokens * 100 / $window_size } else { $window.used_percentage? | default 0 }
+  let color = if $used_tokens >= $ERROR_TOKENS or $percent >= 90 {
+    "red"
+  } else if $used_tokens >= $WARNING_TOKENS or $percent >= 70 {
+    "yellow"
+  } else {
+    "green"
+  }
+  let used = token-count $used_tokens
+  let suffix = if $window_size > 0 { $"(ansi attr_dimmed)/(token-count $window_size)(ansi reset)" } else { "" }
+  $"(ansi attr_bold)Context(ansi reset) (ansi $color)($used)(ansi reset)($suffix)"
 }
 
 # Skills loaded into this session, in first-use order: Skill tool calls that didn't fail, skills the
