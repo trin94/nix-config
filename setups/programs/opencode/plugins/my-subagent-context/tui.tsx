@@ -3,32 +3,49 @@
 // Context size of every subagent in the current session's tree. Mirrors the
 // prompt footer's figure: the last assistant step's tokens against the model limit.
 // A click on a row opens that session, as the Claude Code sidebar puts a subagent in the main view.
+// OpenCode draws the sidebar only for top-level sessions, so the session shown is always the tree's root.
 
 import { Plugin, usePlugin } from "@opencode/plugin/tui";
-import { TextAttributes } from "@opentui/core";
-import { createEffect, createMemo, For, Show } from "solid-js";
+import { createEffect, createMemo, createSignal, For, onCleanup, Show } from "solid-js";
 import { contextUsage, foldText, formatTokens, type Row, type State, state, tree } from "./tree";
 
 const PERCENT_FROM_TOKENS = 200_000;
 const WARNING_TOKENS = 125_000;
 const ERROR_TOKENS = 225_000;
-const MAIN = "← Main conversation";
 const MARK: Record<State, string> = { running: "●", done: "✓", failed: "✗" };
 
 function Subagents(props: { sessionID: string }) {
     const api = usePlugin();
     const session = api.data.session;
     const running = (sessionID: string) => session.status(sessionID) === "running";
-    const root = () => session.root(props.sessionID);
     // Clicked folds, kept across session switches until the TUI exits.
     const [folds, updateFolds] = api.storage.memory("folds", { initial: {} as Record<string, boolean> });
-    const model = createMemo(() => tree(session.list(), root(), (id) => running(id) || id === props.sessionID, folds));
+    const model = createMemo(() => tree(session.list(), props.sessionID, running, folds));
     const toggle = (row: Row) => {
         updateFolds((draft) => {
             draft[row.session.id] = !row.expanded;
         });
     };
     const view = (sessionID: string) => api.ui.router.navigate({ type: "session", sessionID });
+    // The clickable span under the mouse: "row:" or "fold:" and a session ID. Kept here rather
+    // than in the row, because rows remount whenever the session list changes.
+    const [hovered, setHovered] = createSignal<string>();
+    const hover = (key: string) => ({
+        onMouseOver: () => {
+            setHovered(key);
+            api.renderer.setMousePointer("pointer");
+        },
+        onMouseOut: () => {
+            // Moving between spans can deliver the next span's over first.
+            if (hovered() !== key) return;
+            setHovered(undefined);
+            api.renderer.setMousePointer("default");
+        },
+    });
+    onCleanup(() => {
+        if (hovered()) api.renderer.setMousePointer("default");
+    });
+    const hoverBg = (key: string) => (hovered() === key ? api.theme.background.raised.high : undefined);
     const markColor = (value: State) => {
         const { feedback } = api.theme.text;
         if (value === "running") return feedback.info.base;
@@ -48,22 +65,9 @@ function Subagents(props: { sessionID: string }) {
     return (
         <Show when={model().rows.length > 0}>
             <box flexDirection="column" flexShrink={0}>
-                <box flexDirection="row" gap={1} flexShrink={0}>
-                    <text fg={api.theme.text.base} wrapMode="none" flexGrow={1}>
-                        <b>Subagents ({model().total})</b>
-                    </text>
-                    <Show when={props.sessionID !== root()}>
-                        {/* biome-ignore lint/a11y/noStaticElementInteractions: OpenTUI element, no DOM roles */}
-                        <text
-                            fg={api.theme.text.action.primary.selected}
-                            wrapMode="none"
-                            flexShrink={0}
-                            onMouseUp={() => view(root())}
-                        >
-                            {MAIN}
-                        </text>
-                    </Show>
-                </box>
+                <text fg={api.theme.text.base} wrapMode="none">
+                    <b>Subagents ({model().total})</b>
+                </text>
                 <For each={model().rows}>
                     {(row) => {
                         const usage = createMemo(() =>
@@ -73,10 +77,11 @@ function Subagents(props: { sessionID: string }) {
                                 row.session.revert?.messageID,
                             ),
                         );
-                        const viewed = () => row.session.id === props.sessionID;
                         const rowState = () => state(row.session, running(row.session.id));
                         const fg = () => (rowState() === "running" ? api.theme.text.base : api.theme.text.muted);
-                        const labelFg = () => (viewed() ? api.theme.text.action.primary.selected : fg());
+                        const rowKey = `row:${row.session.id}`;
+                        const foldKey = `fold:${row.session.id}`;
+                        const labelFg = () => (hovered() === rowKey ? api.theme.text.base : fg());
                         const usageFg = () => {
                             const tokens = usage()?.tokens ?? 0;
                             if (tokens >= ERROR_TOKENS) return api.theme.text.feedback.error.base;
@@ -91,36 +96,38 @@ function Subagents(props: { sessionID: string }) {
                             return `${tokens} ${value.percent}%`;
                         };
                         const label = row.session.title ?? row.session.agent ?? row.session.id;
-                        // Clicking the open session again goes back to the main one, as the Claude Code tasks list does.
-                        const open = () => view(viewed() ? root() : row.session.id);
                         return (
                             <box flexDirection="row" gap={1} flexShrink={0}>
-                                {/* biome-ignore lint/a11y/noStaticElementInteractions: OpenTUI element, no DOM roles */}
-                                <box flexDirection="row" flexGrow={1} flexShrink={1} minWidth={0} onMouseUp={open}>
+                                <box flexDirection="row" flexGrow={1} flexShrink={1} minWidth={0}>
                                     <text fg={api.theme.text.muted} wrapMode="none" flexShrink={0}>
                                         {row.prefix}
                                     </text>
-                                    <text fg={markColor(rowState())} wrapMode="none" flexShrink={0}>
-                                        {`${MARK[rowState()]} `}
-                                    </text>
-                                    <text
-                                        fg={labelFg()}
-                                        attributes={viewed() ? TextAttributes.BOLD : TextAttributes.NONE}
-                                        wrapMode="none"
-                                        truncate
+                                    {/* biome-ignore lint/a11y/noStaticElementInteractions: OpenTUI element, no DOM roles */}
+                                    <box
+                                        flexDirection="row"
                                         flexShrink={1}
                                         minWidth={0}
+                                        backgroundColor={hoverBg(rowKey)}
+                                        onMouseUp={() => view(row.session.id)}
+                                        {...hover(rowKey)}
                                     >
-                                        {label}
-                                    </text>
+                                        <text fg={markColor(rowState())} wrapMode="none" flexShrink={0}>
+                                            {`${MARK[rowState()]} `}
+                                        </text>
+                                        <text fg={labelFg()} wrapMode="none" truncate flexShrink={1} minWidth={0}>
+                                            {label}
+                                        </text>
+                                    </box>
                                 </box>
                                 <Show when={foldText(row)}>
                                     {/* biome-ignore lint/a11y/noStaticElementInteractions: OpenTUI element, no DOM roles */}
                                     <text
-                                        fg={api.theme.text.muted}
+                                        fg={hovered() === foldKey ? api.theme.text.base : api.theme.text.muted}
+                                        bg={hoverBg(foldKey)}
                                         wrapMode="none"
                                         flexShrink={0}
                                         onMouseUp={() => toggle(row)}
+                                        {...hover(foldKey)}
                                     >
                                         {foldText(row)}
                                     </text>
