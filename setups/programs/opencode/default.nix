@@ -12,7 +12,7 @@ let
 
   # Both plugin lists are built here in a fixed order. Plugin modules don't add themselves.
   serverPlugins =
-    lib.optional cfg.plugins.with-claude.enable "opencode-with-claude"
+    lib.optional cfg.plugins.with-claude.enable "opencode-with-claude@1.11.3"
     ++ lib.optional cfg.plugins.my-agents-local.enable (pluginPath "server" "my-agents-local");
 
   # opencode-with-claude starts the proxy and rewrites the base URL at runtime. The block
